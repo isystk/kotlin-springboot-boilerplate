@@ -8,7 +8,6 @@ import com.isystk.sample.domain.repository.MPostTagRepository;
 import com.isystk.sample.domain.repository.dto.MPostTagRepositoryDto;
 import com.isystk.sample.web.base.controller.html.AbstractHtmlController;
 import javax.validation.constraints.NotBlank;
-import lombok.val;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

@@ -2,7 +2,6 @@ package com.isystk.sample.batch.jobs;
 
 import com.isystk.sample.batch.context.BatchContext;
 import com.isystk.sample.batch.context.BatchContextHolder;
-import lombok.val;
 import org.slf4j.Logger;
 import org.springframework.batch.core.annotation.OnProcessError;
 import org.springframework.batch.item.ItemProcessor;

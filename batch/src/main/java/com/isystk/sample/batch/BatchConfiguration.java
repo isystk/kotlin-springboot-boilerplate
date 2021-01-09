@@ -5,7 +5,6 @@ import com.isystk.sample.common.dto.DefaultPageFactoryImpl;
 import com.isystk.sample.common.dto.PageFactory;
 import com.isystk.sample.common.util.MessageUtils;
 import javax.sql.DataSource;
-import lombok.val;
 import org.springframework.batch.core.configuration.annotation.EnableBatchProcessing;
 import org.springframework.batch.core.converter.JobParametersConverter;
 import org.springframework.batch.core.jsr.JsrJobParametersConverter;

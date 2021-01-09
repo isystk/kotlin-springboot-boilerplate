@@ -8,7 +8,6 @@ import com.isystk.sample.web.base.view.ExcelView;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
-import lombok.val;
 import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.FillPatternType;
 import org.apache.poi.ss.usermodel.Font;

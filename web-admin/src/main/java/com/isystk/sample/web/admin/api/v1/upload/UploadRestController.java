@@ -9,7 +9,6 @@ import com.isystk.sample.web.base.controller.api.AbstractRestController;
 import com.isystk.sample.web.base.controller.api.resource.Resource;
 import com.isystk.sample.web.base.view.FileDownloadView;
 import java.util.Arrays;
-import lombok.val;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.ui.Model;

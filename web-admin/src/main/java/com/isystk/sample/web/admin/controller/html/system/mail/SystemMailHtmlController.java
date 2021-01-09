@@ -7,7 +7,6 @@ import com.isystk.sample.domain.dto.MMailTemplateCriteria;
 import com.isystk.sample.domain.repository.MMailTemplateRepository;
 import com.isystk.sample.domain.repository.dto.MMailTemplateRepositoryDto;
 import com.isystk.sample.web.base.controller.html.AbstractHtmlController;
-import lombok.val;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

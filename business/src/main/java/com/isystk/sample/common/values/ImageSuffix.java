@@ -1,7 +1,5 @@
 package com.isystk.sample.common.values;
 
-import lombok.Getter;
-
 /**
  * 保存する画像サイズ
  */

@@ -9,7 +9,6 @@ import com.isystk.sample.domain.dao.AuditInfoHolder;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
-import lombok.val;
 import org.seasar.doma.jdbc.SelectOptions;
 import org.springframework.batch.item.database.AbstractPagingItemReader;
 

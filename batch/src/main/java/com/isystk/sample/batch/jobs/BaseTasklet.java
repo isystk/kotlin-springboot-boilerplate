@@ -4,7 +4,6 @@ import com.isystk.sample.batch.context.BatchContext;
 import com.isystk.sample.batch.context.BatchContextHolder;
 import com.isystk.sample.batch.item.ItemPosition;
 import java.io.IOException;
-import lombok.val;
 import org.slf4j.Logger;
 import org.springframework.batch.core.StepContribution;
 import org.springframework.batch.core.annotation.OnProcessError;

@@ -7,8 +7,6 @@ import org.apache.commons.collections.map.LRUMap;
 import com.isystk.sample.common.XORShiftRandom;
 import com.isystk.sample.web.base.util.SessionUtils;
 
-import lombok.val;
-
 public class DoubleSubmitCheckToken {
 
   public static final String DOUBLE_SUBMIT_CHECK_PARAMETER = "_double";

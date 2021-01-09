@@ -19,7 +19,6 @@ import com.isystk.sample.web.base.view.PdfView;
 import java.time.LocalTime;
 import java.util.List;
 import javax.validation.Valid;
-import lombok.val;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
