@@ -36,122 +36,15 @@ public abstract class BaseApplicationConfig
   public void customize(ConfigurableServletWebServerFactory container) {
   }
 
-//    @Override
-//    public void addViewControllers(ViewControllerRegistry registry) {
-//        // コントローラーを追加する
-//        registry.addViewController(FORBIDDEN_URL).setViewName(FORBIDDEN_VIEW);
-//        registry.addViewController(ERROR_URL).setViewName(ERROR_VIEW);
-//        registry.setOrder(Ordered.HIGHEST_PRECEDENCE);
-//    }
-//
-//    @Override
-//    public void addFormatters(FormatterRegistry registry) {
-//        registry.addConverter(new LocalDateConverter(LOCALDATE_FORMAT));
-//        registry.addConverter(new LocalDateTimeConverter(LOCALDATETIME_FORMAT));
-//    }
-//
-//    @Bean
-//    public ForwardedHeaderFilter forwardedHeaderFilter() {
-//        // X-Forwarded-XXXの値を使ってリクエスト情報を上書きする
-//        return new ForwardedHeaderFilter();
-//    }
-//
-//    @Bean
-//    public HiddenHttpMethodFilter hiddenHttpMethodFilter() {
-//        // hiddenパラメータで指定されたHTTPメソッドに変換する
-//        return new HiddenHttpMethodFilter();
-//    }
-//
-//    @Bean
-//    public ShallowEtagHeaderFilter shallowEtagHeaderFilter() {
-//        // ETagの制御を行う
-//        return new ShallowEtagHeaderFilter();
-//    }
-//
-//    @Bean
-//    public FilterRegistrationBean<CorsFilter> corsFilter() {
-//        val config = new CorsConfiguration();
-//        config.setAllowCredentials(allowCredentials);
-//        config.setAllowedHeaders(allowedHeaders);
-//        config.setAllowedOrigins(corsAllowedOrigins);
-//        config.setAllowedMethods(allowedMethods);
-//        config.setMaxAge(maxAge);
-//
-//        val source = new UrlBasedCorsConfigurationSource();
-//        source.registerCorsConfiguration("/**", config);
-//
-//        val bean = new FilterRegistrationBean<CorsFilter>(new CorsFilter(source));
-//        bean.setOrder(Ordered.HIGHEST_PRECEDENCE);
-//        return bean;
-//    }
-
   @Bean
   public FilterRegistrationBean<LoginUserTrackingFilter> loginUserTrackingFilterBean() {
-    val filter = new LoginUserTrackingFilter();
+    LoginUserTrackingFilter filter = new LoginUserTrackingFilter();
     filter.setExcludeUrlPatterns(Arrays.asList(WEBJARS_URL, STATIC_RESOURCES_URL));
 
-    val bean = new FilterRegistrationBean<LoginUserTrackingFilter>(filter);
+    FilterRegistrationBean bean = new FilterRegistrationBean<LoginUserTrackingFilter>(filter);
     bean.setOrder(Ordered.LOWEST_PRECEDENCE);
     return bean;
   }
-
-//    @Bean
-//    public FilterRegistrationBean<ClearMDCFilter> clearMDCFilterBean() {
-//        val filter = new ClearMDCFilter();
-//        val bean = new FilterRegistrationBean<ClearMDCFilter>(filter);
-//        bean.setOrder(Ordered.LOWEST_PRECEDENCE);
-//        return bean;
-//    }
-//
-//    @Bean
-//    public FilterRegistrationBean<CheckOverflowFilter> checkOverflowFilterBean() {
-//        val filter = new CheckOverflowFilter();
-//        val bean = new FilterRegistrationBean<CheckOverflowFilter>(filter);
-//        bean.setOrder(Ordered.HIGHEST_PRECEDENCE);
-//        return bean;
-//    }
-
-//    @Bean
-//    public LocaleResolver localeResolver() {
-//        // Cookieに言語を保存する
-//        val resolver = new CookieLocaleResolver();
-//        resolver.setCookieName("lang");
-//        return resolver;
-//    }
-//
-//    @Bean
-//    public LocaleChangeInterceptor localeChangeInterceptor() {
-//        // langパラメータでロケールを切り替える
-//        val interceptor = new LocaleChangeInterceptor();
-//        interceptor.setParamName("lang");
-//        return interceptor;
-//    }
-
-//    @Bean
-//    public LocalValidatorFactoryBean beanValidator(MessageSource messageSource) {
-//        val bean = new LocalValidatorFactoryBean();
-//        bean.setValidationMessageSource(messageSource);
-//        return bean;
-//    }
-//
-//    @Bean
-//    public LayoutDialect layoutDialect() {
-//        return new LayoutDialect();
-//    }
-
-//    @Bean
-//    public CacheManager cacheManager() {
-//        val manager = new EhCacheCacheManager();
-//        manager.setCacheManager(ehcache().getObject());
-//        return manager;
-//    }
-//
-//    @Bean
-//    public EhCacheManagerFactoryBean ehcache() {
-//        val ehcache = new EhCacheManagerFactoryBean();
-//        ehcache.setConfigLocation(new ClassPathResource("ehcache.xml"));
-//        return ehcache;
-//    }
 
   @Override
   public void addResourceHandlers(ResourceHandlerRegistry registry) {

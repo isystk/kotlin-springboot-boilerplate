@@ -1,16 +1,15 @@
 package com.isystk.sample.web.base.util;
 
-import org.apache.commons.io.FilenameUtils;
-import org.apache.commons.lang3.StringUtils;
-import org.springframework.validation.Errors;
-import org.springframework.web.multipart.MultipartFile;
-
+import java.io.IOException;
+import java.util.Iterator;
 import javax.imageio.IIOException;
 import javax.imageio.ImageIO;
 import javax.imageio.ImageReader;
 import javax.imageio.stream.ImageInputStream;
-import java.io.IOException;
-import java.util.Iterator;
+import org.apache.commons.io.FilenameUtils;
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.validation.Errors;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  * 入力チェックユーティリティ

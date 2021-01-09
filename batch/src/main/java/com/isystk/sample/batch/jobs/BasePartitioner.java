@@ -2,19 +2,18 @@ package com.isystk.sample.batch.jobs;
 
 import java.util.HashMap;
 import java.util.Map;
-
+import lombok.val;
+import org.slf4j.Logger;
 import org.springframework.batch.core.partition.support.Partitioner;
 import org.springframework.batch.item.ExecutionContext;
 
-import lombok.val;
-import lombok.extern.slf4j.Slf4j;
-
-@Slf4j
 public abstract class BasePartitioner implements Partitioner {
+
+  private static final Logger log = org.slf4j.LoggerFactory.getLogger(BasePartitioner.class);
 
   @Override
   public Map<String, ExecutionContext> partition(int gridSize) {
-    val partitions = new HashMap<String, ExecutionContext>();
+    Map<String, ExecutionContext> partitions = new HashMap<String, ExecutionContext>();
 
     int index = 1;
     for (int i = 1; i <= gridSize; i++) {
@@ -40,11 +39,11 @@ public abstract class BasePartitioner implements Partitioner {
    */
   protected void addPartitionInfo(Map<String, ExecutionContext> partitions, int index,
       int gridSize) {
-    val partitionInfo = createPartitionInfo(new PartitionInfo(index, gridSize));
-    val context = new ExecutionContext();
+    PartitionInfo partitionInfo = createPartitionInfo(new PartitionInfo(index, gridSize));
+    ExecutionContext context = new ExecutionContext();
     context.put(PartitionInfo.class.getCanonicalName(), partitionInfo);
 
-    val partitionName = String.format("partition%d", index);
+    String partitionName = String.format("partition%d", index);
     partitions.put(partitionName, context);
   }
 

@@ -3,11 +3,6 @@ package com.isystk.sample.domain.repository;
 import static com.isystk.sample.domain.util.DomaUtils.createSelectOptions;
 import static java.util.stream.Collectors.toList;
 
-import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
-
 import com.isystk.sample.common.dto.Page;
 import com.isystk.sample.common.dto.Pageable;
 import com.isystk.sample.common.exception.NoDataFoundException;
@@ -18,8 +13,10 @@ import com.isystk.sample.domain.dao.TUserDao;
 import com.isystk.sample.domain.dto.TUserCriteria;
 import com.isystk.sample.domain.entity.TUser;
 import com.isystk.sample.domain.repository.dto.TUserRepositoryDto;
-
-import lombok.val;
+import java.time.LocalDateTime;
+import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
 /**
  * ユーザーリポジトリ
@@ -67,7 +64,7 @@ public class TUserRepository extends BaseRepository {
   public TUser create(final TUser inputUser) {
 
     // 1件登録
-    val time = DateUtils.getNow();
+    LocalDateTime time = DateUtils.getNow();
 
     inputUser.setRegistTime(time); // 作成日
     inputUser.setUpdateTime(time); // 更新日
@@ -86,7 +83,7 @@ public class TUserRepository extends BaseRepository {
    */
   public TUser update(final TUser inputUser) {
     // 1件更新
-    val time = DateUtils.getNow();
+    LocalDateTime time = DateUtils.getNow();
     inputUser.setUpdateTime(time); // 更新日
     int updated = tUserDao.update(inputUser);
 
@@ -103,7 +100,7 @@ public class TUserRepository extends BaseRepository {
    * @return
    */
   public TUser delete(final Integer id) {
-    val user = tUserDao.selectById(id)
+    TUser user = tUserDao.selectById(id)
         .orElseThrow(() -> new NoDataFoundException("user_id=" + id + " のデータが見つかりません。"));
 
     int updated = tUserDao.delete(user);

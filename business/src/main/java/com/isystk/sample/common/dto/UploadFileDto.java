@@ -1,10 +1,5 @@
 package com.isystk.sample.common.dto;
 
-import lombok.Getter;
-import lombok.Setter;
-
-@Setter
-@Getter
 public class UploadFileDto implements Dto {
 
   Integer imageId;
@@ -13,4 +8,27 @@ public class UploadFileDto implements Dto {
 
   String imageUrlSd;
 
+  public Integer getImageId() {
+    return this.imageId;
+  }
+
+  public String getImageUrlSquare() {
+    return this.imageUrlSquare;
+  }
+
+  public String getImageUrlSd() {
+    return this.imageUrlSd;
+  }
+
+  public void setImageId(Integer imageId) {
+    this.imageId = imageId;
+  }
+
+  public void setImageUrlSquare(String imageUrlSquare) {
+    this.imageUrlSquare = imageUrlSquare;
+  }
+
+  public void setImageUrlSd(String imageUrlSd) {
+    this.imageUrlSd = imageUrlSd;
+  }
 }

@@ -1,24 +1,21 @@
 package com.isystk.sample.batch.jobs.solrRegist;
 
+import com.isystk.sample.batch.context.BatchContext;
+import com.isystk.sample.batch.jobs.BaseTasklet;
+import com.isystk.sample.batch.service.SolrPostService;
 import java.io.IOException;
-
+import org.slf4j.Logger;
 import org.springframework.batch.core.StepContribution;
 import org.springframework.batch.core.scope.context.ChunkContext;
 import org.springframework.batch.repeat.RepeatStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.isystk.sample.batch.context.BatchContext;
-import com.isystk.sample.batch.jobs.BaseTasklet;
-import com.isystk.sample.batch.service.SolrPostService;
-
-import lombok.extern.slf4j.Slf4j;
-
 /**
  * インデックス生成
  */
-@Slf4j
 public class SolrRegistTasklet extends BaseTasklet<SolrRegistPostDto> {
 
+  private static final Logger log = org.slf4j.LoggerFactory.getLogger(SolrRegistTasklet.class);
   @Autowired
   SolrPostService solrPostService;
 

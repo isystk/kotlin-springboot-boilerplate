@@ -5,6 +5,7 @@ import static com.isystk.sample.common.AdminUrl.POST_REGIST;
 import com.isystk.sample.common.dto.CodeValueDto;
 import com.isystk.sample.common.helper.UserHelper;
 import com.isystk.sample.common.util.ObjectMapperUtils;
+import com.isystk.sample.domain.entity.TPost;
 import com.isystk.sample.domain.entity.TPostImage;
 import com.isystk.sample.domain.entity.TPostTag;
 import com.isystk.sample.domain.entity.TUser;
@@ -14,8 +15,8 @@ import com.isystk.sample.web.admin.service.PostService;
 import com.isystk.sample.web.base.controller.html.AbstractHtmlController;
 import java.util.Optional;
 import java.util.stream.Collectors;
-import lombok.extern.slf4j.Slf4j;
 import lombok.val;
+import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -32,12 +33,13 @@ import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
-@Slf4j
 @RequestMapping(POST_REGIST)
 @SessionAttributes(types = {PostRegistForm.class})
 public class PostRegistHtmlController extends AbstractHtmlController {
 
 
+  private static final Logger log = org.slf4j.LoggerFactory
+      .getLogger(PostRegistHtmlController.class);
   @Autowired
   PostService postService;
 
@@ -165,7 +167,7 @@ public class PostRegistHtmlController extends AbstractHtmlController {
     }
 
     // 入力値からDTOを作成する
-    val tPostDto = ObjectMapperUtils.map(form, TPostRepositoryDto.class);
+    TPostRepositoryDto tPostDto = ObjectMapperUtils.map(form, TPostRepositoryDto.class);
     // 投稿画像
     tPostDto.setTPostImageList(
         Optional.ofNullable(form.getPostImageId())
@@ -192,7 +194,7 @@ public class PostRegistHtmlController extends AbstractHtmlController {
             )
             .orElse(null)
     );
-    val postId = postService.create(tPostDto);
+    TPost postId = postService.create(tPostDto);
 
     return "redirect:/post/regist/complete";
   }

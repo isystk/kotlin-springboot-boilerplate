@@ -1,8 +1,14 @@
 package com.isystk.sample.web.admin.controller.html.system.mail;
 
-import static com.isystk.sample.common.AdminUrl.*;
+import static com.isystk.sample.common.AdminUrl.SYSTEM_MAIL;
 
+import com.isystk.sample.common.dto.Page;
+import com.isystk.sample.domain.dto.MMailTemplateCriteria;
+import com.isystk.sample.domain.repository.MMailTemplateRepository;
 import com.isystk.sample.domain.repository.dto.MMailTemplateRepositoryDto;
+import com.isystk.sample.web.base.controller.html.AbstractHtmlController;
+import lombok.val;
+import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -10,20 +16,14 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.SessionAttributes;
-import com.isystk.sample.domain.dto.MMailTemplateCriteria;
-import com.isystk.sample.domain.entity.MMailTemplate;
-import com.isystk.sample.domain.repository.MMailTemplateRepository;
-import com.isystk.sample.web.base.controller.html.AbstractHtmlController;
-
-import lombok.val;
-import lombok.extern.slf4j.Slf4j;
 
 @Controller
-@Slf4j
 @RequestMapping(SYSTEM_MAIL)
 @SessionAttributes(types = {SystemMailSearchForm.class})
 public class SystemMailHtmlController extends AbstractHtmlController {
 
+  private static final Logger log = org.slf4j.LoggerFactory
+      .getLogger(SystemMailHtmlController.class);
   @Autowired
   MMailTemplateRepository mMailTemplateRepository;
 
@@ -43,7 +43,7 @@ public class SystemMailHtmlController extends AbstractHtmlController {
   public String index(SystemMailSearchForm form, Model model) {
 
     // 10件区切りで取得する
-    val pages = mMailTemplateRepository.findAll(formToCriteria(form), form);
+    Page<MMailTemplateRepositoryDto> pages = mMailTemplateRepository.findAll(formToCriteria(form), form);
 
     // 画面に検索結果を渡す
     model.addAttribute("pages", pages);

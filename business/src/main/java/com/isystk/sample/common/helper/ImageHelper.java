@@ -1,12 +1,20 @@
 package com.isystk.sample.common.helper;
 
-import static com.isystk.sample.common.Const.*;
+import static com.isystk.sample.common.Const.IMAGE_EXTENSION;
 
+import com.isystk.sample.common.dto.UploadFileDto;
+import com.isystk.sample.common.exception.FileNotFoundException;
+import com.isystk.sample.common.exception.SystemException;
+import com.isystk.sample.common.util.AwsS3Utils;
+import com.isystk.sample.common.util.DateUtils;
+import com.isystk.sample.common.util.FileUtils;
+import com.isystk.sample.common.values.ImageSuffix;
+import com.isystk.sample.domain.dao.TImageDao;
+import com.isystk.sample.domain.entity.TImage;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.nio.file.Files;
@@ -17,11 +25,12 @@ import java.security.NoSuchAlgorithmException;
 import java.text.DecimalFormat;
 import java.util.Formatter;
 import java.util.stream.Stream;
-
 import javax.imageio.ImageIO;
-
-import com.isystk.sample.common.util.AwsS3Utils;
+import net.coobird.thumbnailator.Thumbnails;
+import net.coobird.thumbnailator.filters.Canvas;
+import net.coobird.thumbnailator.geometry.Positions;
 import org.apache.commons.lang3.RandomStringUtils;
+import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
@@ -30,27 +39,13 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.isystk.sample.common.dto.UploadFileDto;
-import com.isystk.sample.common.exception.FileNotFoundException;
-import com.isystk.sample.common.exception.SystemException;
-import com.isystk.sample.common.util.DateUtils;
-import com.isystk.sample.common.util.FileUtils;
-import com.isystk.sample.common.values.ImageSuffix;
-import com.isystk.sample.domain.dao.TImageDao;
-import com.isystk.sample.domain.entity.TImage;
-
-import lombok.extern.slf4j.Slf4j;
-import net.coobird.thumbnailator.Thumbnails;
-import net.coobird.thumbnailator.filters.Canvas;
-import net.coobird.thumbnailator.geometry.Positions;
-
 /**
  * 画像ヘルパー
  */
 @Component("img")
-@Slf4j
 public class ImageHelper {
 
+  private static final Logger log = org.slf4j.LoggerFactory.getLogger(ImageHelper.class);
   @Value("${application.imageUploadLocation:#{systemProperties['java.io.tmpdir']}}") // 設定ファイルに定義されたアップロード先を取得する
   String imageUploadLocation;
 

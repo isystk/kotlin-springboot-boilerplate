@@ -3,14 +3,6 @@ package com.isystk.sample.domain.repository;
 import static com.isystk.sample.domain.util.DomaUtils.createSelectOptions;
 import static java.util.stream.Collectors.toList;
 
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.stream.Collectors;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
-
 import com.google.common.collect.Lists;
 import com.isystk.sample.common.dto.Page;
 import com.isystk.sample.common.dto.Pageable;
@@ -31,8 +23,13 @@ import com.isystk.sample.domain.entity.TPostImage;
 import com.isystk.sample.domain.entity.TPostTag;
 import com.isystk.sample.domain.entity.TUser;
 import com.isystk.sample.domain.repository.dto.TPostRepositoryDto;
-
-import lombok.val;
+import java.time.LocalDateTime;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.stream.Collectors;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
 /**
  * 投稿リポジトリ
@@ -147,10 +144,10 @@ public class TPostRepository extends BaseRepository {
    * @return
    */
   public TPost create(final TPostRepositoryDto tPostDto) {
-    val time = DateUtils.getNow();
+    LocalDateTime time = DateUtils.getNow();
 
     // 投稿テーブル
-    val tPost = ObjectMapperUtils.map(tPostDto, TPost.class);
+    TPost tPost = ObjectMapperUtils.map(tPostDto, TPost.class);
     tPost.setRegistTime(time); // 作成日
     tPost.setUpdateTime(time); // 更新日
     tPost.setDeleteFlg(false); // 削除フラグ
@@ -158,7 +155,7 @@ public class TPostRepository extends BaseRepository {
     tPostDao.insert(tPost);
 
     // 投稿画像テーブル
-    val tPostImageList = ObjectMapperUtils
+    List<TPostImage> tPostImageList = ObjectMapperUtils
         .mapAll(Optional.ofNullable(tPostDto.getTPostImageList()).orElse(Lists.newArrayList()),
             TPostImage.class);
     tPostImageList.stream()
@@ -168,7 +165,7 @@ public class TPostRepository extends BaseRepository {
         });
 
     // 投稿タグテーブル
-    val tPostTagList = ObjectMapperUtils
+    List<TPostTag> tPostTagList = ObjectMapperUtils
         .mapAll(Optional.ofNullable(tPostDto.getTPostTagList()).orElse(Lists.newArrayList()),
             TPostTag.class);
     tPostTagList.stream()
@@ -187,14 +184,14 @@ public class TPostRepository extends BaseRepository {
    * @return
    */
   public TPost update(final TPostRepositoryDto tPostDto) {
-    val time = DateUtils.getNow();
+    LocalDateTime time = DateUtils.getNow();
 
-    val post = tPostDao.selectById(tPostDto.getPostId())
+    TPost post = tPostDao.selectById(tPostDto.getPostId())
         .orElseThrow(
             () -> new NoDataFoundException("post_id=" + tPostDto.getPostId() + " のデータが見つかりません。"));
 
     // 投稿テーブル
-    val tPost = ObjectMapperUtils.mapExcludeNull(tPostDto, post);
+    TPost tPost = ObjectMapperUtils.mapExcludeNull(tPostDto, post);
     tPost.setUpdateTime(time); // 更新日
     tPostDao.update(tPost);
 
@@ -244,10 +241,10 @@ public class TPostRepository extends BaseRepository {
    * @return
    */
   public TPost delete(final Integer postId) {
-    val post = tPostDao.selectById(postId)
+    TPost post = tPostDao.selectById(postId)
         .orElseThrow(() -> new NoDataFoundException("post_id=" + postId + " のデータが見つかりません。"));
 
-    val time = DateUtils.getNow();
+    LocalDateTime time = DateUtils.getNow();
     post.setUpdateTime(time); // 削除日
     post.setDeleteFlg(true); // 削除フラグ
     int updated = tPostDao.update(post);

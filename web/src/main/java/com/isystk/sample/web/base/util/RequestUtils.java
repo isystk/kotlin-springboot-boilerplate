@@ -1,12 +1,11 @@
 package com.isystk.sample.web.base.util;
 
-import lombok.val;
+import javax.servlet.http.HttpServletRequest;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.http.HttpHeaders;
+import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
-
-import javax.servlet.http.HttpServletRequest;
 
 public class RequestUtils {
 
@@ -31,8 +30,8 @@ public class RequestUtils {
    * @return
    */
   public static boolean isAjaxRequest(HttpServletRequest request) {
-    val header = request.getHeader(X_REQUESTED_WITH);
-    val isAjax = StringUtils.equalsIgnoreCase(XMLHTTP_REQUEST, header);
+    String header = request.getHeader(X_REQUESTED_WITH);
+    boolean isAjax = StringUtils.equalsIgnoreCase(XMLHTTP_REQUEST, header);
     return isAjax;
   }
 
@@ -42,7 +41,7 @@ public class RequestUtils {
    * @return
    */
   public static HttpServletRequest getHttpServletRequest() {
-    val attributes = RequestContextHolder.getRequestAttributes();
+    RequestAttributes attributes = RequestContextHolder.getRequestAttributes();
     return ((ServletRequestAttributes) attributes).getRequest();
   }
 
@@ -52,7 +51,7 @@ public class RequestUtils {
    * @return
    */
   public static String getSiteUrl() {
-    val servletRequest = getHttpServletRequest();
+    HttpServletRequest servletRequest = getHttpServletRequest();
 
     String scheme = servletRequest.getScheme();
     String host = servletRequest.getRemoteHost();

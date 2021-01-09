@@ -1,5 +1,7 @@
 package com.isystk.sample.common.validator;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
@@ -8,8 +10,8 @@ import lombok.extern.slf4j.Slf4j;
 /**
  * 基底入力チェッククラス
  */
-@Slf4j
 public abstract class AbstractValidator<T> implements Validator {
+  protected final static Logger log = LoggerFactory.getLogger(AbstractValidator.class);
 
   @Override
   public boolean supports(Class<?> clazz) {

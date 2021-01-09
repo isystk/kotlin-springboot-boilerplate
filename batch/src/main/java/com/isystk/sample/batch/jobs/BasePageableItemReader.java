@@ -2,17 +2,16 @@ package com.isystk.sample.batch.jobs;
 
 import static com.isystk.sample.batch.BatchConst.MDC_BATCH_ID;
 
-import java.util.List;
-import java.util.concurrent.CopyOnWriteArrayList;
-
-import org.seasar.doma.jdbc.SelectOptions;
-import org.springframework.batch.item.database.AbstractPagingItemReader;
-
+import com.isystk.sample.batch.context.BatchContext;
 import com.isystk.sample.batch.context.BatchContextHolder;
 import com.isystk.sample.common.util.MDCUtils;
 import com.isystk.sample.domain.dao.AuditInfoHolder;
-
+import java.time.LocalDateTime;
+import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 import lombok.val;
+import org.seasar.doma.jdbc.SelectOptions;
+import org.springframework.batch.item.database.AbstractPagingItemReader;
 
 /**
  * ページングに対応したItemReaderの基底クラス
@@ -23,13 +22,13 @@ public abstract class BasePageableItemReader<T> extends AbstractPagingItemReader
 
   @Override
   protected T doRead() throws Exception {
-    val context = BatchContextHolder.getContext();
-    val batchId = context.getBatchId();
+    BatchContext context = BatchContextHolder.getContext();
+    String batchId = context.getBatchId();
 
     // ThreadPoolを使用している場合は再設定する
     MDCUtils.putIfAbsent(MDC_BATCH_ID, batchId);
 
-    val startDateTime = context.getStartDateTime();
+    LocalDateTime startDateTime = context.getStartDateTime();
     AuditInfoHolder.set(batchId, startDateTime);
 
     return super.doRead();
@@ -56,9 +55,9 @@ public abstract class BasePageableItemReader<T> extends AbstractPagingItemReader
    * @return
    */
   protected SelectOptions getSelectOptions() {
-    val page = getPage(); // 1ページは0になる
-    val perpage = getPageSize();
-    val offset = page * perpage;
+    int page = getPage(); // 1ページは0になる
+    int perpage = getPageSize();
+    int offset = page * perpage;
     return SelectOptions.get().offset(offset).limit(perpage);
   }
 

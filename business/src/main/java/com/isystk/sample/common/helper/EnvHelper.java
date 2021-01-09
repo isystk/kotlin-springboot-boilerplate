@@ -1,17 +1,16 @@
 package com.isystk.sample.common.helper;
 
+import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
-
-import lombok.extern.slf4j.Slf4j;
 
 /**
  * 環境ヘルパー
  */
 @Component("env")
-@Slf4j
 public class EnvHelper {
 
+  private static final Logger log = org.slf4j.LoggerFactory.getLogger(EnvHelper.class);
   @Value("${spring.profiles}") // 設定ファイルに定義されたprofilesを取得する
   String profile;
 

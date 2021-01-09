@@ -1,14 +1,8 @@
 package com.isystk.sample.web.admin.api.v1.upload;
 
+import com.isystk.sample.web.base.controller.html.BaseForm;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.isystk.sample.web.base.controller.html.BaseForm;
-
-import lombok.Getter;
-import lombok.Setter;
-
-@Setter
-@Getter
 public class UploadRestForm extends BaseForm {
 
   private static final long serialVersionUID = 7593564324192730932L;
@@ -17,4 +11,19 @@ public class UploadRestForm extends BaseForm {
 
   MultipartFile imageFile;
 
+  public Integer getImageId() {
+    return this.imageId;
+  }
+
+  public MultipartFile getImageFile() {
+    return this.imageFile;
+  }
+
+  public void setImageId(Integer imageId) {
+    this.imageId = imageId;
+  }
+
+  public void setImageFile(MultipartFile imageFile) {
+    this.imageFile = imageFile;
+  }
 }

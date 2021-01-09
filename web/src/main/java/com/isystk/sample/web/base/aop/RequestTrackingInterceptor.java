@@ -1,14 +1,12 @@
 package com.isystk.sample.web.base.aop;
 
-import com.isystk.sample.common.XORShiftRandom;
-import lombok.val;
-import org.slf4j.Logger;
-import org.slf4j.MDC;
+import static java.util.concurrent.TimeUnit.NANOSECONDS;
 
+import com.isystk.sample.common.XORShiftRandom;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import static java.util.concurrent.TimeUnit.NANOSECONDS;
+import org.slf4j.Logger;
+import org.slf4j.MDC;
 
 /**
  * 処理時間をDEBUGログに出力する
@@ -30,11 +28,11 @@ public class RequestTrackingInterceptor extends BaseHandlerInterceptor {
     // コントローラーの動作前
 
     // 現在時刻を記録
-    val beforeNanoSec = System.nanoTime();
+    long beforeNanoSec = System.nanoTime();
     startTimeHolder.set(beforeNanoSec);
 
     // トラッキングID
-    val trackId = getTrackId(request);
+    String trackId = getTrackId(request);
     MDC.put(HEADER_X_TRACK_ID, trackId);
     response.setHeader(HEADER_X_TRACK_ID, trackId);
 
@@ -47,14 +45,14 @@ public class RequestTrackingInterceptor extends BaseHandlerInterceptor {
       throws Exception {
     // 処理完了後
 
-    val beforeNanoSec = startTimeHolder.get();
+    Long beforeNanoSec = startTimeHolder.get();
 
     if (beforeNanoSec == null) {
       return;
     }
 
-    val elapsedNanoSec = System.nanoTime() - beforeNanoSec;
-    val elapsedMilliSec = NANOSECONDS.toMillis(elapsedNanoSec);
+    long elapsedNanoSec = System.nanoTime() - beforeNanoSec;
+    long elapsedMilliSec = NANOSECONDS.toMillis(elapsedNanoSec);
     log.info("path={}, method={}, Elapsed {}ms.", request.getRequestURI(), request.getMethod(),
         elapsedMilliSec);
 

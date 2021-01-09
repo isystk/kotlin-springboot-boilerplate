@@ -2,10 +2,9 @@ package com.isystk.sample.web.base.util;
 
 import com.isystk.sample.common.dto.BZip2Data;
 import com.isystk.sample.common.dto.MultipartFileConvertible;
+import java.io.IOException;
 import org.slf4j.Logger;
 import org.springframework.web.multipart.MultipartFile;
-
-import java.io.IOException;
 
 /**
  * MultipartFile関連のユーティリティ

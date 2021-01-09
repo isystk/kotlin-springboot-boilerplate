@@ -1,17 +1,15 @@
 package com.isystk.sample.batch.jobs.importMst;
 
+import com.isystk.sample.common.validator.AbstractValidator;
 import java.util.Objects;
-
+import org.slf4j.Logger;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 
-import com.isystk.sample.common.validator.AbstractValidator;
-
-import lombok.extern.slf4j.Slf4j;
-
 @Component
-@Slf4j
 public class ImportMstPostValidator extends AbstractValidator<ImportMstPostDto> {
+
+  private static final Logger log = org.slf4j.LoggerFactory.getLogger(ImportMstPostValidator.class);
 
   @Override
   protected void doValidate(ImportMstPostDto dto, Errors errors) {

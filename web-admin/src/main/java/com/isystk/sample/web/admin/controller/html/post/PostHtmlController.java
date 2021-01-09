@@ -1,15 +1,26 @@
 package com.isystk.sample.web.admin.controller.html.post;
 
-import static com.isystk.sample.common.AdminUrl.*;
+import static com.isystk.sample.common.AdminUrl.POST;
 
+import com.isystk.sample.common.dto.Page;
+import com.isystk.sample.common.dto.Pageable;
+import com.isystk.sample.common.helper.UserHelper;
+import com.isystk.sample.common.util.ObjectMapperUtils;
+import com.isystk.sample.domain.dto.TPostCriteria;
 import com.isystk.sample.domain.entity.TUser;
 import com.isystk.sample.domain.repository.MPostTagRepository;
+import com.isystk.sample.domain.repository.TPostRepository;
 import com.isystk.sample.domain.repository.dto.TPostRepositoryDto;
+import com.isystk.sample.web.admin.service.PostService;
+import com.isystk.sample.web.base.controller.html.AbstractHtmlController;
+import com.isystk.sample.web.base.view.CsvView;
+import com.isystk.sample.web.base.view.ExcelView;
+import com.isystk.sample.web.base.view.PdfView;
 import java.time.LocalTime;
 import java.util.List;
-
 import javax.validation.Valid;
-
+import lombok.val;
+import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -26,27 +37,12 @@ import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.isystk.sample.common.dto.Pageable;
-import com.isystk.sample.common.helper.UserHelper;
-import com.isystk.sample.common.util.ObjectMapperUtils;
-import com.isystk.sample.domain.dto.TPostCriteria;
-import com.isystk.sample.domain.entity.TPost;
-import com.isystk.sample.domain.repository.TPostRepository;
-import com.isystk.sample.web.admin.service.PostService;
-import com.isystk.sample.web.base.controller.html.AbstractHtmlController;
-import com.isystk.sample.web.base.view.CsvView;
-import com.isystk.sample.web.base.view.ExcelView;
-import com.isystk.sample.web.base.view.PdfView;
-
-import lombok.val;
-import lombok.extern.slf4j.Slf4j;
-
 @Controller
-@Slf4j
 @RequestMapping(POST)
 @SessionAttributes(types = {PostSearchForm.class})
 public class PostHtmlController extends AbstractHtmlController {
 
+  private static final Logger log = org.slf4j.LoggerFactory.getLogger(PostHtmlController.class);
   @Autowired
   PostService postService;
 
@@ -94,7 +90,7 @@ public class PostHtmlController extends AbstractHtmlController {
     }
 
     // 10件区切りで取得する
-    val pages = postRepository.findAll(formToCriteria(form), form);
+    Page<TPostRepositoryDto> pages = postRepository.findAll(formToCriteria(form), form);
 
     // 画面に検索結果を渡す
     model.addAttribute("pages", pages);
@@ -170,7 +166,7 @@ public class PostHtmlController extends AbstractHtmlController {
 
     // 全件取得する
     form.setPerpage(Pageable.NO_LIMIT.getPerpage());
-    val pages = postRepository.findAll(formToCriteria(form), form);
+    Page<TPostRepositoryDto> pages = postRepository.findAll(formToCriteria(form), form);
 
     // 詰め替える
     List<PostCsv> csvList = ObjectMapperUtils.mapAll(pages.getData(), PostCsv.class);
@@ -191,10 +187,10 @@ public class PostHtmlController extends AbstractHtmlController {
 
     // 全件取得する
     form.setPerpage(Pageable.NO_LIMIT.getPerpage());
-    val pages = postRepository.findAll(formToCriteria(form), form);
+    Page<TPostRepositoryDto> pages = postRepository.findAll(formToCriteria(form), form);
 
     // Excelプック生成コールバック、データ、ダウンロード時のファイル名を指定する
-    val view = new ExcelView(new PostExcel(), pages.getData(), filename);
+    ExcelView view = new ExcelView(new PostExcel(), pages.getData(), filename);
 
     return new ModelAndView(view);
   }
@@ -210,10 +206,10 @@ public class PostHtmlController extends AbstractHtmlController {
 
     // 全件取得する
     form.setPerpage(Pageable.NO_LIMIT.getPerpage());
-    val pages = postRepository.findAll(formToCriteria(form), form);
+    Page<TPostRepositoryDto> pages = postRepository.findAll(formToCriteria(form), form);
 
     // 帳票レイアウト、データ、ダウンロード時のファイル名を指定する
-    val view = new PdfView("reports/post.jrxml", pages.getData(), filename);
+    PdfView view = new PdfView("reports/post.jrxml", pages.getData(), filename);
 
     return new ModelAndView(view);
   }

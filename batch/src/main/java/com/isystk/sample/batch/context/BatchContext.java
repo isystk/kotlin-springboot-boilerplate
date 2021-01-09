@@ -5,16 +5,9 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicLong;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-
 /**
  * バッチ処理コンテキスト
  */
-@Setter
-@Getter
-@NoArgsConstructor
 public class BatchContext {
 
   String batchId;
@@ -33,6 +26,9 @@ public class BatchContext {
   private final Map<String, Object> additionalInfo = new ConcurrentHashMap<>();
 
   private static final Object lock = new Object();
+
+  public BatchContext() {
+  }
 
   /**
    * バッチIDとバッチ名を設定します。
@@ -110,5 +106,33 @@ public class BatchContext {
       totalCount.set(0);
       additionalInfo.clear();
     }
+  }
+
+  public String getBatchId() {
+    return this.batchId;
+  }
+
+  public String getBatchName() {
+    return this.batchName;
+  }
+
+  public LocalDateTime getStartDateTime() {
+    return this.startDateTime;
+  }
+
+  public Map<String, Object> getAdditionalInfo() {
+    return this.additionalInfo;
+  }
+
+  public void setBatchId(String batchId) {
+    this.batchId = batchId;
+  }
+
+  public void setBatchName(String batchName) {
+    this.batchName = batchName;
+  }
+
+  public void setStartDateTime(LocalDateTime startDateTime) {
+    this.startDateTime = startDateTime;
   }
 }

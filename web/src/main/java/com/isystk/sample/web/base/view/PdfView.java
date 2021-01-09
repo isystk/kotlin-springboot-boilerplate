@@ -1,10 +1,20 @@
 package com.isystk.sample.web.base.view;
 
+import static org.springframework.http.HttpHeaders.CONTENT_DISPOSITION;
+
 import com.isystk.sample.common.util.EncodeUtils;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Collection;
+import java.util.Map;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import lombok.val;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperCompileManager;
 import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import net.sf.jasperreports.engine.design.JasperDesign;
@@ -15,14 +25,6 @@ import net.sf.jasperreports.export.SimpleExporterInput;
 import net.sf.jasperreports.export.SimpleOutputStreamExporterOutput;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.web.servlet.view.AbstractView;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.util.Collection;
-import java.util.Map;
-
-import static org.springframework.http.HttpHeaders.CONTENT_DISPOSITION;
 
 /**
  * PDFビュー
@@ -57,23 +59,23 @@ public class PdfView extends AbstractView {
 
     // IEの場合はContent-Lengthヘッダが指定されていないとダウンロードが失敗するので、
     // サイズを取得するための一時的なバイト配列ストリームにコンテンツを書き出すようにする
-    val baos = createTemporaryOutputStream();
+    ByteArrayOutputStream baos = createTemporaryOutputStream();
 
     // 帳票レイアウト
-    val report = loadReport();
+    JasperReport report = loadReport();
 
     // データの設定
-    val dataSource = new JRBeanCollectionDataSource(this.data);
-    val print = JasperFillManager.fillReport(report, model, dataSource);
+    JRBeanCollectionDataSource dataSource = new JRBeanCollectionDataSource(this.data);
+    JasperPrint print = JasperFillManager.fillReport(report, model, dataSource);
 
-    val exporter = new JRPdfExporter();
+    JRPdfExporter exporter = new JRPdfExporter();
     exporter.setExporterInput(new SimpleExporterInput(print));
     exporter.setExporterOutput(new SimpleOutputStreamExporterOutput(baos));
     exporter.exportReport();
 
     // ファイル名に日本語を含めても文字化けしないようにUTF-8にエンコードする
-    val encodedFilename = EncodeUtils.encodeUtf8(filename);
-    val contentDisposition = String.format("attachment; filename*=UTF-8''%s", encodedFilename);
+    String encodedFilename = EncodeUtils.encodeUtf8(filename);
+    String contentDisposition = String.format("attachment; filename*=UTF-8''%s", encodedFilename);
     response.setHeader(CONTENT_DISPOSITION, contentDisposition);
 
     writeToResponse(response, baos);
@@ -85,16 +87,16 @@ public class PdfView extends AbstractView {
    * @return
    */
   protected final JasperReport loadReport() {
-    val resource = new ClassPathResource(this.report);
+    ClassPathResource resource = new ClassPathResource(this.report);
 
     try {
-      val fileName = resource.getFilename();
+      String fileName = resource.getFilename();
       if (fileName.endsWith(".jasper")) {
-        try (val is = resource.getInputStream()) {
+        try (InputStream is = resource.getInputStream()) {
           return (JasperReport) JRLoader.loadObject(is);
         }
       } else if (fileName.endsWith(".jrxml")) {
-        try (val is = resource.getInputStream()) {
+        try (InputStream is = resource.getInputStream()) {
           JasperDesign design = JRXmlLoader.load(is);
           return JasperCompileManager.compileReport(design);
         }

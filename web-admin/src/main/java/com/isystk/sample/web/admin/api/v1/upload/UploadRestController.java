@@ -1,10 +1,15 @@
 package com.isystk.sample.web.admin.api.v1.upload;
 
-import static com.isystk.sample.common.Const.*;
-import static com.isystk.sample.common.AdminUrl.*;
+import static com.isystk.sample.common.AdminUrl.API_V1_FILEUPLOAD;
+import static com.isystk.sample.common.Const.IMAGE_EXTENSION;
 
+import com.isystk.sample.common.dto.UploadFileDto;
+import com.isystk.sample.common.helper.ImageHelper;
+import com.isystk.sample.web.base.controller.api.AbstractRestController;
+import com.isystk.sample.web.base.controller.api.resource.Resource;
+import com.isystk.sample.web.base.view.FileDownloadView;
 import java.util.Arrays;
-
+import lombok.val;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.ui.Model;
@@ -16,14 +21,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
-
-import com.isystk.sample.common.dto.UploadFileDto;
-import com.isystk.sample.common.helper.ImageHelper;
-import com.isystk.sample.web.base.controller.api.AbstractRestController;
-import com.isystk.sample.web.base.controller.api.resource.Resource;
-import com.isystk.sample.web.base.view.FileDownloadView;
-
-import lombok.val;
 
 /**
  * ファイルアップロードのコントローラー
@@ -50,10 +47,10 @@ public class UploadRestController extends AbstractRestController {
   @ResponseBody
   public ModelAndView serveFile(@PathVariable Integer imageId) {
     // ファイルを読み込む
-    val resource = imageHelper.loadFile(imageId);
+    org.springframework.core.io.Resource resource = imageHelper.loadFile(imageId);
 
     // レスポンスを設定する
-    val view = new FileDownloadView(resource);
+    FileDownloadView view = new FileDownloadView(resource);
     view.setAttachment(false);
     view.setFilename(imageId + "." + IMAGE_EXTENSION);
 
@@ -70,10 +67,10 @@ public class UploadRestController extends AbstractRestController {
   @ResponseBody
   public ModelAndView downloadFile(@PathVariable Integer imageId) {
     // ファイルを読み込む
-    val resource = imageHelper.loadFile(imageId);
+    org.springframework.core.io.Resource resource = imageHelper.loadFile(imageId);
 
     // レスポンスを設定する
-    val view = new FileDownloadView(resource);
+    FileDownloadView view = new FileDownloadView(resource);
     view.setFilename(imageId + "." + IMAGE_EXTENSION);
 
     return new ModelAndView(view);
