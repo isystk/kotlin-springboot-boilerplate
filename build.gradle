@@ -6,8 +6,8 @@ buildscript {
   dependencies {
     classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
     // Kotlinを利用する場合はコメントアウトを外す
-    classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:${kotlinVersion}")
-    classpath("org.jetbrains.kotlin:kotlin-allopen:${kotlinVersion}")
+//    classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:${kotlinVersion}")
+//    classpath("org.jetbrains.kotlin:kotlin-allopen:${kotlinVersion}")
     classpath("mysql:mysql-connector-java:${mysqlJdbcVersion}")
     classpath("com.avast.gradle:gradle-docker-compose-plugin:${dockerComposePluginVersion}")
     classpath("io.gitlab.arturbosch.detekt:detekt-gradle-plugin:${detektVersion}")
@@ -22,13 +22,13 @@ plugins {
 }
 
 subprojects {
-  // Kotlinを利用する場合は以下2つをコメントアウトする
+  // Kotlinを利用する場合は以下1つをコメントアウトする
   apply plugin: "java"
   apply plugin: "org.springframework.boot"
   // Kotlinを利用しない場合は以下3つをコメントアウトする
-  apply plugin: "kotlin"
-  apply plugin: "kotlin-spring"
-  apply plugin: "kotlin-kapt"
+//  apply plugin: "kotlin"
+//  apply plugin: "kotlin-spring"
+//  apply plugin: "kotlin-kapt"
   apply plugin: "io.spring.dependency-management"
   apply plugin: "jacoco"
   apply plugin: "com.google.cloud.tools.jib"
@@ -38,33 +38,33 @@ subprojects {
   sourceCompatibility = JavaVersion.VERSION_11
   targetCompatibility = JavaVersion.VERSION_11
 
-  // Kotlinを利用する場合はコメントアウトを外す
-  compileKotlin {
-    kotlinOptions {
-      freeCompilerArgs = ["-Xjsr305=strict"]
-      jvmTarget = "11"
-    }
-  }
-
-  compileTestKotlin {
-    kotlinOptions {
-      freeCompilerArgs = ["-Xjsr305=strict"]
-      jvmTarget = "11"
-    }
-  }
+//  // Kotlinを利用する場合はコメントアウトを外す
+//  compileKotlin {
+//    kotlinOptions {
+//      freeCompilerArgs = ["-Xjsr305=strict"]
+//      jvmTarget = "11"
+//    }
+//  }
+//
+//  compileTestKotlin {
+//    kotlinOptions {
+//      freeCompilerArgs = ["-Xjsr305=strict"]
+//      jvmTarget = "11"
+//    }
+//  }
   /* enable junit 5 */
   test {
     useJUnitPlatform()
   }
 
   // Kotlinを利用する場合はコメントアウトを外す
-  kapt {
-    javacOptions {
-      // Increase the max count of errors from annotation processors.
-      // Default is 100.
-      option("-Xmaxerrs", 500)
-    }
-  }
+//  kapt {
+//    javacOptions {
+//      // Increase the max count of errors from annotation processors.
+//      // Default is 100.
+//      option("-Xmaxerrs", 500)
+//    }
+//  }
 
 //  // DomaのSQLファイルの出力先をresourcesからclassesに変更する（これがないとAuto-buildが失敗する）
 //  apply plugin: 'idea'
@@ -101,10 +101,10 @@ subprojects {
   dependencies {
     // Kotlinを利用する場合はコメントアウトを外す
     /* kotlin */
-    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
-    implementation("org.jetbrains.kotlin:kotlin-reflect")
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core")
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-reactor")
+//    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
+//    implementation("org.jetbrains.kotlin:kotlin-reflect")
+//    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core")
+//    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-reactor")
 
     /* spring */
     implementation("org.springframework.boot:spring-boot-starter-web")
@@ -155,12 +155,6 @@ subprojects {
 
     /* modelmapper */
     implementation("com.github.jmnarloch:modelmapper-spring-boot-starter:${modelmapperVersion}")
-
-    /* lombok */
-    compileOnly("org.projectlombok:lombok:${lombokVersion}")
-    annotationProcessor("org.projectlombok:lombok:${lombokVersion}")
-    testCompileOnly("org.projectlombok:lombok:${lombokVersion}")
-    testAnnotationProcessor("org.projectlombok:lombok:${lombokVersion}")
 
     /* google */
     implementation("com.google.guava:guava:${googleGuavaVersion}")

@@ -10,7 +10,6 @@ import com.isystk.sample.domain.dao.AuditInfoHolder;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
-import lombok.val;
 import org.slf4j.Logger;
 import org.slf4j.MDC;
 import org.springframework.batch.core.BatchStatus;

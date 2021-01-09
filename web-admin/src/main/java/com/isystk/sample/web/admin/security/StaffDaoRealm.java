@@ -7,7 +7,6 @@ import com.isystk.sample.web.base.security.BaseRealm;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import lombok.val;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;

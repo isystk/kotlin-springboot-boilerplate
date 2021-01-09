@@ -183,9 +183,6 @@ $ brew cask install intellij-idea-ce
 - コードフォーマッターを設定する
 「Preferences - Editor - Code Style - Java」にて、Schemeのところの設定アイコンから、"intellij-java-google-style.xml" をインポートする。
 
-- Lombok pluginをインストールする。
-「Preferences - Plugins - Marketplace」から、"Lombok"をインストール後、InteliJを再起動する
-
 - Annotation Processingを有効にする。
 「Preferences - Build,Execution,Deployment - Compiler - Annotation Processors」から、
 ”Enable annotation processing” を有効にする
@@ -202,7 +199,6 @@ $ brew cask install intellij-idea-ce
 
 | プロジェクト| 概要|
 | :---------------------------------------| :-------------------------------|
-| [Lombok Project](https://projectlombok.org/)| 定型的なコードを書かなくてもよくする|
 | [Springframework](https://projects.spring.io/spring-framework/)| Spring Framework|
 | [Spring Security](https://projects.spring.io/spring-security/)| セキュリティ対策、認証・認可のフレームワーク|
 | [Doma2](https://doma.readthedocs.io/ja/stable/)| O/Rマッパー|

@@ -7,7 +7,6 @@ import com.isystk.sample.batch.context.BatchContextHolder;
 import com.isystk.sample.common.util.MDCUtils;
 import com.isystk.sample.domain.dao.AuditInfoHolder;
 import java.time.LocalDateTime;
-import lombok.val;
 import org.slf4j.Logger;
 import org.springframework.batch.core.ExitStatus;
 import org.springframework.batch.core.StepExecution;

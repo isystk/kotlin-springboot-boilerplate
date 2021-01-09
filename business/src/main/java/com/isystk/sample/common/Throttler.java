@@ -2,8 +2,6 @@ package com.isystk.sample.common;
 
 import java.util.concurrent.TimeUnit;
 
-import lombok.val;
-
 /**
  * スロットリングする
  */

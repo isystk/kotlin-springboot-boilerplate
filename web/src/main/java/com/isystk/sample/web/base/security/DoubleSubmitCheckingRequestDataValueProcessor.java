@@ -7,8 +7,6 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.security.web.servlet.support.csrf.CsrfRequestDataValueProcessor;
 import org.springframework.web.servlet.support.RequestDataValueProcessor;
 
-import lombok.val;
-
 /**
  * 二重送信防止チェックのトークンを埋める
  */

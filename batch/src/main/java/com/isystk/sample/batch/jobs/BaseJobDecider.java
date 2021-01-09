@@ -2,7 +2,6 @@ package com.isystk.sample.batch.jobs;
 
 import static com.isystk.sample.batch.BatchConst.EXECUTION_STATUS_SKIP;
 
-import lombok.val;
 import org.springframework.batch.core.JobExecution;
 import org.springframework.batch.core.StepExecution;
 import org.springframework.batch.core.job.flow.FlowExecutionStatus;

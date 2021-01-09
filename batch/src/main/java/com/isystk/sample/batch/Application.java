@@ -1,7 +1,6 @@
 package com.isystk.sample.batch;
 
 import com.isystk.sample.ComponentScanBasePackage;
-import lombok.val;
 import org.slf4j.Logger;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.WebApplicationType;

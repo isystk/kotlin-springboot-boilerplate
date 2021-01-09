@@ -1,8 +1,5 @@
 package com.isystk.sample.common.values;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-
 /**
  * ユーザーステータス
  */

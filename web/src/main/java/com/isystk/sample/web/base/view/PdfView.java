@@ -10,7 +10,6 @@ import java.util.Collection;
 import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import lombok.val;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperCompileManager;
 import net.sf.jasperreports.engine.JasperFillManager;
@@ -29,7 +28,6 @@ import org.springframework.web.servlet.view.AbstractView;
 /**
  * PDFビュー
  */
-@val
 public class PdfView extends AbstractView {
 
   protected String report;

@@ -2,7 +2,6 @@ package com.isystk.sample.batch.jobs;
 
 import java.util.HashMap;
 import java.util.Map;
-import lombok.val;
 import org.slf4j.Logger;
 import org.springframework.batch.core.partition.support.Partitioner;
 import org.springframework.batch.item.ExecutionContext;
