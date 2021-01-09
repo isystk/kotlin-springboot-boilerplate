@@ -1,11 +1,12 @@
 package com.isystk.sample.web.front
 
+import com.isystk.sample.ComponentScanBasePackage
 import org.springframework.boot.autoconfigure.SpringBootApplication
-import org.springframework.boot.runApplication
+import org.springframework.boot.SpringApplication
 
-@SpringBootApplication
+@SpringBootApplication(scanBasePackageClasses = [ComponentScanBasePackage::class])
 class Application
 
 fun main(args: Array<String>) {
-    runApplication<Application>(*args)
+    SpringApplication.run(Application::class.java, *args)
 }
