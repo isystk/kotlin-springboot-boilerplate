@@ -22,3 +22,9 @@ dependencies {
 
 }
 
+
+sourceSets {
+  main.java.srcDirs = []
+  main.kotlin.srcDirs = ['src/main/java', 'src/main/kotlin']
+  main.resources.srcDirs = ['src/main/resources']
+}
