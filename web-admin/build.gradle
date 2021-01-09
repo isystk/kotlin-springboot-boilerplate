@@ -23,3 +23,10 @@ dependencies {
   implementation("org.webjars:AdminLTE:${webjarAdminLTEVersion}")
 
 }
+
+// JavaとKotlinが混在する場合の設定
+sourceSets {
+  main.java.srcDirs = []
+  main.kotlin.srcDirs = ['src/main/java', 'src/main/kotlin']
+  main.resources.srcDirs = ['src/main/resources']
+}
