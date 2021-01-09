@@ -5,25 +5,23 @@ import static java.util.stream.Collectors.toList;
 
 import com.google.common.collect.Lists;
 import com.isystk.sample.common.dto.CodeValueDto;
-import com.isystk.sample.common.exception.NoDataFoundException;
-import com.isystk.sample.common.util.DateUtils;
-import java.util.List;
-
-import java.util.Map;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
-import lombok.val;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
-
 import com.isystk.sample.common.dto.Page;
 import com.isystk.sample.common.dto.Pageable;
+import com.isystk.sample.common.exception.NoDataFoundException;
 import com.isystk.sample.common.service.BaseRepository;
+import com.isystk.sample.common.util.DateUtils;
 import com.isystk.sample.common.util.ObjectMapperUtils;
 import com.isystk.sample.domain.dao.MPostTagDao;
 import com.isystk.sample.domain.dto.MPostTagCriteria;
 import com.isystk.sample.domain.entity.MPostTag;
 import com.isystk.sample.domain.repository.dto.MPostTagRepositoryDto;
+import java.time.LocalDateTime;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
 /**
  * 投稿タグマスタリポジトリ
@@ -117,7 +115,7 @@ public class MPostTagRepository extends BaseRepository {
     criteria.setNameEq(mPostTagRepositoryDto.getName());
     MPostTag mPostTag = mPostTagDao.findOne(criteria).orElse(null);
 
-    val time = DateUtils.getNow();
+    LocalDateTime time = DateUtils.getNow();
 
     if (mPostTag != null) {
       // 更新
@@ -149,10 +147,10 @@ public class MPostTagRepository extends BaseRepository {
    * @return
    */
   public MPostTag delete(final Integer postTagId) {
-    val postTag = mPostTagDao.selectById(postTagId)
+    MPostTag postTag = mPostTagDao.selectById(postTagId)
         .orElseThrow(() -> new NoDataFoundException("post_tag_id=" + postTagId + " のデータが見つかりません。"));
 
-    val time = DateUtils.getNow();
+    LocalDateTime time = DateUtils.getNow();
     postTag.setUpdateTime(time); // 削除日
     postTag.setDeleteFlg(true); // 削除フラグ
     int updated = mPostTagDao.update(postTag);

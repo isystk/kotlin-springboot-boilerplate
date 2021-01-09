@@ -1,13 +1,8 @@
 package com.isystk.sample.common.values;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-
 /**
  * 都道府県
  */
-@Getter
-@AllArgsConstructor
 public enum Prefecture implements Values {
 
   HOKKAIDO(1, "北海道"),
@@ -67,6 +62,11 @@ public enum Prefecture implements Values {
   private final Integer code;
   private final String text;
 
+  private Prefecture(Integer code, String text) {
+    this.code = code;
+    this.text = text;
+  }
+
   /**
    * コードに一致する値を取得します。
    *
@@ -83,5 +83,13 @@ public enum Prefecture implements Values {
       }
     }
     return null;
+  }
+
+  public Integer getCode() {
+    return this.code;
+  }
+
+  public String getText() {
+    return this.text;
   }
 }

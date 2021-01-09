@@ -3,15 +3,18 @@ package com.isystk.sample.web.admin.controller.html.post;
 import static org.apache.poi.hssf.util.HSSFColor.HSSFColorPredefined.DARK_GREEN;
 import static org.apache.poi.hssf.util.HSSFColor.HSSFColorPredefined.WHITE;
 
+import com.isystk.sample.domain.entity.TPost;
+import com.isystk.sample.web.base.view.ExcelView;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
-
 import lombok.val;
-import org.apache.poi.ss.usermodel.*;
-
-import com.isystk.sample.domain.entity.TPost;
-import com.isystk.sample.web.base.view.ExcelView;
+import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.FillPatternType;
+import org.apache.poi.ss.usermodel.Font;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
 
 public class PostExcel implements ExcelView.Callback {
 
@@ -44,7 +47,7 @@ public class PostExcel implements ExcelView.Callback {
 
     // 明細
     @SuppressWarnings("unchecked")
-    val posts = (List<TPost>) data;
+    List<TPost> posts = (List<TPost>) data;
 
     int count = 1;
     for (TPost post : posts) {

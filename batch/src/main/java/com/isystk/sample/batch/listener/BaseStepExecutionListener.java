@@ -2,24 +2,25 @@ package com.isystk.sample.batch.listener;
 
 import static com.isystk.sample.batch.BatchConst.MDC_BATCH_ID;
 
-import org.springframework.batch.core.ExitStatus;
-import org.springframework.batch.core.StepExecution;
-import org.springframework.batch.core.listener.StepExecutionListenerSupport;
-
 import com.isystk.sample.batch.context.BatchContext;
 import com.isystk.sample.batch.context.BatchContextHolder;
 import com.isystk.sample.common.util.MDCUtils;
 import com.isystk.sample.domain.dao.AuditInfoHolder;
-
+import java.time.LocalDateTime;
 import lombok.val;
-import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.springframework.batch.core.ExitStatus;
+import org.springframework.batch.core.StepExecution;
+import org.springframework.batch.core.listener.StepExecutionListenerSupport;
 
-@Slf4j
 public abstract class BaseStepExecutionListener extends StepExecutionListenerSupport {
+
+  private static final Logger log = org.slf4j.LoggerFactory
+      .getLogger(BaseStepExecutionListener.class);
 
   @Override
   public void beforeStep(StepExecution stepExecution) {
-    val context = BatchContextHolder.getContext();
+    BatchContext context = BatchContextHolder.getContext();
 
     // MDCを設定する
     setMDCIfEmpty(context, stepExecution);
@@ -36,7 +37,7 @@ public abstract class BaseStepExecutionListener extends StepExecutionListenerSup
 
   @Override
   public ExitStatus afterStep(StepExecution stepExecution) {
-    val context = BatchContextHolder.getContext();
+    BatchContext context = BatchContextHolder.getContext();
 
     // 機能別の終了処理を呼び出す
     try {
@@ -59,7 +60,7 @@ public abstract class BaseStepExecutionListener extends StepExecutionListenerSup
    * @param stepExecution
    */
   protected void setMDCIfEmpty(BatchContext context, StepExecution stepExecution) {
-    val batchId = context.getBatchId();
+    String batchId = context.getBatchId();
     MDCUtils.putIfAbsent(MDC_BATCH_ID, batchId);
   }
 
@@ -69,8 +70,8 @@ public abstract class BaseStepExecutionListener extends StepExecutionListenerSup
    * @param context
    */
   protected void setAuditInfoIfEmpty(BatchContext context) {
-    val batchId = context.getBatchId();
-    val startDateTime = context.getStartDateTime();
+    String batchId = context.getBatchId();
+    LocalDateTime startDateTime = context.getStartDateTime();
 
     AuditInfoHolder.set(batchId, startDateTime);
   }

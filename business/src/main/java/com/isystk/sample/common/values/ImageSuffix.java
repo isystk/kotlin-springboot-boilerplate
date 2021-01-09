@@ -5,7 +5,6 @@ import lombok.Getter;
 /**
  * 保存する画像サイズ
  */
-@Getter
 public enum ImageSuffix {
 
   SQUARE("_square", 900, 900),
@@ -22,4 +21,15 @@ public enum ImageSuffix {
   private final int width;
   private final int height;
 
+  public String getSuffix() {
+    return this.suffix;
+  }
+
+  public int getWidth() {
+    return this.width;
+  }
+
+  public int getHeight() {
+    return this.height;
+  }
 }

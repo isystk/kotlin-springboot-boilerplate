@@ -1,11 +1,15 @@
 package com.isystk.sample.web.admin.controller.html.post.tag;
 
-import static com.isystk.sample.common.AdminUrl.*;
+import static com.isystk.sample.common.AdminUrl.POST_TAG;
 
-import com.isystk.sample.common.util.NumberUtils;
+import com.isystk.sample.common.dto.Page;
+import com.isystk.sample.domain.dto.MPostTagCriteria;
+import com.isystk.sample.domain.repository.MPostTagRepository;
 import com.isystk.sample.domain.repository.dto.MPostTagRepositoryDto;
+import com.isystk.sample.web.base.controller.html.AbstractHtmlController;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
+import lombok.val;
+import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,19 +20,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
-import com.isystk.sample.domain.dto.MPostTagCriteria;
-import com.isystk.sample.domain.repository.MPostTagRepository;
-import com.isystk.sample.web.base.controller.html.AbstractHtmlController;
-
-import lombok.val;
-import lombok.extern.slf4j.Slf4j;
 
 @Controller
-@Slf4j
 @RequestMapping(POST_TAG)
 @SessionAttributes(types = {PostTagSearchForm.class})
 public class PostTagHtmlController extends AbstractHtmlController {
 
+  private static final Logger log = org.slf4j.LoggerFactory.getLogger(PostTagHtmlController.class);
   @Autowired
   MPostTagRepository mPostTagRepository;
 
@@ -48,7 +46,7 @@ public class PostTagHtmlController extends AbstractHtmlController {
   public String index(PostTagSearchForm form, Model model) {
 
     // 10件区切りで取得する
-    val pages = mPostTagRepository.find(formToCriteria(form), form);
+    Page<MPostTagRepositoryDto> pages = mPostTagRepository.find(formToCriteria(form), form);
 
     // 画面に検索結果を渡す
     model.addAttribute("pages", pages);
@@ -82,7 +80,7 @@ public class PostTagHtmlController extends AbstractHtmlController {
   public String create(@NotBlank @RequestParam("name") String name ) {
 
     // 入力値を詰め替える
-    val dto = new MPostTagRepositoryDto();
+    MPostTagRepositoryDto dto = new MPostTagRepositoryDto();
     dto.setName(name);
     // 登録する
     mPostTagRepository.create(dto);

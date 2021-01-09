@@ -1,8 +1,7 @@
 package com.isystk.sample.web.base.controller.api.resource;
 
-import java.util.List;
-
 import com.isystk.sample.common.dto.Dto;
+import java.util.List;
 
 public interface Resource {
 

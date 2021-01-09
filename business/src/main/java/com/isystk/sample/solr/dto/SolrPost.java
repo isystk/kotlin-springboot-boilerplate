@@ -1,12 +1,11 @@
 package com.isystk.sample.solr.dto;
 
 import com.isystk.sample.common.dto.Dto;
+import java.time.LocalDateTime;
+import java.util.List;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.solr.core.mapping.Indexed;
 import org.springframework.data.solr.core.mapping.SolrDocument;
-
-import java.time.LocalDateTime;
-import java.util.List;
 
 @SolrDocument(collection = "post")
 public class SolrPost implements Dto {

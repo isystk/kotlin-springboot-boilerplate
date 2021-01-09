@@ -1,16 +1,35 @@
 package com.isystk.sample.common.dto.mail;
 
-import lombok.Getter;
-import lombok.Setter;
-
 /**
  * 仮会員登録メール
  */
-@Getter
-@Setter
 public class EntryRegistTemporary {
 
   String familyName;
   String domain;
   String onetimeKey;
+
+  public String getFamilyName() {
+    return this.familyName;
+  }
+
+  public String getDomain() {
+    return this.domain;
+  }
+
+  public String getOnetimeKey() {
+    return this.onetimeKey;
+  }
+
+  public void setFamilyName(String familyName) {
+    this.familyName = familyName;
+  }
+
+  public void setDomain(String domain) {
+    this.domain = domain;
+  }
+
+  public void setOnetimeKey(String onetimeKey) {
+    this.onetimeKey = onetimeKey;
+  }
 }

@@ -2,22 +2,20 @@ package com.isystk.sample.web.base.controller.html;
 
 import static com.isystk.sample.common.Const.MAV_ERRORS;
 
+import com.isystk.sample.common.FunctionNameAware;
+import com.isystk.sample.web.base.controller.BaseController;
+import org.slf4j.Logger;
 import org.springframework.ui.Model;
 import org.springframework.validation.BeanPropertyBindingResult;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.isystk.sample.common.FunctionNameAware;
-import com.isystk.sample.web.base.controller.BaseController;
-
-import lombok.val;
-import lombok.extern.slf4j.Slf4j;
-
 /**
  * 基底HTMLコントローラー
  */
-@Slf4j
 public abstract class AbstractHtmlController extends BaseController implements FunctionNameAware {
+
+  private static final Logger log = org.slf4j.LoggerFactory.getLogger(AbstractHtmlController.class);
 
   /**
    * 入力チェックエラーがある場合はtrueを返します。
@@ -26,10 +24,10 @@ public abstract class AbstractHtmlController extends BaseController implements F
    * @return
    */
   public boolean hasErrors(Model model) {
-    val errors = model.asMap().get(MAV_ERRORS);
+    Object errors = model.asMap().get(MAV_ERRORS);
 
     if (errors != null && errors instanceof BeanPropertyBindingResult) {
-      val br = ((BeanPropertyBindingResult) errors);
+      BeanPropertyBindingResult br = ((BeanPropertyBindingResult) errors);
 
       if (br.hasErrors()) {
         return true;

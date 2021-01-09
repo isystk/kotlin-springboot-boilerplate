@@ -2,12 +2,10 @@ package com.isystk.sample.common.helper;
 
 import com.google.common.reflect.ClassPath;
 import com.isystk.sample.common.values.Values;
-
-import org.springframework.stereotype.Component;
-
 import java.io.IOException;
 import java.util.Map;
 import java.util.stream.Collectors;
+import org.springframework.stereotype.Component;
 
 @Component("vh")
 public class ValuesHelper {

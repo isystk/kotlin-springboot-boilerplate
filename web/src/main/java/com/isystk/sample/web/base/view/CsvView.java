@@ -1,25 +1,20 @@
 package com.isystk.sample.web.base.view;
 
-import com.fasterxml.jackson.dataformat.csv.CsvMapper;
-import com.fasterxml.jackson.dataformat.csv.CsvSchema;
-import com.google.common.collect.Lists;
-import com.isystk.sample.common.util.EncodeUtils;
-import lombok.val;
-import org.springframework.web.servlet.view.AbstractView;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.io.OutputStreamWriter;
-import java.io.PrintWriter;
-import java.io.Writer;
-import java.util.Collection;
-import java.util.List;
-import java.util.Map;
-
 import static com.fasterxml.jackson.dataformat.csv.CsvGenerator.Feature.ALWAYS_QUOTE_STRINGS;
 import static com.isystk.sample.common.util.ValidateUtils.isNotEmpty;
 import static org.springframework.http.HttpHeaders.CONTENT_DISPOSITION;
 import static org.springframework.http.HttpHeaders.CONTENT_TYPE;
+
+import com.fasterxml.jackson.dataformat.csv.CsvMapper;
+import com.fasterxml.jackson.dataformat.csv.CsvSchema;
+import com.isystk.sample.common.util.EncodeUtils;
+import java.io.PrintWriter;
+import java.util.Collection;
+import java.util.List;
+import java.util.Map;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import org.springframework.web.servlet.view.AbstractView;
 
 /**
  * CSVビュー
@@ -73,8 +68,8 @@ public class CsvView extends AbstractView {
       HttpServletResponse response) throws Exception {
 
     // ファイル名に日本語を含めても文字化けしないようにUTF-8にエンコードする
-    val encodedFilename = EncodeUtils.encodeUtf8(filename);
-    val contentDisposition = String.format("attachment; filename*=UTF-8''%s", encodedFilename);
+    String encodedFilename = EncodeUtils.encodeUtf8(filename);
+    String contentDisposition = String.format("attachment; filename*=UTF-8''%s", encodedFilename);
 
     response.setHeader(CONTENT_TYPE, getContentType());
     response.setHeader(CONTENT_DISPOSITION, contentDisposition);
@@ -84,7 +79,7 @@ public class CsvView extends AbstractView {
 
     if (isNotEmpty(columns)) {
       // カラムが指定された場合は、スキーマを再構築する
-      val builder = schema.rebuild().clearColumns();
+      CsvSchema.Builder builder = schema.rebuild().clearColumns();
       for (String column : columns) {
         builder.addColumn(column);
       }
@@ -92,8 +87,6 @@ public class CsvView extends AbstractView {
     }
 
     // 書き出し
-//		val outputStream = createTemporaryOutputStream();
-//		try (Writer writer = new OutputStreamWriter(outputStream, "Windows-31J")) {
     try (PrintWriter writer = response.getWriter()) {
       csvMapper.writer(schema).writeValue(writer, data);
     }

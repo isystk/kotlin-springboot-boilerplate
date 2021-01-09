@@ -1,13 +1,12 @@
 package com.isystk.sample.web.admin.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.util.Assert;
-
 import com.isystk.sample.common.service.BaseTransactionalService;
 import com.isystk.sample.domain.entity.TPost;
 import com.isystk.sample.domain.repository.TPostRepository;
 import com.isystk.sample.domain.repository.dto.TPostRepositoryDto;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.util.Assert;
 
 @Service
 public class PostService extends BaseTransactionalService {

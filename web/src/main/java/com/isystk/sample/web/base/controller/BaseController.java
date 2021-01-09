@@ -1,11 +1,9 @@
 package com.isystk.sample.web.base.controller;
 
+import com.isystk.sample.common.util.MessageUtils;
 import java.util.Locale;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
-
-import com.isystk.sample.common.util.MessageUtils;
 
 public class BaseController {
 

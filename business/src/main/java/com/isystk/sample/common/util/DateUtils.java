@@ -1,20 +1,20 @@
 package com.isystk.sample.common.util;
 
+import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
-
-import lombok.val;
-import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
 
 /**
  * 日付ユーティリティ
  */
-@Slf4j
 public class DateUtils {
+
+  private static final Logger log = org.slf4j.LoggerFactory.getLogger(DateUtils.class);
 
   /**
    * Date型の値を指定されたDateTimeFormatterフォーマットした値を返します。
@@ -24,9 +24,9 @@ public class DateUtils {
    * @return
    */
   public static String format(final Date fromDate, final DateTimeFormatter formatter) {
-    val zoneId = getZoneId();
-    val localDateTime = fromDate.toInstant().atZone(zoneId).toLocalDateTime();
-    val result = formatter.format(localDateTime);
+    ZoneId zoneId = getZoneId();
+    LocalDateTime localDateTime = fromDate.toInstant().atZone(zoneId).toLocalDateTime();
+    String result = formatter.format(localDateTime);
     return result;
   }
 
@@ -39,7 +39,7 @@ public class DateUtils {
    */
   public static String format(final LocalDateTime fromLocalDateTime,
       final DateTimeFormatter formatter) {
-    val result = formatter.format(fromLocalDateTime);
+    String result = formatter.format(fromLocalDateTime);
     return result;
   }
 
@@ -50,7 +50,7 @@ public class DateUtils {
    * @return
    */
   public static LocalDateTime toLocalDateTime(final Date fromDate) {
-    val zoneId = getZoneId();
+    ZoneId zoneId = getZoneId();
     return fromDate.toInstant().atZone(zoneId).toLocalDateTime();
   }
 
@@ -61,8 +61,8 @@ public class DateUtils {
    * @return
    */
   public static Date toDate(final LocalDateTime fromLocalDateTime) {
-    val zoneId = getZoneId();
-    val zoneDateTime = ZonedDateTime.of(fromLocalDateTime, zoneId);
+    ZoneId zoneId = getZoneId();
+    ZonedDateTime zoneDateTime = ZonedDateTime.of(fromLocalDateTime, zoneId);
     return Date.from(zoneDateTime.toInstant());
   }
 
@@ -73,8 +73,8 @@ public class DateUtils {
    * @return
    */
   public static Date toDate(final LocalDate localDate) {
-    val zoneId = getZoneId();
-    val zoneDateTime = localDate.atStartOfDay(zoneId).toInstant();
+    ZoneId zoneId = getZoneId();
+    Instant zoneDateTime = localDate.atStartOfDay(zoneId).toInstant();
     return Date.from(zoneDateTime);
   }
 
@@ -85,7 +85,6 @@ public class DateUtils {
   /**
    * システムで利用する現在日時を取得します。
    *
-   * @param localDate
    * @return
    */
   public static LocalDateTime getNow() {

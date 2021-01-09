@@ -1,13 +1,10 @@
 package com.isystk.sample.batch.jobs;
 
-import java.util.List;
-
-import org.springframework.batch.item.ItemWriter;
-
 import com.isystk.sample.batch.context.BatchContext;
 import com.isystk.sample.batch.context.BatchContextHolder;
-
+import java.util.List;
 import lombok.val;
+import org.springframework.batch.item.ItemWriter;
 
 public abstract class BaseItemWriter<T> implements ItemWriter<T> {
 
@@ -15,7 +12,7 @@ public abstract class BaseItemWriter<T> implements ItemWriter<T> {
   @Override
   public void write(List<? extends T> items) throws Exception {
     // コンテキストを取り出す
-    val context = BatchContextHolder.getContext();
+    BatchContext context = BatchContextHolder.getContext();
 
     // 書き込む
     doWrite(context, (List<T>) items);

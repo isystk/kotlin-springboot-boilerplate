@@ -1,12 +1,10 @@
 package com.isystk.sample.web.admin.security;
 
-import java.util.List;
-
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.User;
-
 import com.isystk.sample.domain.entity.TStaff;
 import com.isystk.sample.web.base.filter.UserIdAware;
+import java.util.List;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.User;
 
 public class LoginStaff extends User implements UserIdAware {
 

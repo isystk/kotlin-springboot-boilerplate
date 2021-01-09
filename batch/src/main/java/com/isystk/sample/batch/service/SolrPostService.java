@@ -1,15 +1,8 @@
 package com.isystk.sample.batch.service;
 
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.stream.Collectors;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
+import com.isystk.sample.common.dto.Page;
 import com.isystk.sample.common.dto.PageFactory;
 import com.isystk.sample.common.dto.Pageable;
 import com.isystk.sample.common.service.BaseTransactionalService;
@@ -18,14 +11,17 @@ import com.isystk.sample.domain.dao.MPostTagDao;
 import com.isystk.sample.domain.dto.MPostTagCriteria;
 import com.isystk.sample.domain.dto.TPostCriteria;
 import com.isystk.sample.domain.entity.MPostTag;
-import com.isystk.sample.domain.entity.TPostImage;
-import com.isystk.sample.domain.entity.TPostTag;
 import com.isystk.sample.domain.repository.TPostRepository;
 import com.isystk.sample.domain.repository.dto.TPostRepositoryDto;
 import com.isystk.sample.solr.dto.SolrPost;
 import com.isystk.sample.solr.repository.SolrPostRepository;
-
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.stream.Collectors;
 import lombok.val;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 @Service
 public class SolrPostService extends BaseTransactionalService {
@@ -52,7 +48,7 @@ public class SolrPostService extends BaseTransactionalService {
     // 有効な投稿を全件取得する
     var criteria = new TPostCriteria();
     criteria.setDeleteFlgFalse(true);
-    val postPage = postRepository.findAll(criteria, Pageable.NO_LIMIT);
+    Page<TPostRepositoryDto> postPage = postRepository.findAll(criteria, Pageable.NO_LIMIT);
     if (postPage.getCount() == 0) {
       // 投稿データが0件の場合は何もしない
       return;
@@ -60,7 +56,7 @@ public class SolrPostService extends BaseTransactionalService {
 
     MPostTagCriteria mPostTagCriteria = new MPostTagCriteria();
     mPostTagCriteria.setDeleteFlgFalse(true);
-    val mPostTagList = mPostTagDao.findAll(mPostTagCriteria);
+    List<MPostTag> mPostTagList = mPostTagDao.findAll(mPostTagCriteria);
     Map<Integer, String> tagNameMap = Maps.newHashMap();
     mPostTagList.stream().forEach(mPostTag -> {
       tagNameMap.put(mPostTag.getPostTagId(), mPostTag.getName());

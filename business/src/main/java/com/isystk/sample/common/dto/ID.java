@@ -2,7 +2,6 @@ package com.isystk.sample.common.dto;
 
 import java.io.Serializable;
 import java.util.Objects;
-
 import org.seasar.doma.Domain;
 
 /**

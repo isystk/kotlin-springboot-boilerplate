@@ -5,14 +5,14 @@ import java.lang.reflect.Field;
 import java.util.Arrays;
 import java.util.Optional;
 import java.util.stream.Stream;
-
-import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
 
 /**
  * リフレクション関連ユーティリティ
  */
-@Slf4j
 public class ReflectionUtils {
+
+  private static final Logger log = org.slf4j.LoggerFactory.getLogger(ReflectionUtils.class);
 
   /**
    * 指定したアノテーションが付与されているフィールドを返します。

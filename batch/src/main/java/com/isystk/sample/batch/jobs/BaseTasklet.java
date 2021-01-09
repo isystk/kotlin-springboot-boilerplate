@@ -1,27 +1,23 @@
 package com.isystk.sample.batch.jobs;
 
+import com.isystk.sample.batch.context.BatchContext;
+import com.isystk.sample.batch.context.BatchContextHolder;
+import com.isystk.sample.batch.item.ItemPosition;
 import java.io.IOException;
-
-import org.modelmapper.ModelMapper;
+import lombok.val;
+import org.slf4j.Logger;
 import org.springframework.batch.core.StepContribution;
 import org.springframework.batch.core.annotation.OnProcessError;
 import org.springframework.batch.core.scope.context.ChunkContext;
 import org.springframework.batch.core.step.tasklet.Tasklet;
 import org.springframework.batch.repeat.RepeatStatus;
-import org.springframework.beans.factory.annotation.Autowired;
-
-import com.isystk.sample.batch.context.BatchContext;
-import com.isystk.sample.batch.context.BatchContextHolder;
-import com.isystk.sample.batch.item.ItemPosition;
-
-import lombok.val;
-import lombok.extern.slf4j.Slf4j;
 
 /**
  * 基底タスクレット
  */
-@Slf4j
 public abstract class BaseTasklet<I extends ItemPosition> implements Tasklet {
+
+  private static final Logger log = org.slf4j.LoggerFactory.getLogger(BaseTasklet.class);
 
   /**
    * メインメソッド
@@ -33,7 +29,7 @@ public abstract class BaseTasklet<I extends ItemPosition> implements Tasklet {
    */
   public RepeatStatus execute(StepContribution contribution, ChunkContext chunkContext)
       throws IOException {
-    val context = BatchContextHolder.getContext();
+    BatchContext context = BatchContextHolder.getContext();
 
     // 実処理
     doProcess(context);

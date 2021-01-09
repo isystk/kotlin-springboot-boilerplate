@@ -6,8 +6,6 @@ import lombok.Getter;
 /**
  * メールテンプレート
  */
-@Getter
-@AllArgsConstructor
 public enum MailTemplate implements Values {
 
   ENTRY_REGIST_TEMPORARY(1, "仮会員登録通知メール", MailTemplateDiv.ENTRY_REGIST),
@@ -23,6 +21,12 @@ public enum MailTemplate implements Values {
   private final Integer code;
   private final String text;
   private final MailTemplateDiv div;
+
+  private MailTemplate(Integer code, String text, MailTemplateDiv div) {
+    this.code = code;
+    this.text = text;
+    this.div = div;
+  }
 
   /**
    * コードに一致する値を取得します。
@@ -40,5 +44,17 @@ public enum MailTemplate implements Values {
       }
     }
     return null;
+  }
+
+  public Integer getCode() {
+    return this.code;
+  }
+
+  public String getText() {
+    return this.text;
+  }
+
+  public MailTemplateDiv getDiv() {
+    return this.div;
   }
 }

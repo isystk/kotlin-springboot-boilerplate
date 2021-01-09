@@ -1,8 +1,11 @@
 package com.isystk.sample.batch;
 
+import com.isystk.sample.batch.jobs.SingleJobCommandLineRunner;
+import com.isystk.sample.common.dto.DefaultPageFactoryImpl;
+import com.isystk.sample.common.dto.PageFactory;
+import com.isystk.sample.common.util.MessageUtils;
 import javax.sql.DataSource;
-
-import org.modelmapper.ModelMapper;
+import lombok.val;
 import org.springframework.batch.core.configuration.annotation.EnableBatchProcessing;
 import org.springframework.batch.core.converter.JobParametersConverter;
 import org.springframework.batch.core.jsr.JsrJobParametersConverter;
@@ -14,13 +17,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
-
-import com.isystk.sample.batch.jobs.SingleJobCommandLineRunner;
-import com.isystk.sample.common.dto.DefaultPageFactoryImpl;
-import com.isystk.sample.common.dto.PageFactory;
-import com.isystk.sample.common.util.MessageUtils;
-
-import lombok.val;
 
 @Configuration
 @EnableBatchProcessing
@@ -47,7 +43,7 @@ public class BatchConfiguration implements InitializingBean {
 
   @Bean
   public ThreadPoolTaskExecutor taskExecutor() {
-    val executor = new ThreadPoolTaskExecutor();
+    ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
     executor.setCorePoolSize(corePoolSize);
     executor.setMaxPoolSize(maxPoolSize);
     executor.setWaitForTasksToCompleteOnShutdown(true);
@@ -56,7 +52,7 @@ public class BatchConfiguration implements InitializingBean {
 
   @Bean
   public LocalValidatorFactoryBean beanValidator(MessageSource messageSource) {
-    val bean = new LocalValidatorFactoryBean();
+    LocalValidatorFactoryBean bean = new LocalValidatorFactoryBean();
     bean.setValidationMessageSource(messageSource);
     return bean;
   }

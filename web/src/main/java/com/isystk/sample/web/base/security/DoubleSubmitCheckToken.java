@@ -77,7 +77,7 @@ public class DoubleSubmitCheckToken {
     if (key == null) {
       key = request.getRequestURI();
     }
-    val token = generateToken();
+    String token = generateToken();
 
     Object mutex = SessionUtils.getMutex(request);
     if (mutex != null) {
@@ -134,7 +134,7 @@ public class DoubleSubmitCheckToken {
    */
   protected static String getToken(HttpServletRequest request, String key) {
     LRUMap map = getLRUMap(request);
-    val token = (String) map.get(key);
+    String token = (String) map.get(key);
     return token;
   }
 

@@ -1,18 +1,18 @@
 package com.isystk.sample.web.base.aop;
 
+import static java.util.Optional.ofNullable;
+
 import com.isystk.sample.domain.dao.AuditInfoHolder;
+import java.time.LocalDateTime;
+import java.util.Optional;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import lombok.val;
 import org.slf4j.Logger;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.servlet.ModelAndView;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.time.LocalDateTime;
-import java.util.Optional;
-
-import static java.util.Optional.ofNullable;
 
 /**
  * ログインユーザーを監査情報ホルダーに設定する
@@ -26,7 +26,7 @@ public class SetAuditInfoInterceptor extends BaseHandlerInterceptor {
   public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
       throws Exception {
     // コントローラーの動作前
-    val now = LocalDateTime.now();
+    LocalDateTime now = LocalDateTime.now();
 
     // 未ログインの場合は、ゲスト扱いにする
     AuditInfoHolder.set("GUEST", now);
@@ -55,7 +55,7 @@ public class SetAuditInfoInterceptor extends BaseHandlerInterceptor {
    * @return
    */
   protected Optional<UserDetails> getLoginUser() {
-    val auth = SecurityContextHolder.getContext().getAuthentication();
+    Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 
     if (auth != null) {
       Object principal = auth.getPrincipal();

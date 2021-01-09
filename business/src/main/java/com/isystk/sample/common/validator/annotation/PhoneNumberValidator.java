@@ -8,15 +8,15 @@ import java.util.regex.PatternSyntaxException;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
-
-import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * 入力チェック（電話番号）
  */
-@Slf4j
 public class PhoneNumberValidator implements ConstraintValidator<PhoneNumber, String> {
 
+  protected final static Logger log = LoggerFactory.getLogger(PhoneNumberValidator.class);
   private Pattern pattern;
 
   @Override

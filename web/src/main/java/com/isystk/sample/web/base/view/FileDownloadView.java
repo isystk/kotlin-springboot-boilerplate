@@ -1,20 +1,19 @@
 package com.isystk.sample.web.base.view;
 
-import lombok.val;
-import org.apache.tika.Tika;
-import org.springframework.core.io.Resource;
-import org.springframework.http.MediaType;
-import org.springframework.web.servlet.view.AbstractView;
+import static org.springframework.http.HttpHeaders.CONTENT_DISPOSITION;
+import static org.springframework.http.HttpHeaders.CONTENT_TYPE;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.Map;
-
-import static org.springframework.http.HttpHeaders.CONTENT_DISPOSITION;
-import static org.springframework.http.HttpHeaders.CONTENT_TYPE;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import org.apache.tika.Tika;
+import org.springframework.core.io.Resource;
+import org.springframework.http.MediaType;
+import org.springframework.web.servlet.view.AbstractView;
 
 /**
  * FileDownloadビュー
@@ -53,11 +52,11 @@ public class FileDownloadView extends AbstractView {
 
     try (InputStream inputStream = resource.getInputStream();
         OutputStream outputStream = response.getOutputStream()) {
-      val file = resource.getFile();
-      val detectedContentType = TIKA.detect(file);
-      val mediaType = MediaType.parseMediaType(detectedContentType);
-      val inlineOrAttachment = (isAttachment) ? "attachment" : "inline";
-      val contentDisposition = String.format("%s; filename=\"%s\"", inlineOrAttachment, filename);
+      File file = resource.getFile();
+      String detectedContentType = TIKA.detect(file);
+      MediaType mediaType = MediaType.parseMediaType(detectedContentType);
+      String inlineOrAttachment = (isAttachment) ? "attachment" : "inline";
+      String contentDisposition = String.format("%s; filename=\"%s\"", inlineOrAttachment, filename);
 
       response.setHeader(CONTENT_TYPE, mediaType.toString());
       response.setHeader(CONTENT_DISPOSITION, contentDisposition);

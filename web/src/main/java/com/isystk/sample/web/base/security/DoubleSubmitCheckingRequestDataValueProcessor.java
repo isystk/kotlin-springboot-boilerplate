@@ -32,10 +32,10 @@ public class DoubleSubmitCheckingRequestDataValueProcessor implements RequestDat
 
   @Override
   public Map<String, String> getExtraHiddenFields(HttpServletRequest request) {
-    val map = PROCESSOR.getExtraHiddenFields(request);
+    Map<String, String> map = PROCESSOR.getExtraHiddenFields(request);
 
     if (!map.isEmpty()) {
-      val action = ACTION_HOLDER.get();
+      String action = ACTION_HOLDER.get();
       String token = DoubleSubmitCheckToken.getExpectedToken(request, action);
 
       if (token == null) {
