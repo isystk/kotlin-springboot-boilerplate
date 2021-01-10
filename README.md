@@ -183,6 +183,9 @@ $ brew cask install intellij-idea-ce
 - コードフォーマッターを設定する
 「Preferences - Editor - Code Style - Java」にて、Schemeのところの設定アイコンから、"intellij-java-google-style.xml" をインポートする。
 
+- Kotlin pluginをインストールする。 
+「Preferences - Plugins - Marketplace」から、"Kotlin"をインストール後、InteliJを再起動する
+
 - Annotation Processingを有効にする。
 「Preferences - Build,Execution,Deployment - Compiler - Annotation Processors」から、
 ”Enable annotation processing” を有効にする
