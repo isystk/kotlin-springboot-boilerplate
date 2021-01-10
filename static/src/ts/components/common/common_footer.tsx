@@ -4,12 +4,15 @@ import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import $ from 'jquery';
 import { URL } from "../../common/constants/url";
+import Overlay from "../common/overlay";
+import SnsShare from "../common/sns_share";
 
-import { toggleMenu, closeMenu, authLogout } from "../../actions";
+import { toggleMenu, closeMenu, showOverlay } from "../../actions";
 
 interface IProps {
     toggleMenu;
     closeMenu;
+    showOverlay;
 }
 interface IState {
     scrollTop: number;
@@ -33,10 +36,17 @@ class CommonFooter extends React.Component<IProps, IState> {
   handleScroll(): void{
     this.setState({scrollTop: $(window).scrollTop()});
   }
-  scrollToTop(): void{
+  scrollToTop(e): void{
+    e.preventDefault();
     $('body,html').animate({
         scrollTop: 0
     }, 500);
+  }
+
+  renderSnsShare(): JSX.Element {
+    return (
+      <SnsShare />
+    )
   }
 
   render(): JSX.Element {
@@ -54,8 +64,14 @@ class CommonFooter extends React.Component<IProps, IState> {
               <nav className="footer-nav">
                 <ul>
                   <li><Link to={URL.HOME} onClick={this.props.closeMenu}><FontAwesomeIcon icon="home" /></Link></li>
-                  <li><a href="#" className="js-overlay" data-panel="#sns-share-overlay"><FontAwesomeIcon icon="share-alt" /></a></li>
-                  <li><a href="#" className="js-open-menu" onClick={this.props.toggleMenu}><FontAwesomeIcon icon="bars" /></a></li>
+                  <li><a href="#" onClick={(e) => {
+                    e.preventDefault();
+                    this.props.showOverlay();
+                  }}><FontAwesomeIcon icon="share-alt" /></a></li>
+                  <li><a href="#" onClick={(e) => {
+                    e.preventDefault();
+                    this.props.toggleMenu();
+                  }}><FontAwesomeIcon icon="bars" /></a></li>
                   <li><a href="#" className="js-scroll-top" onClick={this.scrollToTop} ><FontAwesomeIcon icon="chevron-up" /></a></li>
                 </ul>
               </nav>
@@ -68,6 +84,9 @@ class CommonFooter extends React.Component<IProps, IState> {
               <section className="copylight">© 2020 isystk's sample</section>
             </div>
          </footer>
+         <Overlay>
+           <SnsShare />
+          </Overlay>
          <span id="page-top" className={scrollTopClass}><a href="#" onClick={this.scrollToTop} ><FontAwesomeIcon icon="chevron-up" /></a></span>
       </React.Fragment>
     );
@@ -75,6 +94,6 @@ class CommonFooter extends React.Component<IProps, IState> {
 }
 
 
-const mapDispatchToProps = { toggleMenu, closeMenu };
+const mapDispatchToProps = { toggleMenu, closeMenu, showOverlay };
 
 export default connect(null, mapDispatchToProps)(CommonFooter);

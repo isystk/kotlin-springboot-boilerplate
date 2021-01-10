@@ -8,6 +8,8 @@ import {
   PartsAppAction,
   SHOW_MV,
   HIDE_MV,
+  SHOW_OVERLAY,
+  HIDE_OVERLAY,
   SHOW_LOADING,
   HIDE_LOADING,
   TOGGLE_MENU,
@@ -16,6 +18,7 @@ import {
 
 const initialState: Parts = {
   isShowMv: false,
+  isShowOverlay: false,
   isShowLoading: false,
   isSideMenuOpen: false
 };
@@ -30,6 +33,10 @@ export function PartsReducer(
       return {...state, isShowMv: true };
     case HIDE_MV:
       return {...state, isShowMv: false };
+    case SHOW_OVERLAY:
+      return {...state, isShowOverlay: true };
+    case HIDE_OVERLAY:
+      return {...state, isShowOverlay: false };
     case SHOW_LOADING:
       return {...state, isShowLoading: true };
     case HIDE_LOADING:

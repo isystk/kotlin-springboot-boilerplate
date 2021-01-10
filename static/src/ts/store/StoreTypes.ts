@@ -38,6 +38,7 @@ export interface PostTags {
 
 export interface Parts {
   isShowMv: boolean;
+  isShowOverlay: boolean;
   isShowLoading: boolean;
   isSideMenuOpen: boolean;
 }

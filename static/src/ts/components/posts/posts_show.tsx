@@ -7,6 +7,7 @@ import { getPost } from "../../actions";
 import { Post } from "../../store/StoreTypes";
 import { URL } from "../../common/constants/url";
 import { SimpleSlider } from "../common/slider";
+import SnsShare from "../common/sns_share";
 
 // ↓ 表示用のデータ型
 interface IProps {
@@ -24,10 +25,13 @@ export class PostsShow extends React.Component<IProps, IState> {
     super(props);
   }
 
-  componentDidMount() {
+  async componentDidMount() {
     // パスの投稿IDから投稿データを取得する
     const { id } = this.props.match.params;
-    if (id) this.props.getPost(id);
+    if (id) await this.props.getPost(id);
+
+    // TITLEタグを設定
+    document.title = this.props.post.title;
   }
 
   render(): JSX.Element {
@@ -74,13 +78,6 @@ export class PostsShow extends React.Component<IProps, IState> {
                   <p>{post && post.text}</p>
                 </div>
                 <div className="clearfix"></div>
-                <div className="sns-buttons">
-                  <ul className="sns-button">
-                    <li><div className="fb-like" data-href="https://developers.facebook.com/docs/plugins/" data-width="" data-layout="button" data-action="like" data-size="small" data-share="true"></div></li>
-                    <li><a href="https://twitter.com/share" className="twitter-share-button">Tweet</a></li>
-                  </ul>
-                </div>
-                <div className="clearfix"></div>
                 <div className="entry-meta">
                   <FontAwesomeIcon icon="clock" />
                   {post && post.registTimeMMDD}
@@ -98,24 +95,7 @@ export class PostsShow extends React.Component<IProps, IState> {
                   </div>
                 </div>
 
-                <ul className="sns-buttons">
-                  <li className="share-twitter">
-                  <a href={'http://twitter.com/intent/tweet?text='+(post && post.title)+'%20http://blog.isystk.com/'} target="_blank" rel="noreferrer">Twitter</a>
-                  </li>
-                  <li className="share-facebook">
-                  <a href="https://www.facebook.com/sharer/sharer.php?u=http://blog.isystk.com/" target="_blank" rel="noreferrer">Facebook</a>
-                  </li>
-                  <li className="share-hatena">
-                  <a href={'http://b.hatena.ne.jp/add?mode=confirm&url=http://blog.isystk.com/&title='+(post && post.title)} target="_blank" rel="noreferrer">はてブ</a>
-                  </li>
-                  <li className="share-pocket">
-                  <a href="http://getpocket.com/edit?url=http://blog.isystk.com/" target="_blank" rel="noreferrer">Pocket</a>
-                  </li>
-                  <li className="share-line">
-                  <a href={'http://line.me/R/msg/text/?'+(post && post.title)+'%0D%0Ahttp://blog.isystk.com/'} target="_blank" rel="noreferrer">LINE</a>
-                  </li>
-                </ul>
-                <div className=" clearfix"></div>
+                <SnsShare />
 
               </section>
 
