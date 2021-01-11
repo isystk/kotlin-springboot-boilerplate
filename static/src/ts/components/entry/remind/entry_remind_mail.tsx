@@ -1,14 +1,12 @@
 import * as React from "react";
-import { connect, MapStateToProps, MapDispatchToProps } from "react-redux";
 
 interface IProps {
-  error;
 }
 
 interface IState {
 }
 
-export class constEntryRemindMail extends React.Component<IProps, IState> {
+export class EntryRemindMail extends React.Component<IProps, IState> {
   constructor(props) {
     super(props);
   }
@@ -33,7 +31,4 @@ export class constEntryRemindMail extends React.Component<IProps, IState> {
   }
 }
 
-export default connect(
-  null,
-  null
-)(constEntryRemindMail);
+export default EntryRemindMail;

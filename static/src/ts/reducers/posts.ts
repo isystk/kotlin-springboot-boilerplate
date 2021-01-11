@@ -22,10 +22,10 @@ export function PostsReducer(
 
   switch (action.type) {
     case READ_POST:
-      const data = action.response.data.data[0];
+      const data = action.response[0];
       return { ...state, [data.postId]: data };
     case READ_POSTS:
-      return _.mapKeys(action.response.data.data, "postId");
+      return _.mapKeys(action.response, "postId");
     default:
       return state;
   }

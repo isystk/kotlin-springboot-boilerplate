@@ -30,7 +30,7 @@ export class AuthLogin extends React.Component<IProps, IState> {
     super(props);
     this.onSubmit = this.onSubmit.bind(this);
     this.state = {
-      redirectUrl: null
+      redirectUrl: '/'
     }
   }
 

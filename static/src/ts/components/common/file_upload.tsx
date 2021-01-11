@@ -32,7 +32,7 @@ class FileUpload extends React.Component<IProps, IState> {
     // ファイル選択時に、サーバーにアップロードする。
     this.fileUpload(e.target.files, (response)=>{
       // アップロードが完了したら画像IDを親コンポーネントにセットする。
-      this.props.setImageList(response.data.data);
+      this.props.setImageList(response);
     })
   }
 

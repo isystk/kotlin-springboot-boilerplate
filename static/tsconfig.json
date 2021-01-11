@@ -1,20 +1,31 @@
 {
-	"compilerOptions":
-	{
-		"module": "commonjs",
-		"jsx": "react",
-		"removeComments": true,
-		"target": "es5",
-		"lib": [
-			"esnext",
-			"esnext.asynciterable",
-			"dom"],
-		"typeRoots": ["node_modules/@types"],
-		"esModuleInterop": true
-	},
+  "compilerOptions": {
+    "target": "esnext",
+    "module": "esnext",
+    "lib": [
+      "esnext",
+      "esnext.asynciterable",
+      "dom"],
+    "jsx": "react",
+    "sourceMap": true,
+    "removeComments": true,
+    "noEmit": true,
 
-	"include":
-	[
-		"src/ts/**/*"
-	]
+    "strict": false,
+    "noImplicitAny": false,
+    "strictNullChecks": true,
+    "noImplicitThis": true,
+
+    "typeRoots": ["node_modules/@types"],
+    "esModuleInterop": true,
+    "moduleResolution": "node",
+    "baseUrl": "."
+  },
+  "exclude": [
+    "node_modules"
+  ],
+  "include": [
+    "src/**/*.ts"
+  ]
 }
+

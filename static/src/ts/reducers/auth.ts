@@ -23,17 +23,15 @@ export function AuthReducer(
   switch (action.type) {
     case AUTH_CHECK:
     case AUTH_LOGIN:
-      const { data, message } = action.response.data;
-      if (!data) {
+      const { response } = action;
+      if (!response) {
         return {
           isLogin: false,
-          message: message,
         };
       }
       return {
-        isLogin: (data.length !== 0 && data[0].familyName),
-        familyName: data[0].familyName,
-        message: message,
+        isLogin: true,
+        familyName: response[0].familyName,
       };
     case AUTH_LOGOUT:
       return { isLogin: false };

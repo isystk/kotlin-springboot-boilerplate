@@ -11,7 +11,7 @@ import { User } from "../store/StoreTypes";
 //  ただし、アプリケーションの状態がどのように変化するかはここでは指定しません。(→Reducerがやること)
 //  あくまでどんな挙動があるかだけを定義します。
 export interface EntryAppAction extends Action {
-  values?: User;
+values: User;
 }
 
 export const CREATE_USER = "CREATE_USER";
