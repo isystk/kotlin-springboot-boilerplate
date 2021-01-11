@@ -15,13 +15,6 @@ import { PostsReducer } from "../reducers/posts";
 import { RemindReducer } from "../reducers/remind";
 
 const reducers: ReducersMapObject = {
-  AuthReducer,
-  ConstsReducer,
-  EntryReducer,
-  MemberPostsReducer,
-  PartsReducer,
-  PostsReducer,
-  RemindReducer,
 };
 
 declare let window: any;

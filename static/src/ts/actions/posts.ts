@@ -11,7 +11,6 @@ import { Posts } from "../store/StoreTypes";
 //  あくまでどんな挙動があるかだけを定義します。
 export interface PostsAppAction extends Action {
   response: Posts;
-  id: number;
 }
 
 export const READ_POSTS = "READ_POSTS";

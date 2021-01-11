@@ -59,7 +59,7 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapDispatchToProps = { authCheck };
 
-export default connect(
+export default withRouter(connect(
   mapStateToProps,
   mapDispatchToProps
-)(withRouter(AuthCheck));
+)(AuthCheck));
