@@ -174,7 +174,7 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapDispatchToProps = { authCheck, authLogin };
 
-export default connect(
+export default withRouter(connect(
   mapStateToProps,
   mapDispatchToProps
-)(reduxForm({ validate, form: "authLoginForm" })(withRouter(AuthLogin)));
+)(reduxForm({ validate, form: "authLoginForm" })(AuthLogin)));
