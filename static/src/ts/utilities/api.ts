@@ -27,7 +27,7 @@ const request = async (method: string, url: string, values?: any, config?: any):
       }
     });
 //   console.log('Response:%s', JSON.stringify(response) );
-  return response;
+  return response.data.data;
 }
 
 const jsonToForm = (params, formData, name = '') => {

@@ -46,7 +46,6 @@ export interface Parts {
 export interface Auth {
   isLogin: boolean;
   familyName?: string;
-  message?: string;
 }
 
 export interface User {

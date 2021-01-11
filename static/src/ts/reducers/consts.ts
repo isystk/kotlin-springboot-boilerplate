@@ -20,7 +20,7 @@ export function ConstsReducer(
 
   switch (action.type) {
     case READ_CONSTS:
-      return _.mapKeys(action.response.data.data, "name");
+      return _.mapKeys(action.response, "name");
     default:
       return state;
   }

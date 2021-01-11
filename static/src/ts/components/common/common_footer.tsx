@@ -34,7 +34,7 @@ class CommonFooter extends React.Component<IProps, IState> {
     window.removeEventListener('scroll', this.handleScroll);
   }
   handleScroll(): void{
-    this.setState({scrollTop: $(window).scrollTop()});
+    this.setState({scrollTop: $(window).scrollTop() as number});
   }
   scrollToTop(e): void{
     e.preventDefault();
@@ -50,7 +50,7 @@ class CommonFooter extends React.Component<IProps, IState> {
   }
 
   render(): JSX.Element {
-    let {scrollTop} = this.state;
+    const {scrollTop} = this.state;
 
     let scrollTopClass = "link hide";
     if (scrollTop > 100) {

@@ -25,10 +25,10 @@ export function MemberPostsReducer(
     case CREATE_MEMBER_POST:
     case READ_MEMBER_POST:
     case UPDATE_MEMBER_POST:
-      const data = action.response.data.data[0];
+      const data = action.response[0];
       return { ...state, [data.postId]: data };
     case READ_MEMBER_POSTS:
-      return _.mapKeys(action.response.data.data, "postId");
+      return _.mapKeys(action.response, "postId");
     case DELETE_MEMBER_POST:
       delete state[action.id];
       return { ...state };
