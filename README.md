@@ -148,6 +148,11 @@ $ # bootrun batch application
 $ ./gradlew batch::bootRun -Pargs=--job=solrRegistJob
 ```
 
+※ Windowsユーザーでgradlew が改行コードの違いで動かない場合は以下でWindows用のコマンドを生成してください。
+```bash
+$ tr -d "\r" < ./gradlew > ./gradlew-win
+```
+
 #### 接続先情報
 
 ##### ログインユーザー
