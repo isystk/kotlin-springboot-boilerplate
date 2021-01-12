@@ -21,9 +21,6 @@ plugins {
 }
 
 subprojects {
-//  apply plugin: "java"
-//  apply plugin: "org.springframework.boot"
-
   apply plugin: "kotlin"
   apply plugin: "kotlin-spring"
   apply plugin: "kotlin-kapt"
@@ -32,9 +29,6 @@ subprojects {
   apply plugin: "com.google.cloud.tools.jib"
   apply plugin: "org.flywaydb.flyway"
   apply plugin: "org.seasar.doma.compile"
-
-//  sourceCompatibility = JavaVersion.VERSION_11
-//  targetCompatibility = JavaVersion.VERSION_11
 
   // Kotlinを利用する場合はコメントアウトを外す
   compileKotlin {
@@ -54,14 +48,6 @@ subprojects {
   test {
     useJUnitPlatform()
   }
-
-//  kapt {
-//    javacOptions {
-//      // Increase the max count of errors from annotation processors.
-//      // Default is 100.
-//      option("-Xmaxerrs", 500)
-//    }
-//  }
 
   /* flyway settings */
   apply from: "$rootDir/datasource.gradle"
@@ -127,6 +113,7 @@ subprojects {
     /* Doma2 */
     implementation("org.seasar.doma.boot:doma-spring-boot-starter:$springBootDomaVersion")
     implementation("org.seasar.doma:doma-kotlin:${domaVersion}")
+    kapt("org.seasar.doma:doma-processor:${domaVersion}")
     // Kotlinを利用する場合はコメントアウトを外す
 //    kapt("org.seasar.doma:doma-processor:${domaVersion}")
     annotationProcessor("org.seasar.doma:doma-processor:${domaVersion}")
