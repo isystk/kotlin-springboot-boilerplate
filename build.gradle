@@ -114,9 +114,6 @@ subprojects {
     implementation("org.seasar.doma.boot:doma-spring-boot-starter:$springBootDomaVersion")
     implementation("org.seasar.doma:doma-kotlin:${domaVersion}")
     kapt("org.seasar.doma:doma-processor:${domaVersion}")
-    // Kotlinを利用する場合はコメントアウトを外す
-//    kapt("org.seasar.doma:doma-processor:${domaVersion}")
-    annotationProcessor("org.seasar.doma:doma-processor:${domaVersion}")
 
     /* aws sdk */
     implementation("com.amazonaws:aws-xray-recorder-sdk-core")
