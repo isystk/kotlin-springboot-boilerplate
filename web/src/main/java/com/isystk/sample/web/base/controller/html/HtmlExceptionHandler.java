@@ -1,41 +1,39 @@
 package com.isystk.sample.web.base.controller.html;
 
-import static com.isystk.sample.common.Const.DOUBLE_SUBMIT_ERROR;
-import static com.isystk.sample.common.Const.ERROR_VIEW;
-import static com.isystk.sample.common.Const.FORBIDDEN_VIEW;
-import static com.isystk.sample.common.Const.GLOBAL_DANGER_MESSAGE;
-import static com.isystk.sample.common.Const.NOTFOUND_VIEW;
-import static com.isystk.sample.common.Const.OPTIMISTIC_LOCKING_FAILURE_ERROR;
+import static com.isystk.sample.common.Const.*;
+
+import java.io.PrintWriter;
+import java.io.StringWriter;
+import java.util.Locale;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.springframework.dao.OptimisticLockingFailureException;
+import org.springframework.security.access.AccessDeniedException;
+import org.springframework.web.bind.annotation.ControllerAdvice;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.servlet.support.RequestContextUtils;
+import org.springframework.web.servlet.view.RedirectView;
+import org.springframework.http.HttpStatus;
 
 import com.isystk.sample.common.exception.DoubleSubmitErrorException;
 import com.isystk.sample.common.exception.FileNotFoundException;
 import com.isystk.sample.common.exception.NoDataFoundException;
 import com.isystk.sample.common.util.MessageUtils;
-import java.io.PrintWriter;
-import java.io.StringWriter;
-import java.util.Locale;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import org.slf4j.Logger;
-import org.springframework.dao.OptimisticLockingFailureException;
-import org.springframework.http.HttpStatus;
-import org.springframework.security.access.AccessDeniedException;
-import org.springframework.web.bind.annotation.ControllerAdvice;
-import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.servlet.FlashMap;
-import org.springframework.web.servlet.FlashMapManager;
-import org.springframework.web.servlet.support.RequestContextUtils;
-import org.springframework.web.servlet.view.RedirectView;
+
+import lombok.val;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * 画面機能用の例外ハンドラー
  */
 @ControllerAdvice(assignableTypes = {AbstractHtmlController.class}) // RestControllerでは動作させない
+@Slf4j
 public class HtmlExceptionHandler {
 
   private static final String VIEW_ATTR_STACKTRACE = "trace";
-  private static final Logger log = org.slf4j.LoggerFactory.getLogger(HtmlExceptionHandler.class);
 
   /**
    * ファイル、データ不存在時の例外をハンドリングする
@@ -53,7 +51,7 @@ public class HtmlExceptionHandler {
       log.debug("not found.", e);
     }
 
-    String stackTrace = getStackTraceAsString(e);
+    val stackTrace = getStackTraceAsString(e);
     outputFlashMap(request, response, VIEW_ATTR_STACKTRACE, stackTrace);
 
     return NOTFOUND_VIEW;
@@ -75,7 +73,7 @@ public class HtmlExceptionHandler {
       log.debug("forbidden.", e);
     }
 
-    String stackTrace = getStackTraceAsString(e);
+    val stackTrace = getStackTraceAsString(e);
     outputFlashMap(request, response, VIEW_ATTR_STACKTRACE, stackTrace);
 
     return FORBIDDEN_VIEW;
@@ -98,9 +96,9 @@ public class HtmlExceptionHandler {
     }
 
     // 共通メッセージを取得する
-    Locale locale = RequestContextUtils.getLocale(request);
-    String messageCode = OPTIMISTIC_LOCKING_FAILURE_ERROR;
-    RedirectView view = getRedirectView(request, response, locale, messageCode);
+    val locale = RequestContextUtils.getLocale(request);
+    val messageCode = OPTIMISTIC_LOCKING_FAILURE_ERROR;
+    val view = getRedirectView(request, response, locale, messageCode);
 
     return view;
   }
@@ -121,9 +119,9 @@ public class HtmlExceptionHandler {
     }
 
     // 共通メッセージを取得する
-    Locale locale = RequestContextUtils.getLocale(request);
-    String messageCode = DOUBLE_SUBMIT_ERROR;
-    RedirectView view = getRedirectView(request, response, locale, messageCode);
+    val locale = RequestContextUtils.getLocale(request);
+    val messageCode = DOUBLE_SUBMIT_ERROR;
+    val view = getRedirectView(request, response, locale, messageCode);
 
     return view;
   }
@@ -144,7 +142,7 @@ public class HtmlExceptionHandler {
     // ハンドルする例外がある場合は、条件分岐する
     log.error("unhandled runtime exception.", e);
 
-    String stackTrace = getStackTraceAsString(e);
+    val stackTrace = getStackTraceAsString(e);
     outputFlashMap(request, response, VIEW_ATTR_STACKTRACE, stackTrace);
 
     return ERROR_VIEW;
@@ -163,11 +161,11 @@ public class HtmlExceptionHandler {
       Locale locale,
       String messageCode) {
     // メッセージを遷移先に表示する
-    String message = MessageUtils.getMessage(messageCode, locale);
+    val message = MessageUtils.getMessage(messageCode, locale);
     outputFlashMap(request, response, GLOBAL_DANGER_MESSAGE, message);
 
-    String requestURI = request.getRequestURI();
-    RedirectView view = new RedirectView(requestURI);
+    val requestURI = request.getRequestURI();
+    val view = new RedirectView(requestURI);
 
     return view;
   }
@@ -195,11 +193,11 @@ public class HtmlExceptionHandler {
    */
   protected void outputFlashMap(HttpServletRequest request, HttpServletResponse response,
       String attr, String value) {
-    FlashMap flashMap = RequestContextUtils.getOutputFlashMap(request);
+    val flashMap = RequestContextUtils.getOutputFlashMap(request);
     flashMap.put(attr, value);
 
     // flashMapを書き込む
-    FlashMapManager flashManager = RequestContextUtils.getFlashMapManager(request);
+    val flashManager = RequestContextUtils.getFlashMapManager(request);
     flashManager.saveOutputFlashMap(flashMap, request, response);
   }
 }

@@ -1,27 +1,22 @@
 package com.isystk.sample.common.values;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+
 /**
  * ユーザーステータス
  */
+@Getter
+@AllArgsConstructor
 public enum UserStatus implements Values {
 
-  TEMPORARY(0, "仮登録"),
-  VALID(1, "有効"),
-  INVALID(2, "利用停止"),
-  WITHDRAW(3, "退会者");
+  TEMPORARY("0", "仮登録"),
+  VALID("1", "有効"),
+  INVALID("2", "利用停止"),
+  WITHDRAW("3", "退会者");
 
-  private UserStatus(int code, String text) {
-    this.code = code;
-    this.text = text;
-  }
-
-  private final Integer code;
+  private final String code;
   private final String text;
-
-  private UserStatus(Integer code, String text) {
-    this.code = code;
-    this.text = text;
-  }
 
   /**
    * コードに一致する値を取得します。
@@ -29,7 +24,7 @@ public enum UserStatus implements Values {
    * @param code
    * @return
    */
-  public static UserStatus getValue(Integer code) {
+  public static UserStatus getValue(String code) {
     if (code == null) {
       return null;
     }
@@ -41,11 +36,4 @@ public enum UserStatus implements Values {
     return null;
   }
 
-  public Integer getCode() {
-    return this.code;
-  }
-
-  public String getText() {
-    return this.text;
-  }
 }

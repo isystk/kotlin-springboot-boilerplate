@@ -1,10 +1,8 @@
 spring:
   profiles: staging
-  profiles.include:
-    - common-staging
 
 server:
-  address: stg.isystk.work
+  address: stg.aws.isystk.com
 
 ####
 # アプリケーションの設定

@@ -1,11 +1,13 @@
 package com.isystk.sample.web.base.util;
 
-import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import lombok.val;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.http.HttpHeaders;
-import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
+
+import javax.servlet.http.HttpServletRequest;
 
 public class RequestUtils {
 
@@ -30,8 +32,8 @@ public class RequestUtils {
    * @return
    */
   public static boolean isAjaxRequest(HttpServletRequest request) {
-    String header = request.getHeader(X_REQUESTED_WITH);
-    boolean isAjax = StringUtils.equalsIgnoreCase(XMLHTTP_REQUEST, header);
+    val header = request.getHeader(X_REQUESTED_WITH);
+    val isAjax = StringUtils.equalsIgnoreCase(XMLHTTP_REQUEST, header);
     return isAjax;
   }
 
@@ -40,9 +42,19 @@ public class RequestUtils {
    *
    * @return
    */
-  public static HttpServletRequest getHttpServletRequest() {
-    RequestAttributes attributes = RequestContextHolder.getRequestAttributes();
+  public static HttpServletRequest getRequest() {
+    val attributes = RequestContextHolder.getRequestAttributes();
     return ((ServletRequestAttributes) attributes).getRequest();
+  }
+
+  /**
+   * HttpServletRequestを返します。
+   *
+   * @return
+   */
+  public static HttpServletResponse getResponse() {
+    val attributes = RequestContextHolder.getRequestAttributes();
+    return ((ServletRequestAttributes) attributes).getResponse();
   }
 
   /**
@@ -51,7 +63,7 @@ public class RequestUtils {
    * @return
    */
   public static String getSiteUrl() {
-    HttpServletRequest servletRequest = getHttpServletRequest();
+    val servletRequest = getRequest();
 
     String scheme = servletRequest.getScheme();
     String host = servletRequest.getRemoteHost();
