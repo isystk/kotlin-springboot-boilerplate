@@ -1,15 +1,26 @@
 package com.isystk.sample.common.dto.mail;
 
-import lombok.Getter;
-import lombok.Setter;
-
 /**
  * 本会員登録完了メール
  */
-@Getter
-@Setter
 public class MailEntryRegistValid {
 
   String userName;
   String domain;
+
+  public String getUserName() {
+    return this.userName;
+  }
+
+  public String getDomain() {
+    return this.domain;
+  }
+
+  public void setUserName(String userName) {
+    this.userName = userName;
+  }
+
+  public void setDomain(String domain) {
+    this.domain = domain;
+  }
 }

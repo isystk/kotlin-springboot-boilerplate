@@ -124,7 +124,7 @@ subprojects {
     implementation("org.seasar.doma.boot:doma-spring-boot-starter:$springBootDomaVersion")
     implementation("org.seasar.doma:doma-kotlin:${domaVersion}")
     kapt("org.seasar.doma:doma-processor:${domaVersion}")
-    annotationProcessor("org.seasar.doma:doma-processor:${domaVersion}")
+//    annotationProcessor("org.seasar.doma:doma-processor:${domaVersion}")
 
     /* aws sdk */
     implementation("com.amazonaws:aws-xray-recorder-sdk-core")
@@ -140,12 +140,6 @@ subprojects {
 
     /* modelmapper */
     implementation("com.github.jmnarloch:modelmapper-spring-boot-starter:${modelmapperVersion}")
-
-    /* lombok */
-    compileOnly("org.projectlombok:lombok:${lombokVersion}")
-    annotationProcessor("org.projectlombok:lombok:${lombokVersion}")
-    testCompileOnly("org.projectlombok:lombok:${lombokVersion}")
-    testAnnotationProcessor("org.projectlombok:lombok:${lombokVersion}")
 
     /* google */
     implementation("com.google.guava:guava:${googleGuavaVersion}")

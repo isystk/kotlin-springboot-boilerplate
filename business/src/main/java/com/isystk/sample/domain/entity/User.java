@@ -1,5 +1,6 @@
 package com.isystk.sample.domain.entity;
 
+import com.isystk.sample.domain.dto.DomaDtoImpl;
 import java.math.BigInteger;
 import java.time.LocalDateTime;
 import org.seasar.doma.Column;
@@ -9,10 +10,6 @@ import org.seasar.doma.GenerationType;
 import org.seasar.doma.Id;
 import org.seasar.doma.Table;
 import org.seasar.doma.Version;
-import com.isystk.sample.domain.dto.DomaDtoImpl;
-
-import lombok.Getter;
-import lombok.Setter;
 
 /**
  * ユーザ
@@ -22,8 +19,6 @@ import lombok.Setter;
  */
 @Entity
 @Table(name = "user")
-@Getter
-@Setter
 public class User extends DomaDtoImpl {
 
     /** serialVersionUID */
@@ -84,4 +79,108 @@ public class User extends DomaDtoImpl {
     @Version
     @Column(name = "version")
     Long version;
+
+    public BigInteger getId() {
+        return this.id;
+    }
+
+    public String getProviderId() {
+        return this.providerId;
+    }
+
+    public String getProviderName() {
+        return this.providerName;
+    }
+
+    public String getName() {
+        return this.name;
+    }
+
+    public String getEmail() {
+        return this.email;
+    }
+
+    public LocalDateTime getEmailVerifiedAt() {
+        return this.emailVerifiedAt;
+    }
+
+    public String getPassword() {
+        return this.password;
+    }
+
+    public String getRememberToken() {
+        return this.rememberToken;
+    }
+
+    public LocalDateTime getLastLoginAt() {
+        return this.lastLoginAt;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return this.createdAt;
+    }
+
+    public LocalDateTime getUpdatedAt() {
+        return this.updatedAt;
+    }
+
+    public Boolean getDeleteFlg() {
+        return this.deleteFlg;
+    }
+
+    public Long getVersion() {
+        return this.version;
+    }
+
+    public void setId(BigInteger id) {
+        this.id = id;
+    }
+
+    public void setProviderId(String providerId) {
+        this.providerId = providerId;
+    }
+
+    public void setProviderName(String providerName) {
+        this.providerName = providerName;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setEmailVerifiedAt(LocalDateTime emailVerifiedAt) {
+        this.emailVerifiedAt = emailVerifiedAt;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public void setRememberToken(String rememberToken) {
+        this.rememberToken = rememberToken;
+    }
+
+    public void setLastLoginAt(LocalDateTime lastLoginAt) {
+        this.lastLoginAt = lastLoginAt;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public void setUpdatedAt(LocalDateTime updatedAt) {
+        this.updatedAt = updatedAt;
+    }
+
+    public void setDeleteFlg(Boolean deleteFlg) {
+        this.deleteFlg = deleteFlg;
+    }
+
+    public void setVersion(Long version) {
+        this.version = version;
+    }
 }

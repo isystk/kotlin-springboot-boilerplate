@@ -2,7 +2,6 @@ package com.isystk.sample.web.base.aop;
 
 import com.isystk.sample.common.Const;
 import com.isystk.sample.common.FunctionNameAware;
-import lombok.val;
 import org.slf4j.Logger;
 import org.slf4j.MDC;
 
@@ -23,9 +22,9 @@ public class LoggingFunctionNameInterceptor extends BaseHandlerInterceptor {
       throws Exception {
     // コントローラーの動作前
 
-    val fna = getBean(handler, FunctionNameAware.class);
+    FunctionNameAware fna = getBean(handler, FunctionNameAware.class);
     if (fna != null) {
-      val functionName = fna.getFunctionName();
+      String functionName = fna.getFunctionName();
       MDC.put(MDC_FUNCTION_NAME, functionName);
     }
 

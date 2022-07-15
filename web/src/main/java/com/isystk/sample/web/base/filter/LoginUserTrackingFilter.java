@@ -1,6 +1,5 @@
 package com.isystk.sample.web.base.filter;
 
-import lombok.val;
 import org.slf4j.Logger;
 import org.slf4j.MDC;
 import org.springframework.security.core.Authentication;
@@ -51,7 +50,7 @@ public class LoginUserTrackingFilter extends OncePerRequestFilter {
       Object principal = authentication.getPrincipal();
 
       if (principal instanceof UserIdAware) {
-        val loginId = ((UserIdAware) principal).getUserId();
+        String loginId = ((UserIdAware) principal).getUserId();
         return Optional.of(loginId);
       }
     }
@@ -61,7 +60,7 @@ public class LoginUserTrackingFilter extends OncePerRequestFilter {
 
   @Override
   protected boolean shouldNotFilter(HttpServletRequest request) {
-    val exclude = excludeUrlPatterns.stream()
+    boolean exclude = excludeUrlPatterns.stream()
         .anyMatch(p -> pathMatcher.match(p, request.getServletPath()));
 
     if (exclude) {

@@ -1,13 +1,8 @@
 package com.isystk.sample.common.values;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-
 /**
  * 性別
  */
-@Getter
-@AllArgsConstructor
 public enum Gender implements Values {
 
   WOMAN("1", "女性"),
@@ -15,6 +10,11 @@ public enum Gender implements Values {
 
   private final String code;
   private final String text;
+
+  private Gender(String code, String text) {
+    this.code = code;
+    this.text = text;
+  }
 
   /**
    * コードに一致する値を取得します。
@@ -34,4 +34,11 @@ public enum Gender implements Values {
     return null;
   }
 
+  public String getCode() {
+    return this.code;
+  }
+
+  public String getText() {
+    return this.text;
+  }
 }

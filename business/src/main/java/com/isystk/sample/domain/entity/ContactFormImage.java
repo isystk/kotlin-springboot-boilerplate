@@ -1,5 +1,6 @@
 package com.isystk.sample.domain.entity;
 
+import com.isystk.sample.domain.dto.DomaDtoImpl;
 import java.math.BigInteger;
 import java.time.LocalDateTime;
 import org.seasar.doma.Column;
@@ -9,10 +10,6 @@ import org.seasar.doma.GenerationType;
 import org.seasar.doma.Id;
 import org.seasar.doma.Table;
 import org.seasar.doma.Version;
-import com.isystk.sample.domain.dto.DomaDtoImpl;
-
-import lombok.Getter;
-import lombok.Setter;
 
 /**
  * お問い合わせ画像
@@ -22,8 +19,6 @@ import lombok.Setter;
  */
 @Entity
 @Table(name = "contact_form_image")
-@Getter
-@Setter
 public class ContactFormImage extends DomaDtoImpl {
 
     /** serialVersionUID */
@@ -60,4 +55,60 @@ public class ContactFormImage extends DomaDtoImpl {
     @Version
     @Column(name = "version")
     Long version;
+
+    public BigInteger getId() {
+        return this.id;
+    }
+
+    public BigInteger getContactFormId() {
+        return this.contactFormId;
+    }
+
+    public String getFileName() {
+        return this.fileName;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return this.createdAt;
+    }
+
+    public LocalDateTime getUpdatedAt() {
+        return this.updatedAt;
+    }
+
+    public Boolean getDeleteFlg() {
+        return this.deleteFlg;
+    }
+
+    public Long getVersion() {
+        return this.version;
+    }
+
+    public void setId(BigInteger id) {
+        this.id = id;
+    }
+
+    public void setContactFormId(BigInteger contactFormId) {
+        this.contactFormId = contactFormId;
+    }
+
+    public void setFileName(String fileName) {
+        this.fileName = fileName;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public void setUpdatedAt(LocalDateTime updatedAt) {
+        this.updatedAt = updatedAt;
+    }
+
+    public void setDeleteFlg(Boolean deleteFlg) {
+        this.deleteFlg = deleteFlg;
+    }
+
+    public void setVersion(Long version) {
+        this.version = version;
+    }
 }

@@ -3,29 +3,24 @@ package com.isystk.sample.web.front.security;
 import com.isystk.sample.domain.dao.UserDao;
 import com.isystk.sample.domain.dto.UserCriteria;
 import com.isystk.sample.domain.entity.User;
+import com.isystk.sample.web.base.security.BaseRealm;
 import java.util.HashSet;
 import java.util.List;
-
+import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
-import org.springframework.stereotype.Component;
-
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-
-import com.isystk.sample.web.base.security.BaseRealm;
-
-import lombok.val;
-import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Component;
 
 /**
  * ログインサービス
  */
 @Component
-@Slf4j
 public class UserDaoRealm extends BaseRealm {
 
+  private static final Logger log = org.slf4j.LoggerFactory.getLogger(UserDaoRealm.class);
   @Autowired
   UserDao userDao;
 
@@ -36,7 +31,7 @@ public class UserDaoRealm extends BaseRealm {
 
     try {
       // login_idをメールアドレスと見立てる
-      val criteria = new UserCriteria();
+      UserCriteria criteria = new UserCriteria();
       criteria.setEmailEq(email);
 
       // 担当者を取得して、セッションに保存する

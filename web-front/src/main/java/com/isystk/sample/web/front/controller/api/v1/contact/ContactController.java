@@ -12,7 +12,6 @@ import com.isystk.sample.web.base.controller.api.AbstractRestController;
 import com.isystk.sample.web.base.controller.api.resource.Resource;
 import com.isystk.sample.web.front.service.ContactService;
 import java.util.List;
-import lombok.val;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.validation.BindingResult;
@@ -67,7 +66,7 @@ public class ContactController extends AbstractRestController {
     }
 
     // 入力値を詰め替える
-    val tContactsDto = ObjectMapperUtils.map(form, ContactFormRepositoryDto.class);
+    ContactFormRepositoryDto tContactsDto = ObjectMapperUtils.map(form, ContactFormRepositoryDto.class);
     if (!StringUtils.isBlankOrSpace(form.contactImageName) && !StringUtils.isBlankOrSpace(form.contactImageData)) {
       List<ContactFormImageRepositoryDto> imageList = Lists.newArrayList();
       var dto = new ContactFormImageRepositoryDto();

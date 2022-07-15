@@ -23,7 +23,6 @@ import com.isystk.sample.web.base.controller.api.resource.Resource;
 import com.isystk.sample.web.front.dto.StockSearchResultDto;
 import com.isystk.sample.web.front.service.StockService;
 
-import lombok.val;
 
 @RestController
 @RequestMapping(path = API_V1_STOCKS, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -49,7 +48,7 @@ public class StockController extends AbstractRestController {
       @RequestParam(required = false, defaultValue = "1") int page) {
 
     // 入力値からDTOを作成する
-    val criteria = ObjectMapperUtils.map(form, SolrStockCriteria.class);
+    SolrStockCriteria criteria = ObjectMapperUtils.map(form, SolrStockCriteria.class);
 
     // 10件で区切って取得する
     Page<StockSearchResultDto> stocks = stockService.findSolrAll(criteria, form);

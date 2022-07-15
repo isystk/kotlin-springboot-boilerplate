@@ -1,13 +1,29 @@
 package com.isystk.sample.batch.jobs;
 
+import com.isystk.sample.common.util.FileUtils;
 import java.io.IOException;
 import java.nio.file.FileAlreadyExistsException;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.*;
-
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.Properties;
 import java.util.stream.Collectors;
-import org.springframework.batch.core.*;
+import org.slf4j.Logger;
+import org.springframework.batch.core.BatchStatus;
+import org.springframework.batch.core.Job;
+import org.springframework.batch.core.JobExecution;
+import org.springframework.batch.core.JobExecutionException;
+import org.springframework.batch.core.JobInstance;
+import org.springframework.batch.core.JobParameter;
+import org.springframework.batch.core.JobParameters;
+import org.springframework.batch.core.JobParametersIncrementer;
+import org.springframework.batch.core.JobParametersInvalidException;
 import org.springframework.batch.core.converter.JobParametersConverter;
 import org.springframework.batch.core.explore.JobExplorer;
 import org.springframework.batch.core.launch.JobLauncher;
@@ -23,41 +39,31 @@ import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.ApplicationEventPublisherAware;
 import org.springframework.util.StringUtils;
 
-import com.isystk.sample.common.util.FileUtils;
-
-import lombok.Getter;
-import lombok.val;
-import lombok.extern.slf4j.Slf4j;
-
 /**
  * 単一のジョブのみを処理するCommandLineJobRunner
  */
-@Slf4j
 public class SingleJobCommandLineRunner implements CommandLineRunner,
     ApplicationEventPublisherAware {
 
+  private static final Logger log = org.slf4j.LoggerFactory.getLogger(
+      SingleJobCommandLineRunner.class);
   @Value("${application.processFileLocation:#{systemProperties['java.io.tmpdir']}}")
   private String processFileLocation;
 
   public static final String JOB_PARAMETER_JOB_NAME = "--job";
 
-  @Getter
   @Autowired
   JobParametersConverter converter;
 
-  @Getter
   @Autowired
   JobLauncher jobLauncher;
 
-  @Getter
   @Autowired
   JobExplorer jobExplorer;
 
-  @Getter
   @Autowired
   Collection<Job> jobs = Collections.emptySet();
 
-  @Getter
   ApplicationEventPublisher publisher;
 
   @Override
@@ -67,7 +73,7 @@ public class SingleJobCommandLineRunner implements CommandLineRunner,
 
   @Override
   public void run(String... args) throws JobExecutionException, IOException {
-    val jobParameters = getJobParameters(args);
+    JobParameters jobParameters = getJobParameters(args);
 
     if (jobParameters == null) {
       throw new IllegalArgumentException("引数が指定されていません。");
@@ -86,7 +92,7 @@ public class SingleJobCommandLineRunner implements CommandLineRunner,
     createProcessFile(processFileLocation, targetJobName);
 
     // ジョブを実行する
-    val status = execute(job, jobParameters);
+    BatchStatus status = execute(job, jobParameters);
 
     // 二重起動防止ファイルを削除する
     deleteProcessFile(status, processFileLocation, targetJobName);
@@ -100,7 +106,7 @@ public class SingleJobCommandLineRunner implements CommandLineRunner,
    */
   protected JobParameters getJobParameters(String[] args) {
 
-    val props = StringUtils.splitArrayElementsIntoProperties(args, "=");
+    Properties props = StringUtils.splitArrayElementsIntoProperties(args, "=");
 
     if (log.isDebugEnabled() && props != null) {
       props.entrySet().stream()
@@ -119,11 +125,11 @@ public class SingleJobCommandLineRunner implements CommandLineRunner,
    */
   protected void createProcessFile(String processFileLocation, String jobName) throws IOException {
     // 二重起動防止ファイルの保存先を作成する
-    val location = Paths.get(processFileLocation);
+    Path location = Paths.get(processFileLocation);
     FileUtils.createDirectory(location);
 
     // 二重起動防止ファイルを作成する
-    val path = location.resolve(jobName);
+    Path path = location.resolve(jobName);
     try {
       Files.createFile(path);
     } catch (FileAlreadyExistsException e) {
@@ -143,8 +149,8 @@ public class SingleJobCommandLineRunner implements CommandLineRunner,
       throws IOException {
 
     if (status == BatchStatus.COMPLETED) {
-      val location = Paths.get(processFileLocation);
-      val path = location.resolve(jobName);
+      Path location = Paths.get(processFileLocation);
+      Path path = location.resolve(jobName);
       Files.deleteIfExists(path);
     }
   }
@@ -154,10 +160,10 @@ public class SingleJobCommandLineRunner implements CommandLineRunner,
       JobParametersInvalidException, JobParametersNotFoundException {
 
     BatchStatus status = BatchStatus.UNKNOWN;
-    val nextParameters = getNextJobParameters(job, jobParameters);
+    JobParameters nextParameters = getNextJobParameters(job, jobParameters);
 
     if (nextParameters != null) {
-      val execution = jobLauncher.run(job, nextParameters);
+      JobExecution execution = jobLauncher.run(job, nextParameters);
 
       if (publisher != null) {
         publisher.publishEvent(new JobExecutionEvent(execution));
@@ -172,9 +178,9 @@ public class SingleJobCommandLineRunner implements CommandLineRunner,
   protected JobParameters getNextJobParameters(Job job, JobParameters parameters) {
     String name = job.getName();
     JobParameters mergeParameters = new JobParameters();
-    val lastInstances = jobExplorer.getJobInstances(name, 0, 1);
-    val incrementer = job.getJobParametersIncrementer();
-    val additional = parameters.getParameters();
+    List lastInstances = jobExplorer.getJobInstances(name, 0, 1);
+    JobParametersIncrementer incrementer = job.getJobParametersIncrementer();
+    Map additional = parameters.getParameters();
 
     if (lastInstances.isEmpty()) {
       // Start from a completely clean sheet
@@ -182,8 +188,9 @@ public class SingleJobCommandLineRunner implements CommandLineRunner,
         mergeParameters = incrementer.getNext(new JobParameters());
       }
     } else {
-      val previousExecutions = jobExplorer.getJobExecutions(lastInstances.get(0));
-      val previousExecution = previousExecutions.get(0);
+      List<JobExecution> previousExecutions = jobExplorer.getJobExecutions(
+          (JobInstance) lastInstances.get(0));
+      JobExecution previousExecution = previousExecutions.get(0);
 
       if (previousExecution == null) {
         // Normally this will not happen - an instance exists with no executions
@@ -205,14 +212,14 @@ public class SingleJobCommandLineRunner implements CommandLineRunner,
   }
 
   protected boolean isStoppedOrFailed(JobExecution execution) {
-    val status = execution.getStatus();
+    BatchStatus status = execution.getStatus();
     return (status == BatchStatus.STOPPED || status == BatchStatus.FAILED);
   }
 
   protected void removeNonIdentifying(Map<String, JobParameter> parameters) {
     Map<String, JobParameter> copy = new HashMap<>(parameters);
 
-    for (val parameter : copy.entrySet()) {
+    for (Map.Entry<String, JobParameter> parameter : copy.entrySet()) {
       if (!parameter.getValue().isIdentifying()) {
         parameters.entrySet().stream().filter(e -> !parameter.getKey().equals(e.getKey())).collect(
             Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
@@ -226,5 +233,25 @@ public class SingleJobCommandLineRunner implements CommandLineRunner,
     temp.putAll(parameters);
     merged = new JobParameters(temp);
     return merged;
+  }
+
+  public JobParametersConverter getConverter() {
+    return this.converter;
+  }
+
+  public JobLauncher getJobLauncher() {
+    return this.jobLauncher;
+  }
+
+  public JobExplorer getJobExplorer() {
+    return this.jobExplorer;
+  }
+
+  public Collection<Job> getJobs() {
+    return this.jobs;
+  }
+
+  public ApplicationEventPublisher getPublisher() {
+    return this.publisher;
   }
 }

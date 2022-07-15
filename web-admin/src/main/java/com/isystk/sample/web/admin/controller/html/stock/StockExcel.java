@@ -8,7 +8,6 @@ import com.isystk.sample.web.base.view.ExcelView;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
-import lombok.val;
 import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.FillPatternType;
 import org.apache.poi.ss.usermodel.Font;
@@ -47,7 +46,7 @@ public class StockExcel implements ExcelView.Callback {
 
     // 明細
     @SuppressWarnings("unchecked")
-    val stocks = (List<Stock>) data;
+    List<Stock> stocks = (List<Stock>) data;
 
     int count = 1;
     for (Stock stock : stocks) {

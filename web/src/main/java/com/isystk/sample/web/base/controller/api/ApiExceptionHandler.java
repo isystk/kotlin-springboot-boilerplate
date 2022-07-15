@@ -1,36 +1,38 @@
 package com.isystk.sample.web.base.controller.api;
 
-import static com.isystk.sample.common.Const.*;
+import static com.isystk.sample.common.Const.NO_DATA_FOUND_ERROR;
+import static com.isystk.sample.common.Const.UNEXPECTED_ERROR;
+import static com.isystk.sample.common.Const.VALIDATION_ERROR;
 
 import com.isystk.sample.common.exception.ErrorMessagesException;
+import com.isystk.sample.common.exception.NoDataFoundException;
+import com.isystk.sample.common.exception.ValidationErrorException;
+import com.isystk.sample.common.util.MessageUtils;
+import com.isystk.sample.web.base.controller.api.resource.ErrorResourceImpl;
+import com.isystk.sample.web.base.controller.api.resource.FieldErrorResource;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
 import java.util.Map;
-
+import org.slf4j.Logger;
 import org.slf4j.MDC;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
-import com.isystk.sample.common.exception.NoDataFoundException;
-import com.isystk.sample.common.exception.ValidationErrorException;
-import com.isystk.sample.common.util.MessageUtils;
-import com.isystk.sample.web.base.controller.api.resource.ErrorResourceImpl;
-import com.isystk.sample.web.base.controller.api.resource.FieldErrorResource;
-
-import lombok.val;
-import lombok.extern.slf4j.Slf4j;
-
 /**
  * API用の例外ハンドラー
  */
 @RestControllerAdvice(annotations = RestController.class) // HTMLコントローラーの例外を除外する
-@Slf4j
 public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
+
+  private static final Logger log = org.slf4j.LoggerFactory.getLogger(ApiExceptionHandler.class);
 
   /**
    * 入力チェックエラーのハンドリング
@@ -41,19 +43,19 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
    */
   @ExceptionHandler(ValidationErrorException.class)
   public ResponseEntity<Object> handleValidationErrorException(Exception ex, WebRequest request) {
-    val headers = new HttpHeaders();
-    val status = HttpStatus.BAD_REQUEST;
-    val fieldErrorContexts = new ArrayList<FieldErrorResource>();
+    HttpHeaders headers = new HttpHeaders();
+    HttpStatus status = HttpStatus.BAD_REQUEST;
+    List fieldErrorContexts = new ArrayList<FieldErrorResource>();
 
     if (ex instanceof ValidationErrorException) {
-      val vee = (ValidationErrorException) ex;
+      ValidationErrorException vee = (ValidationErrorException) ex;
 
       vee.getErrors().ifPresent(errors -> {
-        val fieldErrors = errors.getFieldErrors();
+        List<FieldError> fieldErrors = errors.getFieldErrors();
 
         if (fieldErrors != null) {
           fieldErrors.forEach(fieldError -> {
-            val fieldErrorResource = new FieldErrorResource();
+            FieldErrorResource fieldErrorResource = new FieldErrorResource();
             fieldErrorResource.setFieldName(fieldError.getField());
             fieldErrorResource.setErrorType(fieldError.getCode());
             fieldErrorResource.setErrorMessage(fieldError.getDefaultMessage());
@@ -63,9 +65,9 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
       });
     }
 
-    val locale = request.getLocale();
-    val message = MessageUtils.getMessage(VALIDATION_ERROR, null, "validation error", locale);
-    val errorContext = new ErrorResourceImpl();
+    Locale locale = request.getLocale();
+    String message = MessageUtils.getMessage(VALIDATION_ERROR, null, "validation error", locale);
+    ErrorResourceImpl errorContext = new ErrorResourceImpl();
     errorContext.setMessage(message);
     errorContext.setFieldErrors(fieldErrorContexts);
 
@@ -81,11 +83,11 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
    */
   @ExceptionHandler(ErrorMessagesException.class)
   public ResponseEntity<Object> handleErrorMessagesException(Exception ex, WebRequest request) {
-    val headers = new HttpHeaders();
-    val status = HttpStatus.BAD_REQUEST;
-    val fieldErrorContexts = new ArrayList<FieldErrorResource>();
+    HttpHeaders headers = new HttpHeaders();
+    HttpStatus status = HttpStatus.BAD_REQUEST;
+    List fieldErrorContexts = new ArrayList<FieldErrorResource>();
 
-    val errorContext = new ErrorResourceImpl();
+    ErrorResourceImpl errorContext = new ErrorResourceImpl();
     errorContext.setMessage(ex.getMessage());
     errorContext.setFieldErrors(fieldErrorContexts);
 
@@ -101,15 +103,15 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
    */
   @ExceptionHandler(NoDataFoundException.class)
   public ResponseEntity<Object> handleNoDataFoundException(Exception ex, WebRequest request) {
-    val headers = new HttpHeaders();
-    val status = HttpStatus.OK;
+    HttpHeaders headers = new HttpHeaders();
+    HttpStatus status = HttpStatus.OK;
 
     String parameterDump = this.dumpParameterMap(request.getParameterMap());
     log.info("no data found. dump: {}", parameterDump);
 
-    val message = MessageUtils
+    String message = MessageUtils
         .getMessage(NO_DATA_FOUND_ERROR, null, "no data found", request.getLocale());
-    val errorResource = new ErrorResourceImpl();
+    ErrorResourceImpl errorResource = new ErrorResourceImpl();
     errorResource.setRequestId(String.valueOf(MDC.get("X-Track-Id")));
     errorResource.setMessage(message);
     errorResource.setFieldErrors(new ArrayList<>());
@@ -136,9 +138,9 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
     String parameterDump = this.dumpParameterMap(request.getParameterMap());
     log.error(String.format("unexpected error has occurred. dump: %s", parameterDump), ex);
 
-    val locale = request.getLocale();
-    val message = MessageUtils.getMessage(UNEXPECTED_ERROR, null, "unexpected error", locale);
-    val errorResource = new ErrorResourceImpl();
+    Locale locale = request.getLocale();
+    String message = MessageUtils.getMessage(UNEXPECTED_ERROR, null, "unexpected error", locale);
+    ErrorResourceImpl errorResource = new ErrorResourceImpl();
     errorResource.setRequestId(String.valueOf(MDC.get("X-Track-Id")));
     errorResource.setMessage(message);
 

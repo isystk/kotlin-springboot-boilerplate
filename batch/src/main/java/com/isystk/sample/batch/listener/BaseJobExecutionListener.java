@@ -2,35 +2,36 @@ package com.isystk.sample.batch.listener;
 
 import static com.isystk.sample.batch.BatchConst.MDC_BATCH_ID;
 
-import java.time.format.DateTimeFormatter;
-
-import org.slf4j.MDC;
-import org.springframework.batch.core.JobExecution;
-import org.springframework.batch.core.StepExecution;
-import org.springframework.batch.core.listener.JobExecutionListenerSupport;
-
 import com.isystk.sample.batch.context.BatchContext;
 import com.isystk.sample.batch.context.BatchContextHolder;
 import com.isystk.sample.common.util.DateUtils;
 import com.isystk.sample.common.util.MDCUtils;
 import com.isystk.sample.domain.dao.AuditInfoHolder;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
+import org.slf4j.Logger;
+import org.slf4j.MDC;
+import org.springframework.batch.core.BatchStatus;
+import org.springframework.batch.core.JobExecution;
+import org.springframework.batch.core.JobInstance;
+import org.springframework.batch.core.StepExecution;
+import org.springframework.batch.core.listener.JobExecutionListenerSupport;
 
-import lombok.val;
-import lombok.extern.slf4j.Slf4j;
-
-@Slf4j
 public abstract class BaseJobExecutionListener extends JobExecutionListenerSupport {
 
   // yyyy/MM/dd HH:mm:ss
   private static final DateTimeFormatter YYYY_MM_DD_HHmmss = DateTimeFormatter
       .ofPattern("yyyy/MM/dd HH:mm:ss");
+  private static final Logger log = org.slf4j.LoggerFactory.getLogger(
+      BaseJobExecutionListener.class);
 
   @Override
   public void beforeJob(JobExecution jobExecution) {
-    val batchId = getBatchId();
-    val batchName = getBatchName();
-    val startTime = jobExecution.getStartTime();
-    val startDateTime = DateUtils.toLocalDateTime(startTime);
+    String batchId = getBatchId();
+    String batchName = getBatchName();
+    Date startTime = jobExecution.getStartTime();
+    LocalDateTime startDateTime = DateUtils.toLocalDateTime(startTime);
 
     MDCUtils.putIfAbsent(MDC_BATCH_ID, batchId);
 
@@ -44,7 +45,7 @@ public abstract class BaseJobExecutionListener extends JobExecutionListenerSuppo
     AuditInfoHolder.set(batchId, startDateTime);
 
     // コンテキストを設定する
-    val context = BatchContextHolder.getContext();
+    BatchContext context = BatchContextHolder.getContext();
     context.set(batchId, batchName, startDateTime);
 
     // 機能別の初期化処理を呼び出す
@@ -54,7 +55,7 @@ public abstract class BaseJobExecutionListener extends JobExecutionListenerSuppo
   @Override
   public void afterJob(JobExecution jobExecution) {
     // コンテキストを取り出す
-    val context = BatchContextHolder.getContext();
+    BatchContext context = BatchContextHolder.getContext();
 
     // 機能別の終了処理を呼び出す
     try {
@@ -65,15 +66,15 @@ public abstract class BaseJobExecutionListener extends JobExecutionListenerSuppo
     } finally {
       // 共通の終了処理
       try {
-        val batchId = context.getBatchId();
-        val batchName = context.getBatchName();
-        val jobStatus = jobExecution.getStatus();
-        val endTime = jobExecution.getEndTime();
+        String batchId = context.getBatchId();
+        String batchName = context.getBatchName();
+        BatchStatus jobStatus = jobExecution.getStatus();
+        Date endTime = jobExecution.getEndTime();
 
         if (log.isDebugEnabled()) {
-          val jobId = jobExecution.getJobId();
-          val jobInstance = jobExecution.getJobInstance();
-          val jobInstanceId = jobInstance.getInstanceId();
+          Long jobId = jobExecution.getJobId();
+          JobInstance jobInstance = jobExecution.getJobInstance();
+          long jobInstanceId = jobInstance.getInstanceId();
           log.debug("job executed. [job={}(JobInstanceId:{} status:{})] in {}ms", jobId,
               jobInstanceId,
               jobStatus, took(jobExecution));

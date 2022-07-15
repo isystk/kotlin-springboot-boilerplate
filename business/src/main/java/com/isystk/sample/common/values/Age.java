@@ -1,13 +1,8 @@
 package com.isystk.sample.common.values;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-
 /**
  * 年齢
  */
-@Getter
-@AllArgsConstructor
 public enum Age implements Values {
 
   UNDER_19("1", "～19歳"),
@@ -19,6 +14,11 @@ public enum Age implements Values {
 
   private final String code;
   private final String text;
+
+  private Age(String code, String text) {
+    this.code = code;
+    this.text = text;
+  }
 
   /**
    * コードに一致する値を取得します。
@@ -38,4 +38,11 @@ public enum Age implements Values {
     return null;
   }
 
+  public String getCode() {
+    return this.code;
+  }
+
+  public String getText() {
+    return this.text;
+  }
 }

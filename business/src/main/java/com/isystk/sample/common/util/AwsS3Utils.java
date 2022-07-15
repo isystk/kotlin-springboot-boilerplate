@@ -9,25 +9,30 @@ import com.amazonaws.client.builder.AwsClientBuilder.EndpointConfiguration;
 import com.amazonaws.internal.StaticCredentialsProvider;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3ClientBuilder;
-import com.amazonaws.services.s3.model.*;
+import com.amazonaws.services.s3.model.CopyObjectRequest;
+import com.amazonaws.services.s3.model.CopyObjectResult;
+import com.amazonaws.services.s3.model.ListObjectsRequest;
+import com.amazonaws.services.s3.model.ListObjectsV2Request;
+import com.amazonaws.services.s3.model.ListObjectsV2Result;
+import com.amazonaws.services.s3.model.ObjectListing;
+import com.amazonaws.services.s3.model.S3Object;
+import com.amazonaws.services.s3.model.S3ObjectSummary;
 import com.google.common.collect.Lists;
 import com.isystk.sample.common.Environment;
 import com.isystk.sample.common.exception.SystemException;
 import java.io.File;
-import lombok.extern.slf4j.Slf4j;
+import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 
-import java.util.List;
-
 @Configuration
-@Slf4j
 public class AwsS3Utils {
 
   /** ログ */
   protected static final Logger logger = LoggerFactory.getLogger(AwsS3Utils.class);
+  private static final Logger log = LoggerFactory.getLogger(AwsS3Utils.class);
 
   public static String ENDPOINT_URL;
   public static String REGION;

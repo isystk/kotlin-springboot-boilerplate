@@ -20,11 +20,11 @@ import com.isystk.sample.domain.dto.ContactFormRepositoryDto;
 import com.isystk.sample.domain.entity.ContactForm;
 import com.isystk.sample.domain.entity.ContactFormImage;
 import java.math.BigInteger;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
-import lombok.val;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -137,10 +137,10 @@ public class ContactFormRepository extends BaseRepository {
               imageHelper.saveFileData(e.getContactImageData(), "/contacts", e.getContactImageName(), true);
             });
 
-    val time = DateUtils.getNow();
+    LocalDateTime time = DateUtils.getNow();
 
     // お問い合わせテーブル
-    val contactForm = ObjectMapperUtils.map(contactFormDto, ContactForm.class);
+    ContactForm contactForm = ObjectMapperUtils.map(contactFormDto, ContactForm.class);
     contactForm.setCreatedAt(time); // 作成日
     contactForm.setUpdatedAt(time); // 更新日
     contactForm.setDeleteFlg(false); // 削除フラグ
@@ -150,7 +150,7 @@ public class ContactFormRepository extends BaseRepository {
     // お問い合わせ画像テーブル
     contactFormDto.getImageList().stream()
         .forEach((e) -> {
-          val contactFormImage = new ContactFormImage();
+          ContactFormImage contactFormImage = new ContactFormImage();
           contactFormImage.setContactFormId(contactForm.getId());
           contactFormImage.setFileName(e.getContactImageName());
           contactFormImage.setCreatedAt(time); // 作成日
@@ -176,14 +176,15 @@ public class ContactFormRepository extends BaseRepository {
           imageHelper.saveFileData(e.getContactImageData(), "/contacts", e.getContactImageName(), true);
         });
 
-    val time = DateUtils.getNow();
+    LocalDateTime time = DateUtils.getNow();
 
-    val before = contactFormDao.selectById(contactFormDto.getId())
+    ContactForm before = contactFormDao.selectById(contactFormDto.getId())
         .orElseThrow(
             () -> new NoDataFoundException("contactForm_id=" + contactFormDto.getId() + " のデータが見つかりません。"));
 
     // お問い合わせテーブル
-    val contactForm = ObjectMapperUtils.mapExcludeNull(contactFormDto, before);
+
+    ContactForm contactForm = ObjectMapperUtils.mapExcludeNull(contactFormDto, before);
     contactForm.setUpdatedAt(time); // 更新日
     contactFormDao.update(contactForm);
 
@@ -196,7 +197,7 @@ public class ContactFormRepository extends BaseRepository {
     });
     Optional.ofNullable(contactFormDto.getImageList()).orElse(Lists.newArrayList()).stream()
         .forEach((e) -> {
-          val contactFormImage = new ContactFormImage();
+          ContactFormImage contactFormImage = new ContactFormImage();
           contactFormImage.setContactFormId(contactForm.getId());
           contactFormImage.setFileName(e.getContactImageName());
           contactFormImage.setCreatedAt(time); // 作成日
@@ -215,10 +216,10 @@ public class ContactFormRepository extends BaseRepository {
    * @return
    */
   public ContactForm delete(final BigInteger contactFormId) {
-    val contactForm = contactFormDao.selectById(contactFormId)
+    ContactForm contactForm = contactFormDao.selectById(contactFormId)
         .orElseThrow(() -> new NoDataFoundException("contactForm_id=" + contactFormId + " のデータが見つかりません。"));
 
-    val time = DateUtils.getNow();
+    LocalDateTime time = DateUtils.getNow();
     {
       contactForm.setUpdatedAt(time); // 削除日
       contactForm.setDeleteFlg(true); // 削除フラグ

@@ -1,7 +1,6 @@
 package com.isystk.sample.web.base.view;
 
 import com.isystk.sample.common.util.EncodeUtils;
-import lombok.val;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.springframework.web.servlet.view.document.AbstractXlsxView;
 
@@ -51,8 +50,8 @@ public class ExcelView extends AbstractXlsxView {
       HttpServletResponse response) throws Exception {
 
     // ファイル名に日本語を含めても文字化けしないようにUTF-8にエンコードする
-    val encodedFilename = EncodeUtils.encodeUtf8(filename);
-    val contentDisposition = String.format("attachment; filename*=UTF-8''%s", encodedFilename);
+    String encodedFilename = EncodeUtils.encodeUtf8(filename);
+    String contentDisposition = String.format("attachment; filename*=UTF-8''%s", encodedFilename);
     response.setHeader(CONTENT_DISPOSITION, contentDisposition);
 
     // Excelブックを構築する

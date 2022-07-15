@@ -14,7 +14,6 @@ import com.isystk.sample.web.front.dto.StockSearchResultDto;
 import java.math.BigInteger;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
-import lombok.val;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -66,7 +65,7 @@ public class StockService extends BaseTransactionalService {
    */
   public StockSearchResultDto findById(BigInteger stockId) {
     // 1件取得する
-    val stock = stockRepository.findById(stockId);
+    StockRepositoryDto stock = stockRepository.findById(stockId);
     return convertDbToFrontStockDto(stock);
   }
 

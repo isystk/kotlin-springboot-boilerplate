@@ -1,7 +1,16 @@
 package com.isystk.sample.web.admin.controller.html.auth;
 
-import static com.isystk.sample.common.Const.*;
+import static com.isystk.sample.common.Const.GLOBAL_DANGER_MESSAGE;
+import static com.isystk.sample.common.Const.GLOBAL_SUCCESS_MESSAGE;
+import static com.isystk.sample.common.Const.LOGIN_FAILURE_URL;
+import static com.isystk.sample.common.Const.LOGIN_SUCCESS_URL;
+import static com.isystk.sample.common.Const.LOGIN_TIMEOUT_URL;
+import static com.isystk.sample.common.Const.LOGIN_URL;
+import static com.isystk.sample.common.Const.LOGOUT_SUCCESS_URL;
 
+import com.isystk.sample.common.helper.StaffHelper;
+import com.isystk.sample.web.base.controller.html.AbstractHtmlController;
+import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -10,18 +19,13 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.isystk.sample.common.helper.StaffHelper;
-import com.isystk.sample.web.base.controller.html.AbstractHtmlController;
-
-import lombok.extern.slf4j.Slf4j;
-
 /**
  * 管理側ログイン
  */
 @Controller
-@Slf4j
 public class LoginController extends AbstractHtmlController {
 
+  private static final Logger log = org.slf4j.LoggerFactory.getLogger(LoginController.class);
   @Autowired
   StaffHelper staffHelper;
 

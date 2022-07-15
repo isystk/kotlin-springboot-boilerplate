@@ -1,13 +1,8 @@
 package com.isystk.sample.common.values;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-
 /**
  * メールテンプレート区分
  */
-@Getter
-@AllArgsConstructor
 public enum MailTemplateGroup implements Values {
 
   ENTRY_REGIST("1", "会員登録"),
@@ -16,6 +11,11 @@ public enum MailTemplateGroup implements Values {
 
   private final String code;
   private final String text;
+
+  private MailTemplateGroup(String code, String text) {
+    this.code = code;
+    this.text = text;
+  }
 
   /**
    * コードに一致する値を取得します。
@@ -33,5 +33,13 @@ public enum MailTemplateGroup implements Values {
       }
     }
     return null;
+  }
+
+  public String getCode() {
+    return this.code;
+  }
+
+  public String getText() {
+    return this.text;
   }
 }

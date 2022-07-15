@@ -1,7 +1,6 @@
 package com.isystk.sample.web.base.aop;
 
 import com.isystk.sample.web.base.controller.api.AbstractRestController;
-import lombok.val;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
@@ -42,7 +41,7 @@ public abstract class BaseHandlerInterceptor extends HandlerInterceptorAdapter {
    * @return
    */
   protected boolean isRestController(Object handler) {
-    val bean = getBean(handler, AbstractRestController.class);
+    AbstractRestController bean = getBean(handler, AbstractRestController.class);
 
     if (bean instanceof AbstractRestController) {
       return true;
@@ -77,7 +76,7 @@ public abstract class BaseHandlerInterceptor extends HandlerInterceptorAdapter {
   protected <T> T getBean(Object handler, Class<T> clazz) {
 
     if (handler != null && handler instanceof HandlerMethod) {
-      val hm = ((HandlerMethod) handler).getBean();
+      Object hm = ((HandlerMethod) handler).getBean();
 
       if (clazz.isAssignableFrom(hm.getClass())) {
         return (T) hm;

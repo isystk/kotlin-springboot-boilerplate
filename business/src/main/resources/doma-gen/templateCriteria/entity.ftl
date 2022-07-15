@@ -12,9 +12,6 @@ import java.util.List;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
-import lombok.Getter;
-import lombok.Setter;
-
 /**
 <#if showDbComment && comment??>
  * ${comment}
@@ -26,8 +23,6 @@ import lombok.Setter;
  * @author ${lib.author}
 </#if>
  */
-@Getter
-@Setter
 public class ${simpleName}Criteria {
 
 <#list ownEntityPropertyDescs as property>

@@ -12,9 +12,6 @@ import ${importName};
 </#list>
 import com.isystk.sample.domain.dto.DomaDtoImpl;
 
-import lombok.Getter;
-import lombok.Setter;
-
 /**
 <#if showDbComment && comment??>
  * ${comment}
@@ -30,8 +27,6 @@ import lombok.Setter;
 <#if showCatalogName && catalogName?? || showSchemaName && schemaName?? || showTableName && tableName??>
 @Table(<#if showCatalogName && catalogName??>catalog = "${catalogName}"</#if><#if showSchemaName && schemaName??><#if showCatalogName && catalogName??>, </#if>schema = "${schemaName}"</#if><#if showTableName><#if showCatalogName && catalogName?? || showSchemaName && schemaName??>, </#if>name = "${tableName}"</#if>)
 </#if>
-@Getter
-@Setter
 public class ${simpleName} extends DomaDtoImpl {
 
     /** serialVersionUID */

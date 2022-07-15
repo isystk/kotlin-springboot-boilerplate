@@ -1,15 +1,12 @@
 package com.isystk.sample.domain.entity;
 
+import com.isystk.sample.domain.dto.DomaDtoImpl;
 import java.time.LocalDateTime;
 import org.seasar.doma.Column;
 import org.seasar.doma.Entity;
 import org.seasar.doma.Id;
 import org.seasar.doma.Table;
 import org.seasar.doma.Version;
-import com.isystk.sample.domain.dto.DomaDtoImpl;
-
-import lombok.Getter;
-import lombok.Setter;
 
 /**
  * メールテンプレート
@@ -19,8 +16,6 @@ import lombok.Setter;
  */
 @Entity
 @Table(name = "mail_template")
-@Getter
-@Setter
 public class MailTemplate extends DomaDtoImpl {
 
     /** serialVersionUID */
@@ -60,4 +55,68 @@ public class MailTemplate extends DomaDtoImpl {
     @Version
     @Column(name = "version")
     Long version;
+
+    public Integer getMailTemplateId() {
+        return this.mailTemplateId;
+    }
+
+    public Byte getMailTemplateDiv() {
+        return this.mailTemplateDiv;
+    }
+
+    public String getTitle() {
+        return this.title;
+    }
+
+    public String getText() {
+        return this.text;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return this.createdAt;
+    }
+
+    public LocalDateTime getUpdatedAt() {
+        return this.updatedAt;
+    }
+
+    public Boolean getDeleteFlg() {
+        return this.deleteFlg;
+    }
+
+    public Long getVersion() {
+        return this.version;
+    }
+
+    public void setMailTemplateId(Integer mailTemplateId) {
+        this.mailTemplateId = mailTemplateId;
+    }
+
+    public void setMailTemplateDiv(Byte mailTemplateDiv) {
+        this.mailTemplateDiv = mailTemplateDiv;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public void setText(String text) {
+        this.text = text;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public void setUpdatedAt(LocalDateTime updatedAt) {
+        this.updatedAt = updatedAt;
+    }
+
+    public void setDeleteFlg(Boolean deleteFlg) {
+        this.deleteFlg = deleteFlg;
+    }
+
+    public void setVersion(Long version) {
+        this.version = version;
+    }
 }

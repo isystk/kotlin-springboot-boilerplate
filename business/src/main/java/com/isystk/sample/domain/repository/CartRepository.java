@@ -19,6 +19,7 @@ import com.isystk.sample.domain.dto.CartCriteria;
 import com.isystk.sample.domain.dto.CartRepositoryDto;
 import com.isystk.sample.domain.dto.StockCriteria;
 import com.isystk.sample.domain.entity.Cart;
+import com.isystk.sample.domain.entity.MailTemplate;
 import com.isystk.sample.domain.entity.OrderHistory;
 import com.isystk.sample.domain.entity.Stock;
 import com.isystk.sample.domain.entity.User;
@@ -26,10 +27,10 @@ import com.stripe.Stripe;
 import com.stripe.exception.StripeException;
 import com.stripe.model.PaymentIntent;
 import java.math.BigInteger;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
-import lombok.val;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -111,10 +112,10 @@ public class CartRepository extends BaseRepository {
    * @return
    */
   public List<CartRepositoryDto> addCart(BigInteger userId, BigInteger stockId) {
-    val time = DateUtils.getNow();
+    LocalDateTime time = DateUtils.getNow();
 
     // 商品テーブル
-    val cart = new Cart();
+    Cart cart = new Cart();
     cart.setUserId(userId);
     cart.setStockId(stockId);
     cart.setCreatedAt(time); // 作成日
@@ -192,7 +193,7 @@ public class CartRepository extends BaseRepository {
    * @return
    */
   public boolean checkout(User user) {
-    val time = DateUtils.getNow();
+    LocalDateTime time = DateUtils.getNow();
 
     var cartList = findCart(user.getId());
 
@@ -240,15 +241,15 @@ public class CartRepository extends BaseRepository {
 
     // ユーザ宛に購入完了メール送信
     int amount = cartList.stream().mapToInt(e->e.getStock().getPrice()).sum();
-    val mailTemplate = mailTemplateRepository.getMailTemplate(MailTemplateDiv.STOCK_PAYMENT_COMPLETE);
-    val subject = mailTemplate.getTitle();
-    val templateBody = mailTemplate.getText();
+    MailTemplate mailTemplate = mailTemplateRepository.getMailTemplate(MailTemplateDiv.STOCK_PAYMENT_COMPLETE);
+    String subject = mailTemplate.getTitle();
+    String templateBody = mailTemplate.getText();
     var dto = new MailStockPaymentComplete();
     dto.setUserName(user.getName());
     dto.setAmount(amount);
     Map<String, Object> objects = Maps.newHashMap();
     objects.put("dto", dto);
-    val body = sendMailHelper.getMailBody(templateBody, objects);
+    String body = sendMailHelper.getMailBody(templateBody, objects);
     sendMailHelper.sendMail(fromAddress, user.getEmail(), subject, body);
 
     return true;

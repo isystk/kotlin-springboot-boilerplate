@@ -1,27 +1,24 @@
 package com.isystk.sample.common.helper;
 
+import com.isystk.sample.common.exception.NoDataFoundException;
 import com.isystk.sample.common.util.DateUtils;
+import com.isystk.sample.domain.dao.AuditInfoHolder;
 import com.isystk.sample.domain.dao.UserDao;
 import com.isystk.sample.domain.dto.UserCriteria;
 import com.isystk.sample.domain.entity.User;
 import java.math.BigInteger;
 import java.util.List;
-
+import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
-import com.isystk.sample.common.exception.NoDataFoundException;
-import com.isystk.sample.domain.dao.AuditInfoHolder;
-
-import lombok.extern.slf4j.Slf4j;
 
 /**
  * ユーザーヘルパー
  */
 @Component
-@Slf4j
 public class UserHelper {
 
+  private static final Logger log = org.slf4j.LoggerFactory.getLogger(UserHelper.class);
   @Autowired
   UserDao userDao;
 

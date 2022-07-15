@@ -8,7 +8,6 @@ import org.springframework.batch.core.job.flow.FlowExecutionStatus;
 import org.springframework.batch.core.job.flow.JobExecutionDecider;
 import org.springframework.batch.item.ExecutionContext;
 
-import lombok.val;
 
 /**
  * 基底ジョブデサイダー
@@ -17,7 +16,7 @@ public abstract class BaseJobDecider implements JobExecutionDecider {
 
   @Override
   public FlowExecutionStatus decide(JobExecution jobExecution, StepExecution stepExecution) {
-    val context = jobExecution.getExecutionContext();
+    ExecutionContext context = jobExecution.getExecutionContext();
 
     if (!decideToProceed(context)) {
       return new FlowExecutionStatus(EXECUTION_STATUS_SKIP);
