@@ -4,10 +4,10 @@ import com.google.common.collect.Lists;
 import com.isystk.sample.common.util.DateUtils;
 import com.isystk.sample.common.util.ObjectMapperUtils;
 import com.isystk.sample.domain.dto.StockCriteria;
+import com.isystk.sample.domain.dto.StockRepositoryDto;
 import com.isystk.sample.domain.repository.StockRepository;
 import com.isystk.sample.solr.dto.SolrStock;
 import java.util.List;
-import lombok.val;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -33,7 +33,7 @@ public class SolrStockService extends BaseTransactionalService {
     // 有効な商品を全件取得する
     var criteria = new StockCriteria();
     criteria.setDeleteFlgFalse(true);
-    val stockList = stockRepository.findAll(criteria);
+    List<StockRepositoryDto> stockList = stockRepository.findAll(criteria);
     if (stockList.size() == 0) {
       // 商品データが0件の場合は何もしない
       return;

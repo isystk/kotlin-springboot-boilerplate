@@ -12,7 +12,6 @@ import com.isystk.sample.web.admin.dto.StockSearchConditionDto;
 import java.math.BigInteger;
 import java.time.LocalTime;
 import java.util.List;
-import lombok.val;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
@@ -77,7 +76,7 @@ public class StockService extends BaseTransactionalService {
    */
   public StockRepositoryDto findById(BigInteger stockId) {
     // 1件取得する
-    val stock = stockRepository.findById(stockId);
+    StockRepositoryDto stock = stockRepository.findById(stockId);
 
     String imageData = imageHelper.getImageData("/stocks", stock.getImgpath());
     stock.setStockImageData(imageData);

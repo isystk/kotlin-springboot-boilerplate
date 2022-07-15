@@ -1,5 +1,6 @@
 package com.isystk.sample.domain.entity;
 
+import com.isystk.sample.domain.dto.DomaDtoImpl;
 import java.time.LocalDateTime;
 import org.seasar.doma.Column;
 import org.seasar.doma.Entity;
@@ -8,10 +9,6 @@ import org.seasar.doma.GenerationType;
 import org.seasar.doma.Id;
 import org.seasar.doma.Table;
 import org.seasar.doma.Version;
-import com.isystk.sample.domain.dto.DomaDtoImpl;
-
-import lombok.Getter;
-import lombok.Setter;
 
 /**
  * 管理者
@@ -21,8 +18,6 @@ import lombok.Setter;
  */
 @Entity
 @Table(name = "admin")
-@Getter
-@Setter
 public class Admin extends DomaDtoImpl {
 
     /** serialVersionUID */
@@ -71,4 +66,84 @@ public class Admin extends DomaDtoImpl {
     @Version
     @Column(name = "version")
     Long version;
+
+    public Long getId() {
+        return this.id;
+    }
+
+    public String getName() {
+        return this.name;
+    }
+
+    public String getEmail() {
+        return this.email;
+    }
+
+    public String getPassword() {
+        return this.password;
+    }
+
+    public String getRememberToken() {
+        return this.rememberToken;
+    }
+
+    public LocalDateTime getLastLoginAt() {
+        return this.lastLoginAt;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return this.createdAt;
+    }
+
+    public LocalDateTime getUpdatedAt() {
+        return this.updatedAt;
+    }
+
+    public Boolean getDeleteFlg() {
+        return this.deleteFlg;
+    }
+
+    public Long getVersion() {
+        return this.version;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public void setRememberToken(String rememberToken) {
+        this.rememberToken = rememberToken;
+    }
+
+    public void setLastLoginAt(LocalDateTime lastLoginAt) {
+        this.lastLoginAt = lastLoginAt;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public void setUpdatedAt(LocalDateTime updatedAt) {
+        this.updatedAt = updatedAt;
+    }
+
+    public void setDeleteFlg(Boolean deleteFlg) {
+        this.deleteFlg = deleteFlg;
+    }
+
+    public void setVersion(Long version) {
+        this.version = version;
+    }
 }

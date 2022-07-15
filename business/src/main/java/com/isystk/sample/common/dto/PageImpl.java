@@ -4,11 +4,6 @@ import java.io.Serializable;
 import java.util.Collections;
 import java.util.List;
 
-import lombok.Getter;
-import lombok.Setter;
-
-@Setter
-@Getter
 public class PageImpl<T> implements Page<T>, Serializable {
 
   private static final long serialVersionUID = -4365096766976038677L;
@@ -35,5 +30,45 @@ public class PageImpl<T> implements Page<T>, Serializable {
     this.page = pageable.getPage();
     this.perpage = pageable.getPerpage();
     this.totalPages = Math.max(1, (int) Math.ceil((double) count / perpage));
+  }
+
+  public List<T> getData() {
+    return this.data;
+  }
+
+  public long getCount() {
+    return this.count;
+  }
+
+  public int getPage() {
+    return this.page;
+  }
+
+  public int getPerpage() {
+    return this.perpage;
+  }
+
+  public int getTotalPages() {
+    return this.totalPages;
+  }
+
+  public void setData(List<T> data) {
+    this.data = data;
+  }
+
+  public void setCount(long count) {
+    this.count = count;
+  }
+
+  public void setPage(int page) {
+    this.page = page;
+  }
+
+  public void setPerpage(int perpage) {
+    this.perpage = perpage;
+  }
+
+  public void setTotalPages(int totalPages) {
+    this.totalPages = totalPages;
   }
 }

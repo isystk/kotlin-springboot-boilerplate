@@ -1,13 +1,8 @@
 package com.isystk.sample.common.values;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-
 /**
  * ユーザーステータス
  */
-@Getter
-@AllArgsConstructor
 public enum UserStatus implements Values {
 
   TEMPORARY("0", "仮登録"),
@@ -17,6 +12,11 @@ public enum UserStatus implements Values {
 
   private final String code;
   private final String text;
+
+  private UserStatus(String code, String text) {
+    this.code = code;
+    this.text = text;
+  }
 
   /**
    * コードに一致する値を取得します。
@@ -36,4 +36,11 @@ public enum UserStatus implements Values {
     return null;
   }
 
+  public String getCode() {
+    return this.code;
+  }
+
+  public String getText() {
+    return this.text;
+  }
 }

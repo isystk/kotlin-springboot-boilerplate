@@ -21,11 +21,11 @@ import com.isystk.sample.domain.entity.OrderHistory;
 import com.isystk.sample.domain.entity.Stock;
 import com.isystk.sample.domain.entity.User;
 import java.math.BigInteger;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
-import lombok.val;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -164,10 +164,10 @@ public class OrderHistoryRepository extends BaseRepository {
    * @return
    */
   public OrderHistory create(final OrderHistoryRepositoryDto orderHistoryDto) {
-    val time = DateUtils.getNow();
+    LocalDateTime time = DateUtils.getNow();
 
     // 注文履歴テーブル
-    val orderHistory = ObjectMapperUtils.map(orderHistoryDto, OrderHistory.class);
+    OrderHistory orderHistory = ObjectMapperUtils.map(orderHistoryDto, OrderHistory.class);
     orderHistory.setCreatedAt(time); // 作成日
     orderHistory.setUpdatedAt(time); // 更新日
     orderHistory.setDeleteFlg(false); // 削除フラグ
@@ -184,14 +184,14 @@ public class OrderHistoryRepository extends BaseRepository {
    * @return
    */
   public OrderHistory update(final OrderHistoryRepositoryDto orderHistoryDto) {
-    val time = DateUtils.getNow();
+    LocalDateTime time = DateUtils.getNow();
 
-    val before = orderHistoryDao.selectById(orderHistoryDto.getId())
+    OrderHistory before = orderHistoryDao.selectById(orderHistoryDto.getId())
         .orElseThrow(
             () -> new NoDataFoundException("orderHistory_id=" + orderHistoryDto.getId() + " のデータが見つかりません。"));
 
     // 注文履歴テーブル
-    val orderHistory = ObjectMapperUtils.mapExcludeNull(orderHistoryDto, before);
+    OrderHistory orderHistory = ObjectMapperUtils.mapExcludeNull(orderHistoryDto, before);
     orderHistory.setUpdatedAt(time); // 更新日
     orderHistoryDao.update(orderHistory);
 
@@ -204,10 +204,10 @@ public class OrderHistoryRepository extends BaseRepository {
    * @return
    */
   public OrderHistory delete(final BigInteger orderHistoryId) {
-    val orderHistory = orderHistoryDao.selectById(orderHistoryId)
+    OrderHistory orderHistory = orderHistoryDao.selectById(orderHistoryId)
         .orElseThrow(() -> new NoDataFoundException("orderHistory_id=" + orderHistoryId + " のデータが見つかりません。"));
 
-    val time = DateUtils.getNow();
+    LocalDateTime time = DateUtils.getNow();
     orderHistory.setUpdatedAt(time); // 削除日
     orderHistory.setDeleteFlg(true); // 削除フラグ
     int updated = orderHistoryDao.update(orderHistory);

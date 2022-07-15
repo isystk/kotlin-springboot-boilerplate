@@ -4,15 +4,13 @@ import static com.isystk.sample.common.AdminUrl.CONTACTS_EDIT;
 
 import com.isystk.sample.common.util.ObjectMapperUtils;
 import com.isystk.sample.common.util.StringUtils;
-import com.isystk.sample.common.values.Gender;
 import com.isystk.sample.domain.dto.ContactFormImageRepositoryDto;
 import com.isystk.sample.domain.dto.ContactFormRepositoryDto;
 import com.isystk.sample.web.admin.service.ContactService;
 import com.isystk.sample.web.base.controller.html.AbstractHtmlController;
 import java.util.List;
-import lombok.extern.slf4j.Slf4j;
-import lombok.val;
 import org.apache.commons.compress.utils.Lists;
+import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -29,11 +27,11 @@ import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
-@Slf4j
 @RequestMapping(CONTACTS_EDIT)
 @SessionAttributes(types = {ContactEditForm.class})
 public class ContactEditController extends AbstractHtmlController {
 
+  private static final Logger log = org.slf4j.LoggerFactory.getLogger(ContactEditController.class);
   @Autowired
   ContactService contactService;
 
@@ -66,11 +64,11 @@ public class ContactEditController extends AbstractHtmlController {
   public String editIndex(@ModelAttribute ContactEditForm form, Model model) {
 
     // 1件取得する
-    val contact = contactService.findById(form.getContactId());
+    ContactFormRepositoryDto contact = contactService.findById(form.getContactId());
 
     // 取得したDtoをFromに詰め替える
     ObjectMapperUtils.map(contact, form);
-    val contactImageList = contact.getImageList();
+    List<ContactFormImageRepositoryDto> contactImageList = contact.getImageList();
     if (0<contactImageList.size()) {
       form.setContactImageData(contactImageList.get(0).getContactImageData());
       form.setContactImageName(contactImageList.get(0).getContactImageName());
@@ -148,7 +146,7 @@ public class ContactEditController extends AbstractHtmlController {
     }
 
     // 入力値を詰め替える
-    val tContactsDto = ObjectMapperUtils.map(form, ContactFormRepositoryDto.class);
+    ContactFormRepositoryDto tContactsDto = ObjectMapperUtils.map(form, ContactFormRepositoryDto.class);
     if (!StringUtils.isBlankOrSpace(form.contactImageName) && !StringUtils.isBlankOrSpace(form.contactImageData)) {
       List<ContactFormImageRepositoryDto> imageList = Lists.newArrayList();
       var dto = new ContactFormImageRepositoryDto();

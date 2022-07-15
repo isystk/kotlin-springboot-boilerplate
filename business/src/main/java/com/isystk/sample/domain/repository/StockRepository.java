@@ -16,9 +16,9 @@ import com.isystk.sample.domain.dto.StockCriteria;
 import com.isystk.sample.domain.dto.StockRepositoryDto;
 import com.isystk.sample.domain.entity.Stock;
 import java.math.BigInteger;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
-import lombok.val;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -105,10 +105,10 @@ public class StockRepository extends BaseRepository {
     // 画像ファイルをS3にアップロードする
     imageHelper.saveFileData(stockDto.getStockImageData(), "/stocks", stockDto.getStockImageName(), true);
 
-    val time = DateUtils.getNow();
+    LocalDateTime time = DateUtils.getNow();
 
     // 商品テーブル
-    val stock = ObjectMapperUtils.map(stockDto, Stock.class);
+    Stock stock = ObjectMapperUtils.map(stockDto, Stock.class);
     stock.setImgpath(stockDto.getStockImageName());
     stock.setCreatedAt(time); // 作成日
     stock.setUpdatedAt(time); // 更新日
@@ -129,14 +129,14 @@ public class StockRepository extends BaseRepository {
     // 画像ファイルをS3にアップロードする
     imageHelper.saveFileData(stockDto.getStockImageData(), "/stocks", stockDto.getStockImageName(), true);
 
-    val time = DateUtils.getNow();
+    LocalDateTime time = DateUtils.getNow();
 
-    val before = stockDao.selectById(stockDto.getId())
+    Stock before = stockDao.selectById(stockDto.getId())
         .orElseThrow(
             () -> new NoDataFoundException("stock_id=" + stockDto.getId() + " のデータが見つかりません。"));
 
     // 商品テーブル
-    val stock = ObjectMapperUtils.mapExcludeNull(stockDto, before);
+    Stock stock = ObjectMapperUtils.mapExcludeNull(stockDto, before);
     stock.setImgpath(stockDto.getStockImageName());
     stock.setUpdatedAt(time); // 更新日
     stockDao.update(stock);
@@ -150,10 +150,10 @@ public class StockRepository extends BaseRepository {
    * @return
    */
   public Stock delete(final BigInteger stockId) {
-    val stock = stockDao.selectById(stockId)
+    Stock stock = stockDao.selectById(stockId)
         .orElseThrow(() -> new NoDataFoundException("stock_id=" + stockId + " のデータが見つかりません。"));
 
-    val time = DateUtils.getNow();
+    LocalDateTime time = DateUtils.getNow();
     stock.setUpdatedAt(time); // 削除日
     stock.setDeleteFlg(true); // 削除フラグ
     int updated = stockDao.update(stock);

@@ -2,11 +2,7 @@ package com.isystk.sample.web.admin.dto;
 
 import java.math.BigInteger;
 import java.time.LocalDate;
-import lombok.Getter;
-import lombok.Setter;
 
-@Getter
-@Setter
 public class StockSearchConditionDto {
 
   BigInteger stockId;
@@ -17,4 +13,35 @@ public class StockSearchConditionDto {
 
   LocalDate createdAtTo;
 
+  public BigInteger getStockId() {
+    return this.stockId;
+  }
+
+  public String getName() {
+    return this.name;
+  }
+
+  public LocalDate getCreatedAtFrom() {
+    return this.createdAtFrom;
+  }
+
+  public LocalDate getCreatedAtTo() {
+    return this.createdAtTo;
+  }
+
+  public void setStockId(BigInteger stockId) {
+    this.stockId = stockId;
+  }
+
+  public void setName(String name) {
+    this.name = name;
+  }
+
+  public void setCreatedAtFrom(LocalDate createdAtFrom) {
+    this.createdAtFrom = createdAtFrom;
+  }
+
+  public void setCreatedAtTo(LocalDate createdAtTo) {
+    this.createdAtTo = createdAtTo;
+  }
 }

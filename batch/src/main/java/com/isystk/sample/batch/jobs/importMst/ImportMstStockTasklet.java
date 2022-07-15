@@ -2,7 +2,13 @@ package com.isystk.sample.batch.jobs.importMst;
 
 import static com.isystk.sample.common.util.ValidateUtils.isNotEmpty;
 
+import com.isystk.sample.batch.context.BatchContext;
+import com.isystk.sample.batch.context.BatchContextHolder;
+import com.isystk.sample.batch.item.ItemError;
+import com.isystk.sample.batch.jobs.BaseTasklet;
 import com.isystk.sample.common.helper.ImageHelper;
+import com.isystk.sample.common.util.DateUtils;
+import com.isystk.sample.common.util.ObjectMapperUtils;
 import com.isystk.sample.common.util.StringUtils;
 import com.isystk.sample.domain.dao.StockDao;
 import com.isystk.sample.domain.entity.Stock;
@@ -13,32 +19,22 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
-
+import java.util.Map;
 import java.util.stream.Stream;
 import javax.validation.ValidationException;
-
 import org.apache.commons.compress.utils.Lists;
+import org.slf4j.Logger;
 import org.springframework.batch.core.StepContribution;
 import org.springframework.batch.core.scope.context.ChunkContext;
 import org.springframework.batch.repeat.RepeatStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.isystk.sample.batch.context.BatchContext;
-import com.isystk.sample.batch.context.BatchContextHolder;
-import com.isystk.sample.batch.item.ItemError;
-import com.isystk.sample.batch.jobs.BaseTasklet;
-import com.isystk.sample.common.util.DateUtils;
-import com.isystk.sample.common.util.ObjectMapperUtils;
-
-import lombok.val;
-import lombok.extern.slf4j.Slf4j;
-
 /**
  * ユーザー情報取り込みタスク
  */
-@Slf4j
 public class ImportMstStockTasklet extends BaseTasklet<ImportMstStockDto> {
 
+  private static final Logger log = org.slf4j.LoggerFactory.getLogger(ImportMstStockTasklet.class);
   @Autowired
   ImageHelper imageHelper;
 
@@ -50,14 +46,14 @@ public class ImportMstStockTasklet extends BaseTasklet<ImportMstStockDto> {
       throws IOException {
     RepeatStatus status = super.execute(contribution, chunkContext);
 
-    val context = BatchContextHolder.getContext();
-    val errors = getErrors(context);
+    BatchContext context = BatchContextHolder.getContext();
+    List<ItemError> errors = getErrors(context);
 
     if (isNotEmpty(errors)) {
       errors.forEach(e -> {
-        val sourceName = e.getSourceName();
-        val position = e.getPosition();
-        val errorMessage = e.getErrorMessage();
+        String sourceName = e.getSourceName();
+        int position = e.getPosition();
+        String errorMessage = e.getErrorMessage();
         log.error("エラーがあります。ファイル名={}, 行数={}, エラーメッセージ={}", sourceName, position, errorMessage);
       });
 
@@ -71,12 +67,12 @@ public class ImportMstStockTasklet extends BaseTasklet<ImportMstStockDto> {
   protected void doProcess(BatchContext context) {
 
     Path path = Paths.get("src/main/resources/data/stocks.csv");
-    val list = Lists.newArrayList();
+    List list = Lists.newArrayList();
     try {
       List<String> lines = Files.readAllLines(path, StandardCharsets.UTF_8);
       lines.forEach(line -> {
-        val row = StringUtils.csvSplit(line);
-        val dto = new ImportMstStockDto();
+        List<String> row = StringUtils.csvSplit(line);
+        ImportMstStockDto dto = new ImportMstStockDto();
         dto.setSourceName(path.toString());
         dto.setName(row.get(0));
         dto.setDetail(row.get(1));
@@ -89,7 +85,7 @@ public class ImportMstStockTasklet extends BaseTasklet<ImportMstStockDto> {
       e.printStackTrace();
     }
 
-    val stockList = ObjectMapperUtils.map(list, Stock[].class);
+    Stock[] stockList = ObjectMapperUtils.map(list, Stock[].class);
 
     for (Stock stock : stockList) {
       stock.setCreatedAt(DateUtils.getNow());
@@ -114,7 +110,7 @@ public class ImportMstStockTasklet extends BaseTasklet<ImportMstStockDto> {
 
   @SuppressWarnings("unchecked")
   private List<ItemError> getErrors(BatchContext context) {
-    val additionalInfo = context.getAdditionalInfo();
+    Map<String, Object> additionalInfo = context.getAdditionalInfo();
     List<ItemError> errors = (List<ItemError>) additionalInfo.get("errors");
 
     if (errors == null) {

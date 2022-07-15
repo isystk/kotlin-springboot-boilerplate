@@ -2,14 +2,15 @@ package com.isystk.sample.web.admin.controller.html.contact;
 
 import static com.isystk.sample.common.AdminUrl.CONTACTS;
 
+import com.isystk.sample.common.dto.Page;
 import com.isystk.sample.common.util.ObjectMapperUtils;
+import com.isystk.sample.domain.dto.ContactFormRepositoryDto;
 import com.isystk.sample.web.admin.dto.ContactSearchConditionDto;
 import com.isystk.sample.web.admin.service.ContactService;
 import com.isystk.sample.web.base.controller.html.AbstractHtmlController;
 import java.math.BigInteger;
 import javax.validation.Valid;
-import lombok.extern.slf4j.Slf4j;
-import lombok.val;
+import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -25,10 +26,10 @@ import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
-@Slf4j
 @RequestMapping(CONTACTS)
 public class ContactListController extends AbstractHtmlController {
 
+  private static final Logger log = org.slf4j.LoggerFactory.getLogger(ContactListController.class);
   @Autowired
   ContactService contactService;
 
@@ -67,7 +68,7 @@ public class ContactListController extends AbstractHtmlController {
     }
 
     // 10件区切りで取得する
-    val pages = contactService.findPage(formToDto(form), form);
+    Page<ContactFormRepositoryDto> pages = contactService.findPage(formToDto(form), form);
 
     // 画面に検索結果を渡す
     model.addAttribute("pages", pages);

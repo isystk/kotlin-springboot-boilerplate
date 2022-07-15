@@ -1,6 +1,5 @@
 package com.isystk.sample.web.base.util;
 
-import lombok.val;
 import org.springframework.web.util.WebUtils;
 
 import javax.servlet.http.HttpServletRequest;
@@ -19,8 +18,8 @@ public class SessionUtils {
   @SuppressWarnings("unchecked")
   public static <T> T getAttribute(HttpServletRequest request, String attributeName) {
     T ret = null;
-    val session = getSession(request);
-    val mutex = getMutex(request);
+    HttpSession session = getSession(request);
+    Object mutex = getMutex(request);
     if (mutex != null) {
       synchronized (mutex) {
         ret = (T) session.getAttribute(attributeName);
@@ -38,8 +37,8 @@ public class SessionUtils {
    * @return
    */
   public static void setAttribute(HttpServletRequest request, String attributeName, Object value) {
-    val session = getSession(request);
-    val mutex = getMutex(request);
+    HttpSession session = getSession(request);
+    Object mutex = getMutex(request);
     if (mutex != null) {
       synchronized (mutex) {
         session.setAttribute(attributeName, value);
@@ -54,10 +53,10 @@ public class SessionUtils {
    * @return
    */
   public static Object getMutex(HttpServletRequest request) {
-    val session = getSession(request);
+    HttpSession session = getSession(request);
 
     if (session != null) {
-      val mutex = WebUtils.getSessionMutex(session);
+      Object mutex = WebUtils.getSessionMutex(session);
       return mutex;
     }
 

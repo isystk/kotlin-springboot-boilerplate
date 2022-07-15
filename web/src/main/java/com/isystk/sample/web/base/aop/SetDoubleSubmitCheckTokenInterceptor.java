@@ -2,7 +2,6 @@ package com.isystk.sample.web.base.aop;
 
 import com.isystk.sample.domain.dao.DoubleSubmitCheckTokenHolder;
 import com.isystk.sample.web.base.security.DoubleSubmitCheckToken;
-import lombok.val;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.springframework.web.servlet.ModelAndView;
@@ -23,8 +22,8 @@ public class SetDoubleSubmitCheckTokenInterceptor extends BaseHandlerInterceptor
   public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
       throws Exception {
     // コントローラーの動作前
-    val expected = DoubleSubmitCheckToken.getExpectedToken(request);
-    val actual = DoubleSubmitCheckToken.getActualToken(request);
+    String expected = DoubleSubmitCheckToken.getExpectedToken(request);
+    String actual = DoubleSubmitCheckToken.getActualToken(request);
     DoubleSubmitCheckTokenHolder.set(expected, actual);
     return true;
   }
@@ -35,8 +34,8 @@ public class SetDoubleSubmitCheckTokenInterceptor extends BaseHandlerInterceptor
     // コントローラーの動作後
     if (StringUtils.equalsIgnoreCase(request.getMethod(), "POST")) {
       // POSTされたときにトークンが一致していれば新たなトークンを発行する
-      val expected = DoubleSubmitCheckToken.getExpectedToken(request);
-      val actual = DoubleSubmitCheckToken.getActualToken(request);
+      String expected = DoubleSubmitCheckToken.getExpectedToken(request);
+      String actual = DoubleSubmitCheckToken.getActualToken(request);
 
       if (expected != null && actual != null && Objects.equals(expected, actual)) {
         DoubleSubmitCheckToken.renewToken(request);

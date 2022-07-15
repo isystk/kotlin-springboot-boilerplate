@@ -1,5 +1,6 @@
 package com.isystk.sample.domain.entity;
 
+import com.isystk.sample.domain.dto.DomaDtoImpl;
 import java.math.BigInteger;
 import java.time.LocalDateTime;
 import org.seasar.doma.Column;
@@ -9,10 +10,6 @@ import org.seasar.doma.GenerationType;
 import org.seasar.doma.Id;
 import org.seasar.doma.Table;
 import org.seasar.doma.Version;
-import com.isystk.sample.domain.dto.DomaDtoImpl;
-
-import lombok.Getter;
-import lombok.Setter;
 
 /**
  * お問い合わせ
@@ -22,8 +19,6 @@ import lombok.Setter;
  */
 @Entity
 @Table(name = "contact_form")
-@Getter
-@Setter
 public class ContactForm extends DomaDtoImpl {
 
     /** serialVersionUID */
@@ -80,4 +75,100 @@ public class ContactForm extends DomaDtoImpl {
     @Version
     @Column(name = "version")
     Long version;
+
+    public BigInteger getId() {
+        return this.id;
+    }
+
+    public String getYourName() {
+        return this.yourName;
+    }
+
+    public String getTitle() {
+        return this.title;
+    }
+
+    public String getEmail() {
+        return this.email;
+    }
+
+    public String getUrl() {
+        return this.url;
+    }
+
+    public Byte getGender() {
+        return this.gender;
+    }
+
+    public Byte getAge() {
+        return this.age;
+    }
+
+    public String getContact() {
+        return this.contact;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return this.createdAt;
+    }
+
+    public LocalDateTime getUpdatedAt() {
+        return this.updatedAt;
+    }
+
+    public Boolean getDeleteFlg() {
+        return this.deleteFlg;
+    }
+
+    public Long getVersion() {
+        return this.version;
+    }
+
+    public void setId(BigInteger id) {
+        this.id = id;
+    }
+
+    public void setYourName(String yourName) {
+        this.yourName = yourName;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
+    public void setGender(Byte gender) {
+        this.gender = gender;
+    }
+
+    public void setAge(Byte age) {
+        this.age = age;
+    }
+
+    public void setContact(String contact) {
+        this.contact = contact;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public void setUpdatedAt(LocalDateTime updatedAt) {
+        this.updatedAt = updatedAt;
+    }
+
+    public void setDeleteFlg(Boolean deleteFlg) {
+        this.deleteFlg = deleteFlg;
+    }
+
+    public void setVersion(Long version) {
+        this.version = version;
+    }
 }

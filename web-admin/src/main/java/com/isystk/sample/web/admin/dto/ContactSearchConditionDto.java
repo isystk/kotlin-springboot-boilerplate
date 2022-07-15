@@ -1,12 +1,7 @@
 package com.isystk.sample.web.admin.dto;
 
-import java.math.BigInteger;
 import java.time.LocalDate;
-import lombok.Getter;
-import lombok.Setter;
 
-@Getter
-@Setter
 public class ContactSearchConditionDto {
 
   String userName;
@@ -15,4 +10,27 @@ public class ContactSearchConditionDto {
 
   LocalDate createdAtTo;
 
+  public String getUserName() {
+    return this.userName;
+  }
+
+  public LocalDate getCreatedAtFrom() {
+    return this.createdAtFrom;
+  }
+
+  public LocalDate getCreatedAtTo() {
+    return this.createdAtTo;
+  }
+
+  public void setUserName(String userName) {
+    this.userName = userName;
+  }
+
+  public void setCreatedAtFrom(LocalDate createdAtFrom) {
+    this.createdAtFrom = createdAtFrom;
+  }
+
+  public void setCreatedAtTo(LocalDate createdAtTo) {
+    this.createdAtTo = createdAtTo;
+  }
 }

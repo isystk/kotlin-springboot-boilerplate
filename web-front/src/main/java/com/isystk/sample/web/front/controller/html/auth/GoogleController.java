@@ -4,7 +4,7 @@ import static com.isystk.sample.common.FrontUrl.AUTH_GOOGLE_CALLBACK;
 
 import com.isystk.sample.common.helper.UserHelper;
 import com.isystk.sample.web.base.controller.html.AbstractHtmlController;
-import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
@@ -15,10 +15,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@Slf4j
 @RequestMapping(AUTH_GOOGLE_CALLBACK)
 public class GoogleController extends AbstractHtmlController {
 
+  private static final Logger log = org.slf4j.LoggerFactory.getLogger(GoogleController.class);
   @Autowired
   UserHelper userHelper;
 

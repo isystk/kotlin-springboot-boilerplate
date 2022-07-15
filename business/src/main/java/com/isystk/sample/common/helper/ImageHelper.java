@@ -3,28 +3,27 @@ package com.isystk.sample.common.helper;
 import com.amazonaws.services.s3.model.AmazonS3Exception;
 import com.amazonaws.services.s3.model.S3Object;
 import com.amazonaws.services.s3.model.S3ObjectSummary;
+import com.isystk.sample.common.util.AwsS3Utils;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.util.Base64;
-import com.isystk.sample.common.util.AwsS3Utils;
 import java.util.List;
 import java.util.stream.Collectors;
 import javax.imageio.ImageIO;
+import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
-
-import lombok.extern.slf4j.Slf4j;
 
 /**
  * 画像ヘルパー
  */
 @Component("img")
-@Slf4j
 public class ImageHelper {
 
+  private static final Logger log = org.slf4j.LoggerFactory.getLogger(ImageHelper.class);
   public static String BUCKET_NAME;
 
   @Value("${application.imageUploadLocation:#{systemProperties['java.io.tmpdir']}}") // 設定ファイルに定義されたアップロード先を取得する

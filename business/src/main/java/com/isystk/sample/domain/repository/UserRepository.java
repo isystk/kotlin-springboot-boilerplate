@@ -9,6 +9,7 @@ import com.isystk.sample.domain.dto.UserCriteria;
 import com.isystk.sample.domain.dto.UserRepositoryDto;
 import com.isystk.sample.domain.entity.User;
 import java.math.BigInteger;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import java.util.Optional;
@@ -22,7 +23,6 @@ import com.isystk.sample.common.service.BaseRepository;
 import com.isystk.sample.common.util.DateUtils;
 import com.isystk.sample.common.util.ObjectMapperUtils;
 
-import lombok.val;
 
 /**
  * ユーザーリポジトリ
@@ -100,7 +100,7 @@ public class UserRepository extends BaseRepository {
   public User create(final User inputUser) {
 
     // 1件登録
-    val time = DateUtils.getNow();
+    LocalDateTime time = DateUtils.getNow();
 
     inputUser.setCreatedAt(time); // 作成日
     inputUser.setUpdatedAt(time); // 更新日
@@ -119,7 +119,7 @@ public class UserRepository extends BaseRepository {
    */
   public User update(final User inputUser) {
     // 1件更新
-    val time = DateUtils.getNow();
+    LocalDateTime time = DateUtils.getNow();
     inputUser.setUpdatedAt(time); // 更新日
     int updated = userDao.update(inputUser);
 
@@ -136,7 +136,7 @@ public class UserRepository extends BaseRepository {
    * @return
    */
   public User delete(final BigInteger id) {
-    val user = userDao.selectById(id)
+    User user = userDao.selectById(id)
         .orElseThrow(() -> new NoDataFoundException("user_id=" + id + " のデータが見つかりません。"));
 
     int updated = userDao.delete(user);

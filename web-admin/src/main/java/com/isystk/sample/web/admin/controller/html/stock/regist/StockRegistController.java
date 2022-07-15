@@ -6,8 +6,7 @@ import com.isystk.sample.common.util.ObjectMapperUtils;
 import com.isystk.sample.domain.dto.StockRepositoryDto;
 import com.isystk.sample.web.admin.service.StockService;
 import com.isystk.sample.web.base.controller.html.AbstractHtmlController;
-import lombok.extern.slf4j.Slf4j;
-import lombok.val;
+import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -24,11 +23,11 @@ import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
-@Slf4j
 @RequestMapping(STOCKS_REGIST)
 @SessionAttributes(types = {StockRegistForm.class})
 public class StockRegistController extends AbstractHtmlController {
 
+  private static final Logger log = org.slf4j.LoggerFactory.getLogger(StockRegistController.class);
   @Autowired
   StockService stockService;
 
@@ -135,7 +134,7 @@ public class StockRegistController extends AbstractHtmlController {
     }
 
     // 入力値を詰め替える
-    val tStocksDto = ObjectMapperUtils.map(form, StockRepositoryDto.class);
+    StockRepositoryDto tStocksDto = ObjectMapperUtils.map(form, StockRepositoryDto.class);
 
     // 登録する
     stockService.create(tStocksDto);

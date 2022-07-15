@@ -1,5 +1,6 @@
 package com.isystk.sample.domain.entity;
 
+import com.isystk.sample.domain.dto.DomaDtoImpl;
 import java.math.BigInteger;
 import java.time.LocalDateTime;
 import org.seasar.doma.Column;
@@ -9,10 +10,6 @@ import org.seasar.doma.GenerationType;
 import org.seasar.doma.Id;
 import org.seasar.doma.Table;
 import org.seasar.doma.Version;
-import com.isystk.sample.domain.dto.DomaDtoImpl;
-
-import lombok.Getter;
-import lombok.Setter;
 
 /**
  * パスワードリセット
@@ -22,8 +19,6 @@ import lombok.Setter;
  */
 @Entity
 @Table(name = "password_reset")
-@Getter
-@Setter
 public class PasswordReset extends DomaDtoImpl {
 
     /** serialVersionUID */
@@ -60,4 +55,60 @@ public class PasswordReset extends DomaDtoImpl {
     @Version
     @Column(name = "version")
     Long version;
+
+    public BigInteger getId() {
+        return this.id;
+    }
+
+    public String getEmail() {
+        return this.email;
+    }
+
+    public String getToken() {
+        return this.token;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return this.createdAt;
+    }
+
+    public LocalDateTime getUpdatedAt() {
+        return this.updatedAt;
+    }
+
+    public Boolean getDeleteFlg() {
+        return this.deleteFlg;
+    }
+
+    public Long getVersion() {
+        return this.version;
+    }
+
+    public void setId(BigInteger id) {
+        this.id = id;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public void setUpdatedAt(LocalDateTime updatedAt) {
+        this.updatedAt = updatedAt;
+    }
+
+    public void setDeleteFlg(Boolean deleteFlg) {
+        this.deleteFlg = deleteFlg;
+    }
+
+    public void setVersion(Long version) {
+        this.version = version;
+    }
 }

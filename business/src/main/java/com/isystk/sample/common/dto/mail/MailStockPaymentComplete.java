@@ -1,15 +1,26 @@
 package com.isystk.sample.common.dto.mail;
 
-import lombok.Getter;
-import lombok.Setter;
-
 /**
  * 商品決算完了メール
  */
-@Getter
-@Setter
 public class MailStockPaymentComplete {
 
   String userName;
   Integer amount;
+
+  public String getUserName() {
+    return this.userName;
+  }
+
+  public Integer getAmount() {
+    return this.amount;
+  }
+
+  public void setUserName(String userName) {
+    this.userName = userName;
+  }
+
+  public void setAmount(Integer amount) {
+    this.amount = amount;
+  }
 }

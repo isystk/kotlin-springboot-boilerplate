@@ -1,5 +1,7 @@
 package com.isystk.sample.web.front.controller.html.register;
 
+import static com.isystk.sample.common.FrontUrl.REGISTER;
+
 import com.isystk.sample.common.exception.NoDataFoundException;
 import com.isystk.sample.common.helper.UserHelper;
 import com.isystk.sample.common.util.ObjectMapperUtils;
@@ -7,8 +9,7 @@ import com.isystk.sample.domain.entity.User;
 import com.isystk.sample.web.base.controller.html.AbstractHtmlController;
 import com.isystk.sample.web.front.service.RegisterService;
 import java.util.Optional;
-import lombok.extern.slf4j.Slf4j;
-import lombok.val;
+import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -16,19 +17,22 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.InitBinder;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
-import static com.isystk.sample.common.FrontUrl.REGISTER;
 
 /**
  * 会員登録
  */
 @Controller
-@Slf4j
 @RequestMapping(path = REGISTER)
 public class RegisterController extends AbstractHtmlController {
 
+  private static final Logger log = org.slf4j.LoggerFactory.getLogger(RegisterController.class);
   @Autowired
   RegisterService registerService;
 
@@ -73,8 +77,8 @@ public class RegisterController extends AbstractHtmlController {
     }
 
     // 入力値からDTOを作成する
-    val inputUser = ObjectMapperUtils.map(registerForm, User.class);
-    val password = registerForm.getPassword();
+    User inputUser = ObjectMapperUtils.map(registerForm, User.class);
+    String password = registerForm.getPassword();
 
     // パスワードをハッシュ化する
     inputUser.setPassword(passwordEncoder.encode(password));

@@ -2,7 +2,9 @@ package com.isystk.sample.web.admin.controller.html.stock;
 
 import static com.isystk.sample.common.AdminUrl.STOCKS;
 
+import com.isystk.sample.common.dto.Page;
 import com.isystk.sample.common.util.ObjectMapperUtils;
+import com.isystk.sample.domain.dto.StockRepositoryDto;
 import com.isystk.sample.web.admin.dto.StockSearchConditionDto;
 import com.isystk.sample.web.admin.service.StockService;
 import com.isystk.sample.web.base.controller.html.AbstractHtmlController;
@@ -12,8 +14,7 @@ import com.isystk.sample.web.base.view.PdfView;
 import java.math.BigInteger;
 import java.util.List;
 import javax.validation.Valid;
-import lombok.extern.slf4j.Slf4j;
-import lombok.val;
+import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -30,10 +31,10 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
-@Slf4j
 @RequestMapping(STOCKS)
 public class StockListController extends AbstractHtmlController {
 
+  private static final Logger log = org.slf4j.LoggerFactory.getLogger(StockListController.class);
   @Autowired
   StockService stockService;
 
@@ -72,7 +73,7 @@ public class StockListController extends AbstractHtmlController {
     }
 
     // 10件区切りで取得する
-    val pages = stockService.findPage(formToDto(form), form);
+    Page<StockRepositoryDto> pages = stockService.findPage(formToDto(form), form);
 
     // 画面に検索結果を渡す
     model.addAttribute("pages", pages);
@@ -114,7 +115,7 @@ public class StockListController extends AbstractHtmlController {
   public CsvView downloadCsv(@PathVariable String filename, StockListForm form, Model model) {
 
     // 全件取得する
-    val stocks = stockService.findAll(formToDto(form));
+    List<StockRepositoryDto> stocks = stockService.findAll(formToDto(form));
 
     // 詰め替える
     List<StockCsv> csvList = ObjectMapperUtils.mapAll(stocks, StockCsv.class);
@@ -134,10 +135,10 @@ public class StockListController extends AbstractHtmlController {
       Model model) {
 
     // 全件取得する
-    val stocks = stockService.findAll(formToDto(form));
+    List<StockRepositoryDto> stocks = stockService.findAll(formToDto(form));
 
     // Excelプック生成コールバック、データ、ダウンロード時のファイル名を指定する
-    val view = new ExcelView(new StockExcel(), stocks, filename);
+    ExcelView view = new ExcelView(new StockExcel(), stocks, filename);
 
     return new ModelAndView(view);
   }
@@ -152,10 +153,10 @@ public class StockListController extends AbstractHtmlController {
   public ModelAndView downloadPdf(@PathVariable String filename, StockListForm form, Model model) {
 
     // 全件取得する
-    val stocks = stockService.findAll(formToDto(form));
+    List<StockRepositoryDto> stocks = stockService.findAll(formToDto(form));
 
     // 帳票レイアウト、データ、ダウンロード時のファイル名を指定する
-    val view = new PdfView("reports/stocks.jrxml", stocks, filename);
+    PdfView view = new PdfView("reports/stocks.jrxml", stocks, filename);
 
     return new ModelAndView(view);
   }

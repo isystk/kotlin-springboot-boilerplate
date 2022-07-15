@@ -190,9 +190,6 @@ https://www.jetbrains.com/ja-jp/idea/download/
 # コードフォーマッターを設定する
 「Preferences - Editor - Code Style - Java」にて、Schemeのところの設定アイコンから、"intellij-java-google-style.xml" をインポートする。
 
-# Lombok pluginをインストールする(既にインストールされている場合は不要です)
-「Preferences - Plugins - Marketplace」から、"Lombok"をインストール後、InteliJを再起動する
-
 # Annotation Processingを有効にする
 「Preferences - Build,Execution,Deployment - Compiler - Annotation Processors」から、
 ”Enable annotation processing” を有効にする

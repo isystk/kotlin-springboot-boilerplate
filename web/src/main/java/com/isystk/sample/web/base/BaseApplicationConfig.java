@@ -26,7 +26,6 @@ import com.isystk.sample.web.base.controller.api.resource.DefaultResourceFactory
 import com.isystk.sample.web.base.controller.api.resource.ResourceFactory;
 import com.isystk.sample.web.base.filter.LoginUserTrackingFilter;
 
-import lombok.val;
 
 public abstract class BaseApplicationConfig
     implements WebServerFactoryCustomizer<ConfigurableServletWebServerFactory>, WebMvcConfigurer {
@@ -86,10 +85,10 @@ public abstract class BaseApplicationConfig
 
   @Bean
   public FilterRegistrationBean<LoginUserTrackingFilter> loginUserTrackingFilterBean() {
-    val filter = new LoginUserTrackingFilter();
+    LoginUserTrackingFilter filter = new LoginUserTrackingFilter();
     filter.setExcludeUrlPatterns(Arrays.asList(WEBJARS_URL, STATIC_RESOURCES_URL));
 
-    val bean = new FilterRegistrationBean<LoginUserTrackingFilter>(filter);
+    FilterRegistrationBean bean = new FilterRegistrationBean<LoginUserTrackingFilter>(filter);
     bean.setOrder(Ordered.LOWEST_PRECEDENCE);
     return bean;
   }

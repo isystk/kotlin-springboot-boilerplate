@@ -2,12 +2,13 @@ package com.isystk.sample.web.base.aop;
 
 import com.isystk.sample.common.util.MessageUtils;
 import com.isystk.sample.web.base.filter.UserIdAware;
-import lombok.val;
+import java.util.Locale;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.ui.ModelMap;
 import org.springframework.validation.BeanPropertyBindingResult;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.servlet.ModelAndView;
@@ -39,8 +40,8 @@ public class SetModelAndViewInterceptor extends BaseHandlerInterceptor {
       return;
     }
 
-    val locale = LocaleContextHolder.getLocale();
-    val pulldownOption = MessageUtils.getMessage(MAV_PULLDOWN_OPTION, locale);
+    Locale locale = LocaleContextHolder.getLocale();
+    String pulldownOption = MessageUtils.getMessage(MAV_PULLDOWN_OPTION, locale);
 
     // ログインユーザーID
     UserIdAware user = null;
@@ -65,17 +66,17 @@ public class SetModelAndViewInterceptor extends BaseHandlerInterceptor {
    * @param modelAndView
    */
   protected void retainValidateErrors(ModelAndView modelAndView) {
-    val model = modelAndView.getModelMap();
+    ModelMap model = modelAndView.getModelMap();
 
     if (model != null && model.containsAttribute(MAV_ERRORS)) {
-      val errors = model.get(MAV_ERRORS);
+      Object errors = model.get(MAV_ERRORS);
 
       if (errors != null && errors instanceof BeanPropertyBindingResult) {
-        val br = ((BeanPropertyBindingResult) errors);
+        BeanPropertyBindingResult br = ((BeanPropertyBindingResult) errors);
 
         if (br.hasErrors()) {
-          val formName = br.getObjectName();
-          val key = BindingResult.MODEL_KEY_PREFIX + formName;
+          String formName = br.getObjectName();
+          String key = BindingResult.MODEL_KEY_PREFIX + formName;
           model.addAttribute(key, errors);
           model.addAttribute(GLOBAL_DANGER_MESSAGE, MessageUtils.getMessage(VALIDATION_ERROR));
         }

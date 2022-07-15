@@ -6,7 +6,7 @@ import com.isystk.sample.domain.dto.ContactFormRepositoryDto;
 import com.isystk.sample.web.admin.service.ContactService;
 import com.isystk.sample.web.base.controller.html.AbstractHtmlController;
 import java.math.BigInteger;
-import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,10 +15,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@Slf4j
 @RequestMapping(CONTACTS)
 public class ContactDetailController extends AbstractHtmlController {
 
+  private static final Logger log = org.slf4j.LoggerFactory.getLogger(
+      ContactDetailController.class);
   @Autowired
   ContactService contactService;
 

@@ -1,16 +1,13 @@
 package com.isystk.sample.batch.jobs;
 
+import com.isystk.sample.batch.context.BatchContext;
+import com.isystk.sample.batch.context.BatchContextHolder;
+import org.slf4j.Logger;
 import org.springframework.batch.core.annotation.OnProcessError;
 import org.springframework.batch.item.ItemProcessor;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.DataBinder;
 import org.springframework.validation.Validator;
-
-import com.isystk.sample.batch.context.BatchContext;
-import com.isystk.sample.batch.context.BatchContextHolder;
-
-import lombok.val;
-import lombok.extern.slf4j.Slf4j;
 
 /**
  * 基底プロセッサー
@@ -18,23 +15,24 @@ import lombok.extern.slf4j.Slf4j;
  * @param <I>
  * @param <O>
  */
-@Slf4j
 public abstract class BaseItemProcessor<I, O> implements ItemProcessor<I, O> {
+
+  private static final Logger log = org.slf4j.LoggerFactory.getLogger(BaseItemProcessor.class);
 
   @Override
   public O process(I item) {
-    val validator = getValidator();
-    val context = BatchContextHolder.getContext();
+    Validator validator = getValidator();
+    BatchContext context = BatchContextHolder.getContext();
 
     // 対象件数を加算する
     context.increaseTotalCount();
 
     if (validator != null) {
-      val binder = new DataBinder(item);
+      DataBinder binder = new DataBinder(item);
       binder.setValidator(validator);
       binder.validate();
 
-      val result = binder.getBindingResult();
+      BindingResult result = binder.getBindingResult();
       if (result.hasErrors()) {
         // バリデーションエラーがある場合
         onValidationError(context, result, item);

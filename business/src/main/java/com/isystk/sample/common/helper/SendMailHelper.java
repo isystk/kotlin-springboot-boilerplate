@@ -2,24 +2,9 @@ package com.isystk.sample.common.helper;
 
 import static com.isystk.sample.common.util.ValidateUtils.isNotEmpty;
 
+import com.isystk.sample.common.exception.SystemException;
 import java.util.Map;
 import java.util.Properties;
-
-import com.isystk.sample.common.exception.SystemException;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.mail.MailException;
-import org.springframework.mail.SimpleMailMessage;
-import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.stereotype.Component;
-import org.thymeleaf.context.Context;
-import org.thymeleaf.spring5.SpringTemplateEngine;
-import org.thymeleaf.templateresolver.ITemplateResolver;
-import org.thymeleaf.templateresolver.StringTemplateResolver;
-
-import lombok.val;
-import lombok.extern.slf4j.Slf4j;
-
 import javax.mail.Message;
 import javax.mail.MessagingException;
 import javax.mail.Session;
@@ -27,14 +12,22 @@ import javax.mail.Transport;
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
+import org.slf4j.Logger;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.mail.MailException;
+import org.springframework.stereotype.Component;
+import org.thymeleaf.context.Context;
+import org.thymeleaf.spring5.SpringTemplateEngine;
+import org.thymeleaf.templateresolver.ITemplateResolver;
+import org.thymeleaf.templateresolver.StringTemplateResolver;
 
 /**
  * メール送信ヘルパー
  */
 @Component
-@Slf4j
 public class SendMailHelper {
 
+  private static final Logger log = org.slf4j.LoggerFactory.getLogger(SendMailHelper.class);
   @Value("${spring.mail.host}")
   private String SMTP_HOST_NAME;
 
@@ -51,7 +44,7 @@ public class SendMailHelper {
       Properties props = new Properties();
       props.put("mail.localhost.host", SMTP_HOST_NAME);
       Session session2 = Session.getDefaultInstance(props, null);
-      val message = new MimeMessage(session2);
+      MimeMessage message = new MimeMessage(session2);
 
       message.addFrom(InternetAddress.parse(fromAddress));
       message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(toAddress));
@@ -79,10 +72,10 @@ public class SendMailHelper {
    * @return
    */
   public String getMailBody(String template, Map<String, Object> objects) {
-    val templateEngine = new SpringTemplateEngine();
+    SpringTemplateEngine templateEngine = new SpringTemplateEngine();
     templateEngine.setTemplateResolver(templateResolver());
 
-    val context = new Context();
+    Context context = new Context();
     if (isNotEmpty(objects)) {
       objects.forEach(context::setVariable);
     }
@@ -91,7 +84,7 @@ public class SendMailHelper {
   }
 
   private ITemplateResolver templateResolver() {
-    val resolver = new StringTemplateResolver();
+    StringTemplateResolver resolver = new StringTemplateResolver();
     resolver.setTemplateMode("TEXT");
     resolver.setCacheable(false); // 安全をとってキャッシュしない
     return resolver;

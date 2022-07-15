@@ -7,13 +7,13 @@ import com.isystk.sample.common.values.MailTemplateDiv;
 import com.isystk.sample.domain.dao.PasswordResetDao;
 import com.isystk.sample.domain.dto.PasswordResetCriteria;
 import com.isystk.sample.domain.dto.UserCriteria;
+import com.isystk.sample.domain.entity.MailTemplate;
 import com.isystk.sample.domain.entity.PasswordReset;
 import com.isystk.sample.domain.entity.User;
 import com.isystk.sample.domain.repository.MailTemplateRepository;
 
 import com.isystk.sample.domain.repository.UserRepository;
 import java.util.Map;
-import lombok.val;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -79,16 +79,16 @@ public class PasswordResetService extends BaseTransactionalService {
     passwordResetDao.insert(passwordReset);
 
     // 新パスワード設定画面のお知らせメールを送信する
-    val mailTemplate = mailTemplateRepository.getMailTemplate(MailTemplateDiv.ENTRY_REMIND);
-    val subject = mailTemplate.getTitle();
-    val templateBody = mailTemplate.getText();
+    MailTemplate mailTemplate = mailTemplateRepository.getMailTemplate(MailTemplateDiv.ENTRY_REMIND);
+    String subject = mailTemplate.getTitle();
+    String templateBody = mailTemplate.getText();
     MailEntryRegistTemporary dto = new MailEntryRegistTemporary();
     dto.setUserName(user.getName());
     dto.setDomain(domain);
     dto.setOnetimeKey(onetimeKey);
     Map<String, Object> objects = Maps.newHashMap();
     objects.put("dto", dto);
-    val body = sendMailHelper.getMailBody(templateBody, objects);
+    String body = sendMailHelper.getMailBody(templateBody, objects);
     sendMailHelper.sendMail(fromAddress, user.getEmail(), subject, body);
   }
 
