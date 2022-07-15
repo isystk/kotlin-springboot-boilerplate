@@ -7,6 +7,8 @@ import org.apache.commons.collections.map.LRUMap;
 import com.isystk.sample.common.XORShiftRandom;
 import com.isystk.sample.web.base.util.SessionUtils;
 
+import lombok.val;
+
 public class DoubleSubmitCheckToken {
 
   public static final String DOUBLE_SUBMIT_CHECK_PARAMETER = "_double";
@@ -75,7 +77,7 @@ public class DoubleSubmitCheckToken {
     if (key == null) {
       key = request.getRequestURI();
     }
-    String token = generateToken();
+    val token = generateToken();
 
     Object mutex = SessionUtils.getMutex(request);
     if (mutex != null) {
@@ -132,7 +134,7 @@ public class DoubleSubmitCheckToken {
    */
   protected static String getToken(HttpServletRequest request, String key) {
     LRUMap map = getLRUMap(request);
-    String token = (String) map.get(key);
+    val token = (String) map.get(key);
     return token;
   }
 

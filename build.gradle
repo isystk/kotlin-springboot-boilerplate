@@ -1,49 +1,32 @@
 buildscript {
   repositories {
     mavenCentral()
-    jcenter()
   }
   dependencies {
     classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
-    classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:${kotlinVersion}")
-    classpath("org.jetbrains.kotlin:kotlin-allopen:${kotlinVersion}")
     classpath("mysql:mysql-connector-java:${mysqlJdbcVersion}")
     classpath("com.avast.gradle:gradle-docker-compose-plugin:${dockerComposePluginVersion}")
-    classpath("io.gitlab.arturbosch.detekt:detekt-gradle-plugin:${detektVersion}")
     classpath("gradle.plugin.com.google.cloud.tools:jib-gradle-plugin:${jibPluginVersion}")
   }
 }
 
 plugins {
   id "org.flywaydb.flyway" version "${flywayVersion}"
-  id "io.gitlab.arturbosch.detekt" version "${detektVersion}"
   id "org.seasar.doma.compile" version "${domaCompilerPluginVersion}"
 }
 
 subprojects {
-  apply plugin: "kotlin"
-  apply plugin: "kotlin-spring"
-  apply plugin: "kotlin-kapt"
+  apply plugin: "java"
+  apply plugin: "org.springframework.boot"
   apply plugin: "io.spring.dependency-management"
   apply plugin: "jacoco"
   apply plugin: "com.google.cloud.tools.jib"
   apply plugin: "org.flywaydb.flyway"
   apply plugin: "org.seasar.doma.compile"
 
-  // Kotlinを利用する場合はコメントアウトを外す
-  compileKotlin {
-    kotlinOptions {
-      freeCompilerArgs = ["-Xjsr305=strict"]
-      jvmTarget = "11"
-    }
-  }
+  sourceCompatibility = JavaVersion.VERSION_17
+  targetCompatibility = JavaVersion.VERSION_17
 
-  compileTestKotlin {
-    kotlinOptions {
-      freeCompilerArgs = ["-Xjsr305=strict"]
-      jvmTarget = "11"
-    }
-  }
   /* enable junit 5 */
   test {
     useJUnitPlatform()
@@ -63,9 +46,8 @@ subprojects {
 
   repositories {
     mavenCentral()
-    jcenter()
     maven { url 'https://jitpack.io' }
-    maven { url 'http://jaspersoft.jfrog.io/jaspersoft/third-party-ce-artifacts/' }
+    maven { url 'https://jaspersoft.jfrog.io/jaspersoft/third-party-ce-artifacts/' }
   }
 
   dependencyManagement {
@@ -76,18 +58,11 @@ subprojects {
   }
 
   dependencies {
-    /* kotlin */
-    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
-    implementation("org.jetbrains.kotlin:kotlin-reflect")
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core")
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-reactor")
-
     /* spring */
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("org.springframework.boot:spring-boot-starter-thymeleaf")
     implementation("nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect:${thymeleafLayoutVersion}")
     implementation("org.springframework.boot:spring-boot-starter-aop")
-    implementation("org.springframework.data:spring-data-elasticsearch")
     implementation("org.springframework.boot:spring-boot-starter-validation")
     implementation("org.springframework.boot:spring-boot-starter-actuator")
     implementation("org.springframework.boot:spring-boot-starter-data-redis")
@@ -95,11 +70,14 @@ subprojects {
     runtimeOnly("org.springframework.boot:spring-boot-devtools")
 
     /* solr */
-    implementation("org.springframework.boot:spring-boot-starter-data-solr")
+    implementation("org.apache.solr:solr-solrj:${solrJVersion}")
 
     /* spring security */
     implementation("org.springframework.boot:spring-boot-starter-security")
     implementation("org.thymeleaf.extras:thymeleaf-extras-springsecurity5")
+
+    /* spring security oauth2 */
+    implementation("org.springframework.security:spring-security-oauth2-client")
 
     /* mysql */
     runtimeOnly("mysql:mysql-connector-java")
@@ -113,7 +91,7 @@ subprojects {
     /* Doma2 */
     implementation("org.seasar.doma.boot:doma-spring-boot-starter:$springBootDomaVersion")
     implementation("org.seasar.doma:doma-kotlin:${domaVersion}")
-    kapt("org.seasar.doma:doma-processor:${domaVersion}")
+    annotationProcessor("org.seasar.doma:doma-processor:${domaVersion}")
 
     /* aws sdk */
     implementation("com.amazonaws:aws-xray-recorder-sdk-core")
@@ -130,17 +108,23 @@ subprojects {
     /* modelmapper */
     implementation("com.github.jmnarloch:modelmapper-spring-boot-starter:${modelmapperVersion}")
 
+    /* lombok */
+    compileOnly("org.projectlombok:lombok:${lombokVersion}")
+    annotationProcessor("org.projectlombok:lombok:${lombokVersion}")
+    testCompileOnly("org.projectlombok:lombok:${lombokVersion}")
+    testAnnotationProcessor("org.projectlombok:lombok:${lombokVersion}")
+
     /* google */
     implementation("com.google.guava:guava:${googleGuavaVersion}")
-
-    /* thumbnailator */
-    implementation("net.coobird:thumbnailator:${thumbnailatorVersion}")
 
     /* csv */
     implementation("com.fasterxml.jackson.dataformat:jackson-dataformat-csv:$jacksonVersion")
 
     /* poi */
     implementation("org.apache.poi:poi-ooxml:${poiOoxmlVersion}")
+
+    /* stripe */
+    implementation("com.stripe:stripe-java:${stripeVersion}")
 
     /* pdf */
     implementation("net.sf.jasperreports:jasperreports:${jasperreportsVersion}")
@@ -151,13 +135,11 @@ subprojects {
     /* xml */
     implementation("com.fasterxml.jackson.dataformat:jackson-dataformat-xml:${jacksonVersion}")
 
-//    /* json */
-//    implementation("com.fasterxml.jackson.module:jackson-module-kotlin:${jacksonVersion}")
-
     /* test */
     testImplementation("org.springframework.boot:spring-boot-starter-test") {
       exclude group: "org.junit.vintage", module: "junit-vintage-engine"
     }
+    testImplementation("org.junit.jupiter:junit-jupiter")
     testImplementation("org.assertj:assertj-core:${assertJVersion}")
     testImplementation("org.dbunit:dbunit:${dbunitVersion}")
     testImplementation("com.github.springtestdbunit:spring-test-dbunit:${dbunitSpringVersion}")
@@ -166,19 +148,13 @@ subprojects {
     testImplementation("io.mockk:mockk:${mockkVersion}")
     testImplementation("io.mockk:mockk-common:${mockkVersion}")
 
-    /* ulid */
-    implementation("de.huxhorn.sulky:de.huxhorn.sulky.ulid:${ulidVersion}")
-
-    /* jwt */
-    compile("io.jsonwebtoken:jjwt-api:${jjwtVersion}")
-    runtime("io.jsonwebtoken:jjwt-impl:${jjwtVersion}")
-    runtime("io.jsonwebtoken:jjwt-jackson:${jjwtVersion}")
-
-    /* KMapper */
-    implementation("com.github.ProjectMapK:KMapper:${kmapperVersion}")
-
     /* flyway */
     implementation("org.flywaydb:flyway-core:${flywayVersion}")
+
+    /* swagger */
+    implementation("com.fasterxml.jackson.dataformat:jackson-dataformat-xml:2.10.1")
+    implementation("io.springfox:springfox-boot-starter:${swaggerVersion}")
+
   }
 }
 

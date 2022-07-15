@@ -1,27 +1,18 @@
 package com.isystk.sample.common.dto;
 
+import com.isystk.sample.common.dto.Dto;
+import com.isystk.sample.common.values.Values;
+import lombok.Getter;
+import lombok.Setter;
+
 /**
  * 名称とコードのDTO
  */
+@Getter
+@Setter
 public class CodeValueDto implements Dto {
 
-  Integer code;
+  String code;
 
   String text;
-
-  public Integer getCode() {
-    return this.code;
-  }
-
-  public String getText() {
-    return this.text;
-  }
-
-  public void setCode(Integer code) {
-    this.code = code;
-  }
-
-  public void setText(String text) {
-    this.text = text;
-  }
 }

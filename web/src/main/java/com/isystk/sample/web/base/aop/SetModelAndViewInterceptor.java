@@ -1,28 +1,23 @@
 package com.isystk.sample.web.base.aop;
 
-import static com.isystk.sample.common.Const.GLOBAL_DANGER_MESSAGE;
-import static com.isystk.sample.common.Const.MAV_CONST;
-import static com.isystk.sample.common.Const.MAV_ERRORS;
-import static com.isystk.sample.common.Const.MAV_LOGIN_USER;
-import static com.isystk.sample.common.Const.MAV_PULLDOWN_OPTION;
-import static com.isystk.sample.common.Const.VALIDATION_ERROR;
-
 import com.isystk.sample.common.util.MessageUtils;
 import com.isystk.sample.web.base.filter.UserIdAware;
-import java.util.HashMap;
-import java.util.Locale;
-import java.util.Map;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import lombok.val;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.ui.ModelMap;
 import org.springframework.validation.BeanPropertyBindingResult;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.servlet.ModelAndView;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.util.HashMap;
+import java.util.Map;
+
+import static com.isystk.sample.common.Const.*;
 
 public class SetModelAndViewInterceptor extends BaseHandlerInterceptor {
 
@@ -44,8 +39,8 @@ public class SetModelAndViewInterceptor extends BaseHandlerInterceptor {
       return;
     }
 
-    Locale locale = LocaleContextHolder.getLocale();
-    String pulldownOption = MessageUtils.getMessage(MAV_PULLDOWN_OPTION, locale);
+    val locale = LocaleContextHolder.getLocale();
+    val pulldownOption = MessageUtils.getMessage(MAV_PULLDOWN_OPTION, locale);
 
     // ログインユーザーID
     UserIdAware user = null;
@@ -70,17 +65,17 @@ public class SetModelAndViewInterceptor extends BaseHandlerInterceptor {
    * @param modelAndView
    */
   protected void retainValidateErrors(ModelAndView modelAndView) {
-    ModelMap model = modelAndView.getModelMap();
+    val model = modelAndView.getModelMap();
 
     if (model != null && model.containsAttribute(MAV_ERRORS)) {
-      Object errors = model.get(MAV_ERRORS);
+      val errors = model.get(MAV_ERRORS);
 
       if (errors != null && errors instanceof BeanPropertyBindingResult) {
-        BeanPropertyBindingResult br = ((BeanPropertyBindingResult) errors);
+        val br = ((BeanPropertyBindingResult) errors);
 
         if (br.hasErrors()) {
-          String formName = br.getObjectName();
-          String key = BindingResult.MODEL_KEY_PREFIX + formName;
+          val formName = br.getObjectName();
+          val key = BindingResult.MODEL_KEY_PREFIX + formName;
           model.addAttribute(key, errors);
           model.addAttribute(GLOBAL_DANGER_MESSAGE, MessageUtils.getMessage(VALIDATION_ERROR));
         }

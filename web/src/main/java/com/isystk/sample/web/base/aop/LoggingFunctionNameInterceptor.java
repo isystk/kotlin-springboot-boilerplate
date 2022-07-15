@@ -2,10 +2,12 @@ package com.isystk.sample.web.base.aop;
 
 import com.isystk.sample.common.Const;
 import com.isystk.sample.common.FunctionNameAware;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import lombok.val;
 import org.slf4j.Logger;
 import org.slf4j.MDC;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * 機能名をログに出力する
@@ -21,9 +23,9 @@ public class LoggingFunctionNameInterceptor extends BaseHandlerInterceptor {
       throws Exception {
     // コントローラーの動作前
 
-    FunctionNameAware fna = getBean(handler, FunctionNameAware.class);
+    val fna = getBean(handler, FunctionNameAware.class);
     if (fna != null) {
-      String functionName = fna.getFunctionName();
+      val functionName = fna.getFunctionName();
       MDC.put(MDC_FUNCTION_NAME, functionName);
     }
 
