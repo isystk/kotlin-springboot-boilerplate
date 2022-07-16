@@ -29,3 +29,10 @@ dependencies {
 
   providedRuntime("org.springframework.boot:spring-boot-starter-tomcat")
 }
+//
+//// JavaとKotlinが混在する場合の設定
+//sourceSets {
+//  main.java.srcDirs = []
+//  main.kotlin.srcDirs = ['src/main/java']
+//  main.resources.srcDirs = ['src/main/resources']
+//}

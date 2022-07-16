@@ -6,6 +6,7 @@ bootJar {
 
 jar {
   enabled = true
+  duplicatesStrategy = DuplicatesStrategy.EXCLUDE
 }
 
 dependencies {

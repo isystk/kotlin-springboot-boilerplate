@@ -27,10 +27,14 @@ subprojects {
   apply plugin: "org.flywaydb.flyway"
   apply plugin: "org.seasar.doma.compile"
 
-  sourceCompatibility = JavaVersion.VERSION_17
-  targetCompatibility = JavaVersion.VERSION_17
+  kapt {
+    javacOptions {
+      // Increase the max count of errors from annotation processors.
+      // Default is 100.
+      option("-Xmaxerrs", 500)
+    }
+  }
 
-  // Kotlinを利用する場合はコメントアウトを外す
   compileKotlin {
     kotlinOptions {
       freeCompilerArgs = ["-Xjsr305=strict"]
@@ -48,14 +52,6 @@ subprojects {
   /* enable junit 5 */
   test {
     useJUnitPlatform()
-  }
-
-  kapt {
-    javacOptions {
-      // Increase the max count of errors from annotation processors.
-      // Default is 100.
-      option("-Xmaxerrs", 500)
-    }
   }
 
   /* flyway settings */
@@ -124,7 +120,6 @@ subprojects {
     implementation("org.seasar.doma.boot:doma-spring-boot-starter:$springBootDomaVersion")
     implementation("org.seasar.doma:doma-kotlin:${domaVersion}")
     kapt("org.seasar.doma:doma-processor:${domaVersion}")
-//    annotationProcessor("org.seasar.doma:doma-processor:${domaVersion}")
 
     /* aws sdk */
     implementation("com.amazonaws:aws-xray-recorder-sdk-core")
@@ -140,6 +135,12 @@ subprojects {
 
     /* modelmapper */
     implementation("com.github.jmnarloch:modelmapper-spring-boot-starter:${modelmapperVersion}")
+//
+//    /* lombok */
+//    compileOnly("org.projectlombok:lombok:${lombokVersion}")
+//    annotationProcessor("org.projectlombok:lombok:${lombokVersion}")
+//    testCompileOnly("org.projectlombok:lombok:${lombokVersion}")
+//    testAnnotationProcessor("org.projectlombok:lombok:${lombokVersion}")
 
     /* google */
     implementation("com.google.guava:guava:${googleGuavaVersion}")
@@ -234,4 +235,3 @@ tasks.register("s3") {
     startedServices = ['s3']
   }
 }
-
