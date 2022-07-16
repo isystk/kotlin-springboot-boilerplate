@@ -77,7 +77,7 @@ class StockRegistController : AbstractHtmlController() {
      */
     @PostMapping(params = ["confirm"])
     fun registConfirm(@Validated @ModelAttribute form: StockRegistForm, br: BindingResult,
-                      sessionStatus: SessionStatus?, attributes: RedirectAttributes?, model: Model): String {
+                      sessionStatus: SessionStatus?, attributes: RedirectAttributes, model: Model): String {
 
         // 入力チェックエラーがある場合は、元の画面にもどる
         if (br.hasErrors()) {
@@ -98,7 +98,7 @@ class StockRegistController : AbstractHtmlController() {
      */
     @PostMapping(params = ["back"])
     fun registBack(@Validated @ModelAttribute form: StockRegistForm, br: BindingResult?,
-                   sessionStatus: SessionStatus?, attributes: RedirectAttributes?, model: Model): String {
+                   sessionStatus: SessionStatus?, attributes: RedirectAttributes, model: Model): String {
         return showRegistIndex(form, model)
     }
 
@@ -113,7 +113,7 @@ class StockRegistController : AbstractHtmlController() {
      */
     @PostMapping(params = ["complete"])
     fun registComplete(@Validated @ModelAttribute form: StockRegistForm, br: BindingResult,
-                       sessionStatus: SessionStatus, attributes: RedirectAttributes?, model: Model): String {
+                       sessionStatus: SessionStatus, attributes: RedirectAttributes, model: Model): String {
 
         // 入力チェックエラーがある場合は、元の画面にもどる
         if (br.hasErrors()) {

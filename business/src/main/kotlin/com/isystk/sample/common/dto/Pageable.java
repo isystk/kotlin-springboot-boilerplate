@@ -12,10 +12,10 @@ public interface Pageable {
   /**
    * @return
    */
-  int getPage();
+  int page();
 
   /**
    * @return
    */
-  int getPerpage();
+  int perpage();
 }

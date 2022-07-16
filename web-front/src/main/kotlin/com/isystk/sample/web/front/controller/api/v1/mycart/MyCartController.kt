@@ -30,7 +30,7 @@ class MyCartController : AbstractRestController() {
      */
     @PostMapping
     fun index(): Resource {
-        val resource = resourceFactory.create()
+        val resource = resourceFactory!!.create()
         resource.data = Arrays.asList(cartService!!.searchCart())
         resource.message = getMessage(Const.MESSAGE_SUCCESS)
         resource.result = true
@@ -44,7 +44,7 @@ class MyCartController : AbstractRestController() {
      */
     @PostMapping("/add")
     fun addCart(@RequestParam("stock_id") stockId: BigInteger?): Resource {
-        val resource = resourceFactory.create()
+        val resource = resourceFactory!!.create()
         resource.data = Arrays.asList(cartService!!.addCart(stockId))
         resource.message = getMessage(Const.MESSAGE_SUCCESS)
         resource.result = true
@@ -58,7 +58,7 @@ class MyCartController : AbstractRestController() {
      */
     @PostMapping("/remove")
     fun removeCart(@RequestParam("cart_id") cartId: BigInteger?): Resource {
-        val resource = resourceFactory.create()
+        val resource = resourceFactory!!.create()
         resource.data = Arrays.asList(cartService!!.removeCart(cartId))
         resource.message = getMessage(Const.MESSAGE_SUCCESS)
         resource.result = true
@@ -73,7 +73,7 @@ class MyCartController : AbstractRestController() {
     @PostMapping("/payment")
     fun payment(@RequestParam("amount") amount: Int?, @RequestParam("username") email: String?): Resource {
         val dto = cartService!!.createPayment(amount, email)
-        val resource = resourceFactory.create()
+        val resource = resourceFactory!!.create()
         resource.data = Arrays.asList(dto)
         resource.message = getMessage(Const.MESSAGE_SUCCESS)
         resource.result = true
@@ -88,7 +88,7 @@ class MyCartController : AbstractRestController() {
     @PostMapping("/checkout")
     fun checkout(): Resource {
         val result = cartService!!.checkout()
-        val resource = resourceFactory.create()
+        val resource = resourceFactory!!.create()
         resource.message = getMessage(Const.MESSAGE_SUCCESS)
         resource.result = result
         return resource

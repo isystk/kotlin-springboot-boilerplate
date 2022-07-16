@@ -80,7 +80,7 @@ class StockEditController : AbstractHtmlController() {
      */
     @PutMapping(params = ["confirm"])
     fun editConfirm(@Validated @ModelAttribute form: StockEditForm, br: BindingResult,
-                    sessionStatus: SessionStatus?, attributes: RedirectAttributes?, model: Model): String {
+                    sessionStatus: SessionStatus?, attributes: RedirectAttributes, model: Model): String {
 
         // 入力チェックエラーがある場合は、元の画面にもどる
         if (br.hasErrors()) {
@@ -101,7 +101,7 @@ class StockEditController : AbstractHtmlController() {
      */
     @PutMapping(params = ["back"])
     fun editBack(@Validated @ModelAttribute form: StockEditForm, br: BindingResult?,
-                 sessionStatus: SessionStatus?, attributes: RedirectAttributes?, model: Model): String {
+                 sessionStatus: SessionStatus?, attributes: RedirectAttributes, model: Model): String {
         return showEditIndex(form, model)
     }
 
@@ -116,7 +116,7 @@ class StockEditController : AbstractHtmlController() {
      */
     @PutMapping(params = ["complete"])
     fun updateComplete(@Validated @ModelAttribute form: StockEditForm, br: BindingResult,
-                       sessionStatus: SessionStatus, attributes: RedirectAttributes?, model: Model): String {
+                       sessionStatus: SessionStatus, attributes: RedirectAttributes, model: Model): String {
 
         // 入力チェックエラーがある場合は、元の画面にもどる
         if (br.hasErrors()) {

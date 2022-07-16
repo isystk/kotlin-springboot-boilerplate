@@ -45,7 +45,7 @@ class ContactController : AbstractRestController() {
      */
     @PostMapping("/regist")
     fun regist(@Validated @ModelAttribute("form") form: ContactForm, br: BindingResult): Resource {
-        val resource = resourceFactory.create()
+        val resource = resourceFactory!!.create()
 
         // 入力チェックエラーがある場合は、元の画面にもどる
         if (br.hasErrors()) {
