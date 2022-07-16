@@ -48,7 +48,7 @@ class ContactListController : AbstractHtmlController() {
      */
     @GetMapping
     fun index(@ModelAttribute form: @Valid ContactListForm?, br: BindingResult,
-              sessionStatus: SessionStatus?, attributes: RedirectAttributes?, model: Model): String {
+              sessionStatus: SessionStatus?, attributes: RedirectAttributes, model: Model): String {
         if (br.hasErrors()) {
             setFlashAttributeErrors(attributes, br)
             return "modules/contact/list"

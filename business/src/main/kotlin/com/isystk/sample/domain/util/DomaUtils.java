@@ -25,8 +25,8 @@ public class DomaUtils {
    * @return
    */
   public static SelectOptions createSelectOptions(Pageable pageable) {
-    int page = pageable.getPage();
-    int perpage = pageable.getPerpage();
+    int page = pageable.page();
+    int perpage = pageable.perpage();
     return createSelectOptions(page, perpage);
   }
 

@@ -217,9 +217,9 @@ public class SolrStockRepository extends BaseRepository {
       String queryString = "*:*";
 
       solrQuery.setQuery(queryString);
-      int start = (pageable.getPage() - 1) * pageable.getPerpage();
+      int start = (pageable.page() - 1) * pageable.perpage();
       solrQuery.setStart(start);
-      solrQuery.setRows(pageable.getPerpage());
+      solrQuery.setRows(pageable.perpage());
       solrQuery.setHighlight(true);
       solrQuery.addHighlightField("name");
       solrQuery.addHighlightField("detail");

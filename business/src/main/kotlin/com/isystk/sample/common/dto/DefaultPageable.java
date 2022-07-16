@@ -11,19 +11,12 @@ public class DefaultPageable implements Pageable {
     this.perpage = perpage;
   }
 
-  public int getPage() {
+  public int page() {
     return this.page;
   }
 
-  public int getPerpage() {
+  public int perpage() {
     return this.perpage;
   }
 
-  public void setPage(int page) {
-    this.page = page;
-  }
-
-  public void setPerpage(int perpage) {
-    this.perpage = perpage;
-  }
 }

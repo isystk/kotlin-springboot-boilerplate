@@ -52,7 +52,7 @@ class StockListController : AbstractHtmlController() {
      */
     @GetMapping
     fun index(@ModelAttribute form: @Valid StockListForm?, br: BindingResult,
-              sessionStatus: SessionStatus?, attributes: RedirectAttributes?, model: Model): String {
+              sessionStatus: SessionStatus?, attributes: RedirectAttributes, model: Model): String {
         if (br.hasErrors()) {
             setFlashAttributeErrors(attributes, br)
             return "modules/stock/list"
@@ -97,7 +97,7 @@ class StockListController : AbstractHtmlController() {
      * @return
      */
     @GetMapping("/download/{filename:.+\\.csv}")
-    fun downloadCsv(@PathVariable filename: String?, form: StockListForm?, model: Model?): CsvView {
+    fun downloadCsv(@PathVariable filename: String, form: StockListForm?, model: Model?): CsvView {
 
         // 全件取得する
         val stocks = stockService!!.findAll(formToDto(form))
@@ -134,7 +134,7 @@ class StockListController : AbstractHtmlController() {
      * @return
      */
     @GetMapping(path = ["/download/{filename:.+\\.pdf}"])
-    fun downloadPdf(@PathVariable filename: String?, form: StockListForm?, model: Model?): ModelAndView {
+    fun downloadPdf(@PathVariable filename: String, form: StockListForm?, model: Model?): ModelAndView {
 
         // 全件取得する
         val stocks = stockService!!.findAll(formToDto(form))

@@ -27,8 +27,8 @@ public class PageImpl<T> implements Page<T>, Serializable {
   public PageImpl(List<T> data, Pageable pageable, long count) {
     this.data = (data == null) ? Collections.emptyList() : data;
     this.count = count;
-    this.page = pageable.getPage();
-    this.perpage = pageable.getPerpage();
+    this.page = pageable.page();
+    this.perpage = pageable.perpage();
     this.totalPages = Math.max(1, (int) Math.ceil((double) count / perpage));
   }
 
@@ -40,11 +40,11 @@ public class PageImpl<T> implements Page<T>, Serializable {
     return this.count;
   }
 
-  public int getPage() {
+  public int page() {
     return this.page;
   }
 
-  public int getPerpage() {
+  public int perpage() {
     return this.perpage;
   }
 
@@ -58,14 +58,6 @@ public class PageImpl<T> implements Page<T>, Serializable {
 
   public void setCount(long count) {
     this.count = count;
-  }
-
-  public void setPage(int page) {
-    this.page = page;
-  }
-
-  public void setPerpage(int perpage) {
-    this.perpage = perpage;
   }
 
   public void setTotalPages(int totalPages) {
