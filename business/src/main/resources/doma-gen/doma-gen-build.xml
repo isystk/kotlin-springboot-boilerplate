@@ -3,7 +3,7 @@
 
 	<property name="templatePrimaryDir" value="template"/>
 	<property name="templateCriteriaPrimaryDir" value="templateCriteria"/>
-	<property name="javaDestDir" value="../../java"/>
+	<property name="javaDestDir" value="../../kotlin"/>
 	<property name="sqlDestDir" value=".."/>
 	<property name="dialectName" value="mysql"/>
 	<property name="driverClassName" value="com.mysql.cj.jdbc.Driver"/>
@@ -35,14 +35,14 @@
 			templatePrimaryDir="template"
 			ignoredTableNamePattern="${ignoredTableNamePattern}" >
 			<entityConfig
-				destdir="../../java"
+				destdir="../../kotlin"
 				packageName="${entityPackageName}"
 				overwrite="true"
 				useListener="false"
 			/>
 			<daoConfig
 				overwrite="false"
-				destdir="../../java"
+				destdir="../../kotlin"
 				packageName="${daoPackageName}"
 			/>
 			<sqlConfig
@@ -63,7 +63,7 @@
 			templatePrimaryDir="templateCriteria"
 			ignoredTableNamePattern="${ignoredTableNamePattern}">
 			<entityConfig
-				destdir="../../java"
+				destdir="../../kotlin"
 				packageName="${criteriaPackageName}"
 				overwrite="true"
 				useListener="false"
