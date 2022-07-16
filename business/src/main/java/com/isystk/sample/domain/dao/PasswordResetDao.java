@@ -1,6 +1,7 @@
 package com.isystk.sample.domain.dao;
 
 import org.seasar.doma.Select;
+import org.seasar.doma.Suppress;
 import org.seasar.doma.boot.ConfigAutowireable;
 
 import java.util.List;
@@ -15,11 +16,13 @@ import org.seasar.doma.Insert;
 import org.seasar.doma.Update;
 import org.seasar.doma.SelectType;
 import com.isystk.sample.domain.dto.PasswordResetCriteria;
+import org.seasar.doma.message.Message;
 
 /**
  */
 @ConfigAutowireable
 @Dao
+@Suppress(messages = { Message.DOMA4220 })
 public interface PasswordResetDao {
 
     /**
