@@ -1,8 +1,8 @@
 package com.isystk.sample.web.front.security
 
-import com.isystk.sample.domain.dao.TUserDao
-import com.isystk.sample.domain.dto.TUserCriteria
-import com.isystk.sample.domain.entity.TUser
+import com.isystk.sample.domain.dao.UserDao
+import com.isystk.sample.domain.dto.UserCriteria
+import com.isystk.sample.domain.entity.User
 import com.isystk.sample.web.base.security.BaseRealm
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
@@ -11,7 +11,6 @@ import org.springframework.security.core.authority.AuthorityUtils
 import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.security.core.userdetails.UsernameNotFoundException
 import org.springframework.stereotype.Component
-import java.util.*
 
 /**
  * ログインサービス
@@ -19,21 +18,21 @@ import java.util.*
 @Component
 class UserDaoRealm : BaseRealm() {
     @Autowired
-    var tUserDao: TUserDao? = null
+    var userDao: UserDao? = null
     override fun getLoginUser(email: String): UserDetails {
-        var user: TUser? = null
+        var user: User? = null
         var authorityList: List<GrantedAuthority?>? = null
         return try {
             // login_idをメールアドレスと見立てる
-            val criteria = TUserCriteria()
+            val criteria = UserCriteria()
             criteria.emailEq = email
 
             // 担当者を取得して、セッションに保存する
-            user = tUserDao!!.findOne(criteria)
+            user = userDao!!.findOne(criteria)
                     .orElseThrow { UsernameNotFoundException("no user found [id=$email]") }
 
             // 役割と権限を両方ともGrantedAuthorityとして渡す
-            authorityList = AuthorityUtils.createAuthorityList(*HashSet<String>().toTypedArray<String>())
+            authorityList = AuthorityUtils.createAuthorityList()
             LoginUser(user, authorityList)
         } catch (e: Exception) {
             if (e !is UsernameNotFoundException) {

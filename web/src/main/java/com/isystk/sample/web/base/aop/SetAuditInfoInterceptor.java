@@ -1,17 +1,18 @@
 package com.isystk.sample.web.base.aop;
 
-import static java.util.Optional.ofNullable;
-
 import com.isystk.sample.domain.dao.AuditInfoHolder;
-import java.time.LocalDateTime;
-import java.util.Optional;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.servlet.ModelAndView;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.time.LocalDateTime;
+import java.util.Optional;
+
+import static java.util.Optional.ofNullable;
 
 /**
  * ログインユーザーを監査情報ホルダーに設定する

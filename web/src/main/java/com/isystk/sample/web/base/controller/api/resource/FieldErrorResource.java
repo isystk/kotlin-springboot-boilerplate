@@ -90,7 +90,7 @@ public class FieldErrorResource {
   }
 
   public String toString() {
-    return "FieldErrorResource(fieldName=" + this.getFieldName() + ", errorType=" + this
-        .getErrorType() + ", errorMessage=" + this.getErrorMessage() + ")";
+    return "FieldErrorResource(fieldName=" + this.getFieldName() + ", errorType="
+        + this.getErrorType() + ", errorMessage=" + this.getErrorMessage() + ")";
   }
 }

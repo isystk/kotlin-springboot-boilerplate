@@ -1,23 +1,23 @@
 package com.isystk.sample.common.values;
 
 /**
- * メールテンプレート区分
+ * メールテンプレート
  */
 public enum MailTemplateDiv implements Values {
 
-  ENTRY_REGIST(1, "会員登録");
+  ENTRY_REGIST_TEMPORARY("1", "仮会員登録通知メール", MailTemplateGroup.ENTRY_REGIST),
+  ENTRY_REGIST_VALID("2", "本登録完了通知メール", MailTemplateGroup.ENTRY_REGIST),
+  ENTRY_REMIND("3", "新パスワード設定画面のお知らせメール", MailTemplateGroup.ENTRY_REGIST),
+  STOCK_PAYMENT_COMPLETE("4", "商品購入完了通知メール", MailTemplateGroup.STOCK_PAYMENT);
 
-  private MailTemplateDiv(int code, String text) {
-    this.code = code;
-    this.text = text;
-  }
-
-  private final Integer code;
+  private final String code;
   private final String text;
+  private final MailTemplateGroup div;
 
-  private MailTemplateDiv(Integer code, String text) {
+  private MailTemplateDiv(String code, String text, MailTemplateGroup div) {
     this.code = code;
     this.text = text;
+    this.div = div;
   }
 
   /**
@@ -26,7 +26,7 @@ public enum MailTemplateDiv implements Values {
    * @param code
    * @return
    */
-  public static MailTemplateDiv getValue(Integer code) {
+  public static MailTemplateDiv getValue(String code) {
     if (code == null) {
       return null;
     }
@@ -38,11 +38,15 @@ public enum MailTemplateDiv implements Values {
     return null;
   }
 
-  public Integer getCode() {
+  public String getCode() {
     return this.code;
   }
 
   public String getText() {
     return this.text;
+  }
+
+  public MailTemplateGroup getDiv() {
+    return this.div;
   }
 }

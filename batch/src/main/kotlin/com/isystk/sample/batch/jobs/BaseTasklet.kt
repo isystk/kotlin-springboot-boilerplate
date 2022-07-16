@@ -36,7 +36,6 @@ abstract class BaseTasklet<I : ItemPosition?> : Tasklet {
      * 実処理を実施します。
      *
      * @param context
-     * @param item
      * @return
      */
     protected abstract fun doProcess(context: BatchContext?)

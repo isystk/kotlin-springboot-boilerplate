@@ -1,7 +1,8 @@
 package com.isystk.sample.domain.util;
 
-import com.isystk.sample.common.dto.Pageable;
 import org.seasar.doma.jdbc.SelectOptions;
+
+import com.isystk.sample.common.dto.Pageable;
 
 /**
  * Doma関連ユーティリティ

@@ -1,7 +1,8 @@
 package com.isystk.sample.web.base.controller;
 
-import com.isystk.sample.common.dto.ID;
 import java.beans.PropertyEditorSupport;
+
+import com.isystk.sample.common.dto.ID;
 
 /**
  * 文字列をIDクラスに変換する

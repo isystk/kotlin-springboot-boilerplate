@@ -2,7 +2,7 @@ package com.isystk.sample.batch.jobs.solrRegist
 
 import com.isystk.sample.batch.context.BatchContext
 import com.isystk.sample.batch.jobs.BaseTasklet
-import com.isystk.sample.batch.service.SolrPostService
+import com.isystk.sample.batch.service.SolrStockService
 import org.slf4j.LoggerFactory
 import org.springframework.batch.core.StepContribution
 import org.springframework.batch.core.scope.context.ChunkContext
@@ -13,10 +13,9 @@ import java.io.IOException
 /**
  * インデックス生成
  */
-class SolrRegistTasklet : BaseTasklet<SolrRegistPostDto?>() {
+class SolrRegistTasklet : BaseTasklet<SolrRegistDto>() {
     @Autowired
-    var solrPostService: SolrPostService? = null
-
+    var solrStockService: SolrStockService? = null
     @Throws(IOException::class)
     override fun execute(contribution: StepContribution, chunkContext: ChunkContext): RepeatStatus? {
         return super.execute(contribution, chunkContext)
@@ -24,7 +23,7 @@ class SolrRegistTasklet : BaseTasklet<SolrRegistPostDto?>() {
 
     override fun doProcess(context: BatchContext?) {
         // Solrの投稿インデックスを更新します。
-        solrPostService!!.refresh()
+        solrStockService!!.refresh()
     }
 
     companion object {

@@ -15,8 +15,8 @@ import org.springframework.security.web.authentication.LoginUrlAuthenticationEnt
  */
 public class DefaultAuthenticationEntryPoint extends LoginUrlAuthenticationEntryPoint {
 
-  private static final Logger log = org.slf4j.LoggerFactory
-      .getLogger(DefaultAuthenticationEntryPoint.class);
+  private static final Logger log = org.slf4j.LoggerFactory.getLogger(
+      DefaultAuthenticationEntryPoint.class);
   private final String loginTimeoutUrl;
 
   /**

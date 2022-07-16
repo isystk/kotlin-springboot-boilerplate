@@ -1,0 +1,56 @@
+version: 2.1
+executors:
+  default:
+    working_directory: ~/kotlin-springboot-boilerplate
+    docker:
+      - image: cimg/openjdk:17.0.3
+      - image: cimg/redis:6.2.6
+    environment:
+      # Customize the JVM maximum heap limit
+      JVM_OPTS: -Xmx2048m
+
+commands:
+  restore_gradle:
+    steps:
+      - restore_cache:
+          name: Restore gradle dependencies
+          key: v1-dependencies-{{ checksum "build.gradle" }}
+  
+  save_gradle:
+    steps:
+      - save_cache:
+          name: Cache gradle dependencies
+          key: v1-dependencies-{{ checksum "build.gradle" }}
+          paths:
+            - ~/.gradle
+
+jobs:
+  setup:
+    executor:
+      name: default
+    steps:
+      - checkout
+      - run:
+          name: Install dependencies
+          command: gradle dependencies
+      - save_gradle
+
+  test:
+    executor:
+      name: default
+    steps:
+      - checkout
+      - restore_gradle
+      - run:
+          name: Test
+          command: gradle test
+      - save_gradle
+
+workflows:
+  version: 2
+  build_and_test:
+    jobs:
+      - setup
+      - test
+
+

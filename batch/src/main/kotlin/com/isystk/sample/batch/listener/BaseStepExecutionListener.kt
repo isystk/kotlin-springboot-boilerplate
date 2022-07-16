@@ -50,7 +50,7 @@ abstract class BaseStepExecutionListener : StepExecutionListenerSupport() {
      * @param stepExecution
      */
     protected fun setMDCIfEmpty(context: BatchContext?, stepExecution: StepExecution?) {
-        val batchId = context!!.batchId
+        val batchId = context?.batchId
         MDCUtils.putIfAbsent(BatchConst.MDC_BATCH_ID, batchId)
     }
 
@@ -60,8 +60,8 @@ abstract class BaseStepExecutionListener : StepExecutionListenerSupport() {
      * @param context
      */
     protected fun setAuditInfoIfEmpty(context: BatchContext?) {
-        val batchId = context!!.batchId
-        val startDateTime = context.startDateTime
+        val batchId = context?.batchId
+        val startDateTime = context?.startDateTime
         AuditInfoHolder.set(batchId, startDateTime)
     }
 
@@ -104,7 +104,7 @@ abstract class BaseStepExecutionListener : StepExecutionListenerSupport() {
     protected fun after(context: BatchContext?, stepExecution: StepExecution?) {}
 
     companion object {
-        private val log = LoggerFactory
-                .getLogger(BaseStepExecutionListener::class.java)
+        private val log = LoggerFactory.getLogger(
+                BaseStepExecutionListener::class.java)
     }
 }

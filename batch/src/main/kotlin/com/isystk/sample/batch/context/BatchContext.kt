@@ -48,7 +48,7 @@ class BatchContext {
      * @return
      */
     fun getProcessCount(): Long {
-        return processCount.toLong()
+        return processCount.toInt().toLong()
     }
 
     /**
@@ -64,7 +64,7 @@ class BatchContext {
      * @return
      */
     fun getErrorCount(): Long {
-        return errorCount.toLong()
+        return errorCount.toInt().toLong()
     }
 
     /**
@@ -80,7 +80,7 @@ class BatchContext {
      * @return
      */
     fun getTotalCount(): Long {
-        return totalCount.toLong()
+        return totalCount.toInt().toLong()
     }
 
     /**

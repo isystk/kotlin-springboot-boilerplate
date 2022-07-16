@@ -19,8 +19,8 @@ import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.security.web.AuthenticationEntryPoint
 import org.springframework.security.web.access.AccessDeniedHandler
 import org.springframework.security.web.authentication.logout.HttpStatusReturningLogoutSuccessHandler
+import org.springframework.security.web.csrf.CookieCsrfTokenRepository
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher
-import org.springframework.security.web.util.matcher.RequestMatcher
 import javax.servlet.http.HttpServletRequest
 
 @EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true) // アノテーションで役割、権限チェックを行うために定義する
@@ -28,7 +28,6 @@ import javax.servlet.http.HttpServletRequest
 class SecurityConfig : BaseSecurityConfig() {
     @Autowired
     var userDetailsService: UserDetailsService? = null
-
     @Bean
     fun passwordEncoder(): PasswordEncoder {
         return BCryptPasswordEncoder()
@@ -49,12 +48,11 @@ class SecurityConfig : BaseSecurityConfig() {
 
     @Throws(Exception::class)
     override fun configure(http: HttpSecurity) {
-//		// CookieにCSRFトークンを保存する
-//		http.csrf()//
-//				.csrfTokenRepository(new CookieCsrfTokenRepository());
-        http.csrf().disable()
+        // CookieにCSRFトークンを保存する
+        http.csrf() //
+                .csrfTokenRepository(CookieCsrfTokenRepository())
         val permittedUrls = arrayOf("*")
-        val authenticatedUrls = arrayOf(FrontUrl.API_V1_MEMBER + "/**")
+        val authenticatedUrls = arrayOf(FrontUrl.API_V1_MYCARTS + "/**")
 
         // 認証除外設定
         http.authorizeRequests() // 認証をかけない
@@ -67,18 +65,20 @@ class SecurityConfig : BaseSecurityConfig() {
         // ログイン処理
         http.formLogin() // ログイン画面のURL
                 .loginPage(Const.LOGIN_URL) // 認可を処理するURL
-                .loginProcessingUrl(FrontUrl.API_V1_AUTH) // ログイン成功時の遷移先
-                .successForwardUrl(FrontUrl.API_V1_LOGIN_SUCCESS_URL) // ログイン失敗時の遷移先
-                .failureUrl(FrontUrl.API_V1_LOGIN_FAILURE_URL) // ログインIDのパラメータ名
+                .loginProcessingUrl(Const.LOGIN_PROCESSING_URL) // ログイン成功時の遷移先
+                .successForwardUrl(Const.LOGIN_SUCCESS_URL) // ログイン失敗時の遷移先
+                .failureUrl(Const.LOGIN_FAILURE_URL) // ログインIDのパラメータ名
                 .usernameParameter("loginId") // パスワードのパラメータ名
-                .passwordParameter("password").permitAll()
+                .passwordParameter("password").permitAll() // OAuth 2.0 Login機能を有効化
+                .and()
+                .oauth2Login()
 
         // ログアウト処理
-        http.logout().logoutRequestMatcher(AntPathRequestMatcher(FrontUrl.API_V1_LOGOUT_URL)) // Cookieを破棄する
+        http.logout().logoutRequestMatcher(AntPathRequestMatcher(Const.LOGOUT_URL)) // Cookieを破棄する
                 .deleteCookies("SESSION", "JSESSIONID") // ログアウト画面のURL
-                .logoutUrl(FrontUrl.API_V1_LOGOUT_URL) // ログアウト後の遷移先
-                .logoutSuccessUrl(FrontUrl.API_V1_LOGOUT_SUCCESS_URL) // ajaxの場合は、HTTPステータスを返す
-                .defaultLogoutSuccessHandlerFor(HttpStatusReturningLogoutSuccessHandler(), RequestMatcher { request: HttpServletRequest? -> RequestUtils.isAjaxRequest(request) }) // セッションを破棄する
+                .logoutUrl(Const.LOGOUT_URL) // ログアウト後の遷移先
+                .logoutSuccessUrl(Const.LOGOUT_SUCCESS_URL) // ajaxの場合は、HTTPステータスを返す
+                .defaultLogoutSuccessHandlerFor(HttpStatusReturningLogoutSuccessHandler()) { request: HttpServletRequest? -> RequestUtils.isAjaxRequest(request) } // セッションを破棄する
                 .invalidateHttpSession(true).permitAll()
     }
 

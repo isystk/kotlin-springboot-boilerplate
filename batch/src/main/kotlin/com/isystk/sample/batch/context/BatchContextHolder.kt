@@ -7,5 +7,4 @@ object BatchContextHolder {
      * @return
      */
     val context = BatchContext()
-
 }

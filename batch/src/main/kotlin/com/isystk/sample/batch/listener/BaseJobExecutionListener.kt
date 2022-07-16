@@ -94,7 +94,7 @@ abstract class BaseJobExecutionListener : JobExecutionListenerSupport() {
     }
 
     protected fun took(stepExecution: StepExecution): Long {
-        return stepExecution.endTime.time - stepExecution.startTime.time
+        return stepExecution.endTime!!.time - stepExecution.startTime.time
     }
 
     /**
@@ -131,7 +131,7 @@ abstract class BaseJobExecutionListener : JobExecutionListenerSupport() {
         // yyyy/MM/dd HH:mm:ss
         private val YYYY_MM_DD_HHmmss = DateTimeFormatter
                 .ofPattern("yyyy/MM/dd HH:mm:ss")
-        private val log = LoggerFactory
-                .getLogger(BaseJobExecutionListener::class.java)
+        private val log = LoggerFactory.getLogger(
+                BaseJobExecutionListener::class.java)
     }
 }

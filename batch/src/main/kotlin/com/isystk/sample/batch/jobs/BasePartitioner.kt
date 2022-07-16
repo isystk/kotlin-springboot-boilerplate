@@ -3,7 +3,6 @@ package com.isystk.sample.batch.jobs
 import org.slf4j.LoggerFactory
 import org.springframework.batch.core.partition.support.Partitioner
 import org.springframework.batch.item.ExecutionContext
-import java.util.*
 
 abstract class BasePartitioner : Partitioner {
     override fun partition(gridSize: Int): Map<String, ExecutionContext> {

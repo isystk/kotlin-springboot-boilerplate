@@ -14,7 +14,7 @@ import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 
 /**
- * ユーザー情報取り込み
+ * マスタ取り込み
  */
 @Configuration
 @EnableBatchProcessing
@@ -24,7 +24,6 @@ class ImportMstJobConfig {
 
     @Autowired
     var stepBuilderFactory: StepBuilderFactory? = null
-
     @Bean
     fun importUserJobListener(): JobExecutionListener {
         return ImportMstJobListener()
@@ -33,18 +32,19 @@ class ImportMstJobConfig {
     @Bean
     fun importMstJob(): Job {
         return jobBuilderFactory!!["importMstJob"].incrementer(RunIdIncrementer())
-                .listener(importUserJobListener()).start(importMstPostStep()) //              .next(importMstPostStep())
+                .listener(importUserJobListener())
+                .start(importMstStockStep()) //       .next(importMstPostStep())
                 .build()
     }
 
     @Bean
-    fun importMstPostStep(): Step {
-        return stepBuilderFactory!!["importMstPostStep"].listener(DefaultStepExecutionListener())
-                .tasklet(importMstPostTasklet()).build()
+    fun importMstStockStep(): Step {
+        return stepBuilderFactory!!["importMstStockStep"].listener(DefaultStepExecutionListener())
+                .tasklet(importMstStockTasklet()).build()
     }
 
     @Bean
-    fun importMstPostTasklet(): Tasklet {
-        return ImportMstPostTasklet()
+    fun importMstStockTasklet(): Tasklet {
+        return ImportMstStockTasklet()
     }
 }

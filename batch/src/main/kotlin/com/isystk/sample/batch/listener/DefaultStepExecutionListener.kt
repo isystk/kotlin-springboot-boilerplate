@@ -1,3 +1,3 @@
 package com.isystk.sample.batch.listener
 
-class DefaultStepExecutionListener : BaseStepExecutionListener() 
+class DefaultStepExecutionListener : BaseStepExecutionListener()

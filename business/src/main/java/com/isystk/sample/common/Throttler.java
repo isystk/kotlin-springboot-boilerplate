@@ -2,6 +2,7 @@ package com.isystk.sample.common;
 
 import java.util.concurrent.TimeUnit;
 
+
 /**
  * スロットリングする
  */

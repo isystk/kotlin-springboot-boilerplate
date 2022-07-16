@@ -1,39 +1,42 @@
 package com.isystk.sample.web.base.controller.api.resource;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.isystk.sample.common.dto.Dto;
 import java.util.List;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class PageableResourceImpl extends ResourceImpl implements PageableResource {
 
-  int page = 1;
+  @JsonProperty("current_page")
+  int currentPage = 1;
 
-  int totalPages;
+  int total;
 
   public PageableResourceImpl() {
   }
 
-  public PageableResourceImpl(List<? extends Dto> data, int page, int totalPages) {
+  public PageableResourceImpl(List<? extends Dto> data, int currentPage, int total) {
     this.data = data;
-    this.page = page;
-    this.totalPages = totalPages;
+    this.currentPage = currentPage;
+    this.total = total;
   }
 
-  public int getPage() {
-    return this.page;
+  public int getCurrentPage() {
+    return this.currentPage;
   }
 
-  public int getTotalPages() {
-    return this.totalPages;
+  public int getTotal() {
+    return this.total;
   }
 
-  public void setPage(int page) {
-    this.page = page;
+  @JsonProperty("current_page")
+  public void setCurrentPage(int currentPage) {
+    this.currentPage = currentPage;
   }
 
-  public void setTotalPages(int totalPages) {
-    this.totalPages = totalPages;
+  public void setTotal(int total) {
+    this.total = total;
   }
 
   public boolean equals(final Object o) {
@@ -50,10 +53,10 @@ public class PageableResourceImpl extends ResourceImpl implements PageableResour
     if (!super.equals(o)) {
       return false;
     }
-    if (this.getPage() != other.getPage()) {
+    if (this.getCurrentPage() != other.getCurrentPage()) {
       return false;
     }
-    if (this.getTotalPages() != other.getTotalPages()) {
+    if (this.getTotal() != other.getTotal()) {
       return false;
     }
     return true;
@@ -66,8 +69,8 @@ public class PageableResourceImpl extends ResourceImpl implements PageableResour
   public int hashCode() {
     final int PRIME = 59;
     int result = super.hashCode();
-    result = result * PRIME + this.getPage();
-    result = result * PRIME + this.getTotalPages();
+    result = result * PRIME + this.getCurrentPage();
+    result = result * PRIME + this.getTotal();
     return result;
   }
 }

@@ -5,18 +5,16 @@ import static com.isystk.sample.common.util.ValidateUtils.isEmpty;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
-
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * 入力チェック（電話番号）
  */
 public class PhoneNumberValidator implements ConstraintValidator<PhoneNumber, String> {
 
-  protected final static Logger log = LoggerFactory.getLogger(PhoneNumberValidator.class);
+  private static final Logger log = org.slf4j.LoggerFactory.getLogger(PhoneNumberValidator.class);
   private Pattern pattern;
 
   @Override

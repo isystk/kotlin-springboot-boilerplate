@@ -1,7 +1,8 @@
 package com.isystk.sample.web.base.controller.api.resource;
 
-import com.isystk.sample.common.dto.Dto;
 import java.util.List;
+
+import com.isystk.sample.common.dto.Dto;
 
 public interface Resource {
 
@@ -12,4 +13,9 @@ public interface Resource {
   String getMessage();
 
   void setMessage(String message);
+
+  Boolean getResult();
+
+  void setResult(Boolean result);
+
 }

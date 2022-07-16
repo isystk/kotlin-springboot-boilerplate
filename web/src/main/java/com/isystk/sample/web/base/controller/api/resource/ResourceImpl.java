@@ -12,6 +12,8 @@ public class ResourceImpl implements Resource {
   // メッセージ
   String message;
 
+  Boolean result;
+
   public ResourceImpl() {
   }
 
@@ -23,12 +25,20 @@ public class ResourceImpl implements Resource {
     return this.message;
   }
 
+  public Boolean getResult() {
+    return this.result;
+  }
+
   public void setData(List<? extends Dto> data) {
     this.data = data;
   }
 
   public void setMessage(String message) {
     this.message = message;
+  }
+
+  public void setResult(Boolean result) {
+    this.result = result;
   }
 
   public boolean equals(final Object o) {
@@ -52,6 +62,11 @@ public class ResourceImpl implements Resource {
     if (this$message == null ? other$message != null : !this$message.equals(other$message)) {
       return false;
     }
+    final Object this$result = this.getResult();
+    final Object other$result = other.getResult();
+    if (this$result == null ? other$result != null : !this$result.equals(other$result)) {
+      return false;
+    }
     return true;
   }
 
@@ -66,10 +81,13 @@ public class ResourceImpl implements Resource {
     result = result * PRIME + ($data == null ? 43 : $data.hashCode());
     final Object $message = this.getMessage();
     result = result * PRIME + ($message == null ? 43 : $message.hashCode());
+    final Object $result = this.getResult();
+    result = result * PRIME + ($result == null ? 43 : $result.hashCode());
     return result;
   }
 
   public String toString() {
-    return "ResourceImpl(data=" + this.getData() + ", message=" + this.getMessage() + ")";
+    return "ResourceImpl(data=" + this.getData() + ", message=" + this.getMessage() + ", result="
+        + this.getResult() + ")";
   }
 }
