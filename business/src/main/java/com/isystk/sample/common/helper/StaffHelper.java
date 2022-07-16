@@ -2,10 +2,10 @@ package com.isystk.sample.common.helper;
 
 import com.isystk.sample.common.exception.NoDataFoundException;
 import com.isystk.sample.common.util.DateUtils;
+import com.isystk.sample.domain.dao.AdminDao;
 import com.isystk.sample.domain.dao.AuditInfoHolder;
-import com.isystk.sample.domain.dao.TStaffDao;
-import com.isystk.sample.domain.dto.TStaffCriteria;
-import com.isystk.sample.domain.entity.TStaff;
+import com.isystk.sample.domain.dto.AdminCriteria;
+import com.isystk.sample.domain.entity.Admin;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -18,7 +18,7 @@ public class StaffHelper {
 
   private static final Logger log = org.slf4j.LoggerFactory.getLogger(StaffHelper.class);
   @Autowired
-  TStaffDao tStaffDao;
+  AdminDao adminDao;
 
   /**
    * ログイン済みかどうか
@@ -32,8 +32,8 @@ public class StaffHelper {
    *
    * @return
    */
-  public Integer getLoginStaffId() {
-    return getLoginStaff().getStaffId();
+  public Long getLoginStaffId() {
+    return getLoginStaff().getId();
   }
 
   /**
@@ -41,10 +41,10 @@ public class StaffHelper {
    *
    * @return
    */
-  public TStaff getLoginStaff() {
-    TStaffCriteria criteria = new TStaffCriteria();
+  public Admin getLoginStaff() {
+    AdminCriteria criteria = new AdminCriteria();
     criteria.setEmailEq(AuditInfoHolder.getAuditUser());
-    return tStaffDao.findOne(criteria).orElseThrow(
+    return adminDao.findOne(criteria).orElseThrow(
         () -> new NoDataFoundException(
             "email=" + AuditInfoHolder.getAuditUser() + "のデータが見つかりません。"));
   }
@@ -55,9 +55,9 @@ public class StaffHelper {
    * @return
    */
   public void updateLastLogin() {
-    TStaff tStaff = getLoginStaff();
-    tStaff.setLastLoginTime(DateUtils.getNow());
-    tStaffDao.update(tStaff);
+    Admin admin = getLoginStaff();
+    admin.setLastLoginAt(DateUtils.getNow());
+    adminDao.update(admin);
   }
 
 }

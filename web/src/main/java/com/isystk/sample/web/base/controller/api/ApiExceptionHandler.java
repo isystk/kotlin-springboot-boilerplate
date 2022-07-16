@@ -4,6 +4,7 @@ import static com.isystk.sample.common.Const.NO_DATA_FOUND_ERROR;
 import static com.isystk.sample.common.Const.UNEXPECTED_ERROR;
 import static com.isystk.sample.common.Const.VALIDATION_ERROR;
 
+import com.isystk.sample.common.exception.ErrorMessagesException;
 import com.isystk.sample.common.exception.NoDataFoundException;
 import com.isystk.sample.common.exception.ValidationErrorException;
 import com.isystk.sample.common.util.MessageUtils;
@@ -44,7 +45,7 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
   public ResponseEntity<Object> handleValidationErrorException(Exception ex, WebRequest request) {
     HttpHeaders headers = new HttpHeaders();
     HttpStatus status = HttpStatus.BAD_REQUEST;
-    List<FieldErrorResource> fieldErrorContexts = new ArrayList<FieldErrorResource>();
+    List fieldErrorContexts = new ArrayList<FieldErrorResource>();
 
     if (ex instanceof ValidationErrorException) {
       ValidationErrorException vee = (ValidationErrorException) ex;
@@ -68,6 +69,26 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
     String message = MessageUtils.getMessage(VALIDATION_ERROR, null, "validation error", locale);
     ErrorResourceImpl errorContext = new ErrorResourceImpl();
     errorContext.setMessage(message);
+    errorContext.setFieldErrors(fieldErrorContexts);
+
+    return new ResponseEntity<>(errorContext, headers, status);
+  }
+
+  /**
+   * 論理チェックエラーのハンドリング
+   *
+   * @param ex
+   * @param request
+   * @return
+   */
+  @ExceptionHandler(ErrorMessagesException.class)
+  public ResponseEntity<Object> handleErrorMessagesException(Exception ex, WebRequest request) {
+    HttpHeaders headers = new HttpHeaders();
+    HttpStatus status = HttpStatus.BAD_REQUEST;
+    List fieldErrorContexts = new ArrayList<FieldErrorResource>();
+
+    ErrorResourceImpl errorContext = new ErrorResourceImpl();
+    errorContext.setMessage(ex.getMessage());
     errorContext.setFieldErrors(fieldErrorContexts);
 
     return new ResponseEntity<>(errorContext, headers, status);

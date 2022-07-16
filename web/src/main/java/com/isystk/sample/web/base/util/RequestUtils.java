@@ -1,11 +1,13 @@
 package com.isystk.sample.web.base.util;
 
-import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.http.HttpHeaders;
 import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
+
+import javax.servlet.http.HttpServletRequest;
 
 public class RequestUtils {
 
@@ -40,9 +42,19 @@ public class RequestUtils {
    *
    * @return
    */
-  public static HttpServletRequest getHttpServletRequest() {
+  public static HttpServletRequest getRequest() {
     RequestAttributes attributes = RequestContextHolder.getRequestAttributes();
     return ((ServletRequestAttributes) attributes).getRequest();
+  }
+
+  /**
+   * HttpServletRequestを返します。
+   *
+   * @return
+   */
+  public static HttpServletResponse getResponse() {
+    RequestAttributes attributes = RequestContextHolder.getRequestAttributes();
+    return ((ServletRequestAttributes) attributes).getResponse();
   }
 
   /**
@@ -51,7 +63,7 @@ public class RequestUtils {
    * @return
    */
   public static String getSiteUrl() {
-    HttpServletRequest servletRequest = getHttpServletRequest();
+    HttpServletRequest servletRequest = getRequest();
 
     String scheme = servletRequest.getScheme();
     String host = servletRequest.getRemoteHost();

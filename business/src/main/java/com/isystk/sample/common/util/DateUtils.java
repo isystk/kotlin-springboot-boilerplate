@@ -39,8 +39,7 @@ public class DateUtils {
    */
   public static String format(final LocalDateTime fromLocalDateTime,
       final DateTimeFormatter formatter) {
-    String result = formatter.format(fromLocalDateTime);
-    return result;
+    return formatter.format(fromLocalDateTime);
   }
 
   /**
@@ -120,6 +119,17 @@ public class DateUtils {
    */
   public static int compareTo(final LocalDateTime time1, final LocalDateTime time2) {
     return time1.compareTo(time2);
+  }
+
+  /**
+   * 時間（分）を加算します
+   *
+   * @param time
+   * @param minutes
+   * @return
+   */
+  public static LocalDateTime addMinutes(final LocalDateTime time, final long minutes) {
+    return time.plusMinutes(minutes);
   }
 
 }

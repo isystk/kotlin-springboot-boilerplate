@@ -1,12 +1,13 @@
 package com.isystk.sample.web.base.aop;
 
-import static java.util.concurrent.TimeUnit.NANOSECONDS;
-
 import com.isystk.sample.common.XORShiftRandom;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
 import org.slf4j.MDC;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import static java.util.concurrent.TimeUnit.NANOSECONDS;
 
 /**
  * 処理時間をDEBUGログに出力する
@@ -51,8 +52,8 @@ public class RequestTrackingInterceptor extends BaseHandlerInterceptor {
       return;
     }
 
-    long elapsedNanoSec = System.nanoTime() - beforeNanoSec;
-    long elapsedMilliSec = NANOSECONDS.toMillis(elapsedNanoSec);
+    Long elapsedNanoSec = System.nanoTime() - beforeNanoSec;
+    Long elapsedMilliSec = NANOSECONDS.toMillis(elapsedNanoSec);
     log.info("path={}, method={}, Elapsed {}ms.", request.getRequestURI(), request.getMethod(),
         elapsedMilliSec);
 

@@ -7,5 +7,4 @@ class ItemError {
     var sourceName: String? = null
     var position = 0
     var errorMessage: String? = null
-
 }

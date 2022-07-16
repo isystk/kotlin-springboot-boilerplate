@@ -28,7 +28,6 @@ class BatchConfiguration : InitializingBean {
 
     @Autowired
     var messageSource: MessageSource? = null
-
     @Bean
     fun jobParametersConverter(dataSource: DataSource?): JobParametersConverter {
         return JsrJobParametersConverter(dataSource!!)

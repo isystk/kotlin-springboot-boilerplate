@@ -24,7 +24,6 @@ class SolrRegistJobConfig {
 
     @Autowired
     var stepBuilderFactory: StepBuilderFactory? = null
-
     @Bean
     fun solrlRegistJobListener(): JobExecutionListener {
         return SolrlRegistJobListener()

@@ -5,11 +5,11 @@ package com.isystk.sample.common.dto;
  */
 public class CodeValueDto implements Dto {
 
-  Integer code;
+  String code;
 
   String text;
 
-  public Integer getCode() {
+  public String getCode() {
     return this.code;
   }
 
@@ -17,7 +17,7 @@ public class CodeValueDto implements Dto {
     return this.text;
   }
 
-  public void setCode(Integer code) {
+  public void setCode(String code) {
     this.code = code;
   }
 

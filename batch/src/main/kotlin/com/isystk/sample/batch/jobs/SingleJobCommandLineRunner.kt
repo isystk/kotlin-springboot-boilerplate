@@ -1,7 +1,6 @@
 package com.isystk.sample.batch.jobs
 
-import com.google.common.collect.Lists
-import com.isystk.sample.common.util.FileUtils
+import com.isystk.sample.common.util.*
 import org.slf4j.LoggerFactory
 import org.springframework.batch.core.*
 import org.springframework.batch.core.converter.JobParametersConverter
@@ -22,7 +21,8 @@ import java.io.IOException
 import java.nio.file.FileAlreadyExistsException
 import java.nio.file.Files
 import java.nio.file.Paths
-import java.util.*
+import java.util.function.Function
+import java.util.stream.Collectors
 
 /**
  * 単一のジョブのみを処理するCommandLineJobRunner
@@ -47,6 +47,7 @@ class SingleJobCommandLineRunner : CommandLineRunner, ApplicationEventPublisherA
         this.publisher = publisher
     }
 
+    @Throws(JobExecutionException::class, IOException::class)
     override fun run(vararg args: String) {
         var margs: Array<String>? = null
         margs = arrayOf(*args)
@@ -80,7 +81,7 @@ class SingleJobCommandLineRunner : CommandLineRunner, ApplicationEventPublisherA
         val props = StringUtils.splitArrayElementsIntoProperties(args!!, "=")
         if (log.isDebugEnabled && props != null) {
             props.entries.stream()
-                    .forEach { e: Map.Entry<Any?, Any> -> log.debug("args: key={}, value={}", e.key, e.value.toString()) }
+                    .forEach { (key, value): Map.Entry<Any?, Any> -> log.debug("args: key={}, value={}", key, value.toString()) }
         }
         return converter!!.getJobParameters(props)
     }
@@ -140,7 +141,7 @@ class SingleJobCommandLineRunner : CommandLineRunner, ApplicationEventPublisherA
     protected fun getNextJobParameters(job: Job, parameters: JobParameters): JobParameters {
         val name = job.name
         var mergeParameters = JobParameters()
-        val lastInstances = jobExplorer!!.getJobInstances(name, 0, 1)
+        val lastInstances: List<*> = jobExplorer!!.getJobInstances(name, 0, 1)
         val incrementer = job.jobParametersIncrementer
         val additional = parameters.parameters
         if (lastInstances.isEmpty()) {
@@ -149,7 +150,8 @@ class SingleJobCommandLineRunner : CommandLineRunner, ApplicationEventPublisherA
                 mergeParameters = incrementer.getNext(JobParameters())
             }
         } else {
-            val previousExecutions = jobExplorer!!.getJobExecutions(lastInstances[0])
+            val previousExecutions = jobExplorer!!.getJobExecutions(
+                    (lastInstances[0] as JobInstance?)!!)
             val previousExecution = previousExecutions[0]
             if (previousExecution === null) {
                 // Normally this will not happen - an instance exists with no executions
@@ -193,9 +195,8 @@ class SingleJobCommandLineRunner : CommandLineRunner, ApplicationEventPublisherA
     }
 
     companion object {
-        private val log = LoggerFactory
-                .getLogger(SingleJobCommandLineRunner::class.java)
+        private val log = LoggerFactory.getLogger(
+                SingleJobCommandLineRunner::class.java)
         const val JOB_PARAMETER_JOB_NAME = "--job"
     }
-
 }

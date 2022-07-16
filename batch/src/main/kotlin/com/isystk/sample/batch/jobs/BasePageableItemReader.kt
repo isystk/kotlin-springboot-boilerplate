@@ -28,7 +28,7 @@ abstract class BasePageableItemReader<T> : AbstractPagingItemReader<T?>() {
 
     override fun doReadPage() {
         if (results == null) {
-            results = CopyOnWriteArrayList<T>()
+            results = CopyOnWriteArrayList()
         } else {
             results.clear()
         }
