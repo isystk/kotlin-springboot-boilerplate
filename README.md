@@ -245,7 +245,7 @@ $ npm install -g yarn
 ├── batch (バッチ)
 │   └── src
 │       └── main
-│           ├── java
+│           ├── kotlin
 │           └── resources
 ├── business (共通ロジック)
 │   └── src
@@ -264,12 +264,12 @@ $ npm install -g yarn
 ├── web-admin (管理画面)
 │   └── src
 │       └── main
-│           ├── java
+│           ├── kotlin
 │           └── resources
 ├── web-front (フロント画面)
 │   ├── src
 │   │   └── main
-│   │       ├── java
+│   │       ├── kotlin
 │   │       └── resources
 │   └── resources (フロントエンドモジュール)
 │       ├── node_modules
