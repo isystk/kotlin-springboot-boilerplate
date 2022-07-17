@@ -67,7 +67,7 @@ class CartService : BaseTransactionalService() {
      *
      * @return
      */
-    fun removeCart(cartId: BigInteger?): CartSearchResultDto {
+    fun removeCart(cartId: BigInteger): CartSearchResultDto {
         val user = userHelper!!.user
         Assert.notNull(user, "user must not be null")
         val cartList = cartRepository!!.removeCart(user.id, cartId)
@@ -79,7 +79,7 @@ class CartService : BaseTransactionalService() {
      *
      * @return
      */
-    fun createPayment(amount: Int?, email: String?): StripePaymentDto {
+    fun createPayment(amount: Int, email: String): StripePaymentDto {
         val user = userHelper!!.user
         return cartRepository!!.createPayment(user, amount, email)
     }

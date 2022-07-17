@@ -19,7 +19,7 @@ import org.springframework.stereotype.Component
 class UserDaoRealm : BaseRealm() {
     @Autowired
     var userDao: UserDao? = null
-    override fun getLoginUser(email: String): UserDetails {
+    override fun getLoginUser(email: String?): UserDetails {
         var user: User? = null
         var authorityList: List<GrantedAuthority?>? = null
         return try {

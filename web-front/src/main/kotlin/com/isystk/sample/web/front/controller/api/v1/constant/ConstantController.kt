@@ -34,7 +34,7 @@ class ConstantController : AbstractRestController() {
      */
     @GetMapping
     fun index(): Resource {
-        val resource = resourceFactory.create()
+        val resource = resourceFactory!!.create()
         val list: MutableList<CodeValueGroupDto> = Lists.newArrayList()
         list.add(CodeValueGroupDto("gender", Arrays.stream(Gender.values())
                 .map { values: Gender ->

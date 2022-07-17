@@ -29,8 +29,8 @@ class AuthController : AbstractRestController() {
      */
     @PostMapping(FrontUrl.API_V1_SESSION)
     fun session(session: HttpSession): Resource {
-        val userId = AuditInfoHolder.getAuditUser()
-        val resource = resourceFactory.create()
+        val userId = AuditInfoHolder.auditUser
+        val resource = resourceFactory!!.create()
         if (Optional.of(userId).isEmpty || "GUEST" == userId) {
             val dto = AuthUserDto()
             dto.sessionId = session.id
@@ -57,7 +57,7 @@ class AuthController : AbstractRestController() {
     //    // 最終ログイン日時を更新します。
     //    userHelper.updateLastLogin();
     //
-    //    Resource resource = resourceFactory.create();
+    //    Resource resource = resourceFactory!!.create();
     //    User user = userHelper.getUser();
     //    AuthUserDto dto = ObjectMapperUtils.map(user, AuthUserDto.class);
     //    dto.setSessionId(session.getId());
@@ -76,7 +76,7 @@ class AuthController : AbstractRestController() {
     //  @GetMapping(LOGIN_FAILURE_URL)
     //  @ResponseStatus(HttpStatus.UNAUTHORIZED)
     //  public Resource loginFailure(HttpServletResponse response) {
-    //    Resource resource = resourceFactory.create();
+    //    Resource resource = resourceFactory!!.create();
     //    resource.setMessage(getMessage("login.failed"));
     //    resource.setResult(false);
     //    return resource;
@@ -89,7 +89,7 @@ class AuthController : AbstractRestController() {
     //   */
     //  @GetMapping(LOGOUT_SUCCESS_URL)
     //  public Resource logoutSuccess() {
-    //    Resource resource = resourceFactory.create();
+    //    Resource resource = resourceFactory!!.create();
     //    resource.setMessage(getMessage("login.success"));
     //    resource.setResult(true);
     //    return resource;

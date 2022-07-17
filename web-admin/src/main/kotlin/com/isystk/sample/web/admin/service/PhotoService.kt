@@ -47,7 +47,7 @@ class PhotoService : BaseTransactionalService() {
      * 写真を削除します。
      * @param imageName
      */
-    fun delete(imageName: String?) {
+    fun delete(imageName: String) {
         imageHelper!!.removeFile("/", imageName)
     }
 }

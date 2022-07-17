@@ -48,7 +48,7 @@ class OrderHistoryService : BaseTransactionalService() {
      * @param pageable
      * @return
      */
-    fun findPage(dto: OrderHistorySearchConditionDto, pageable: Pageable?): Page<OrderHistoryRepositoryDto> {
+    fun findPage(dto: OrderHistorySearchConditionDto, pageable: Pageable): Page<OrderHistoryRepositoryDto> {
         return orderHistoryRepository!!.findPage(dtoToCriteria(dto), pageable)
     }
 
@@ -100,7 +100,7 @@ class OrderHistoryService : BaseTransactionalService() {
      * @param stockId
      * @return
      */
-    fun findById(stockId: BigInteger?): OrderHistoryRepositoryDto {
+    fun findById(stockId: BigInteger): OrderHistoryRepositoryDto {
         return orderHistoryRepository!!.findById(stockId)
     }
 }

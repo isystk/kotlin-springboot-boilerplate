@@ -78,7 +78,7 @@ class SecurityConfig : BaseSecurityConfig() {
                 .deleteCookies("SESSION", "JSESSIONID") // ログアウト画面のURL
                 .logoutUrl(Const.LOGOUT_URL) // ログアウト後の遷移先
                 .logoutSuccessUrl(Const.LOGOUT_SUCCESS_URL) // ajaxの場合は、HTTPステータスを返す
-                .defaultLogoutSuccessHandlerFor(HttpStatusReturningLogoutSuccessHandler()) { request: HttpServletRequest? -> RequestUtils.isAjaxRequest(request) } // セッションを破棄する
+                .defaultLogoutSuccessHandlerFor(HttpStatusReturningLogoutSuccessHandler()) { request: HttpServletRequest -> RequestUtils.isAjaxRequest(request) } // セッションを破棄する
                 .invalidateHttpSession(true).permitAll()
     }
 

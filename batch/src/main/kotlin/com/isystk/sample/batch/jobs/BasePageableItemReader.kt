@@ -22,7 +22,7 @@ abstract class BasePageableItemReader<T> : AbstractPagingItemReader<T?>() {
         // ThreadPoolを使用している場合は再設定する
         MDCUtils.putIfAbsent(BatchConst.MDC_BATCH_ID, batchId)
         val startDateTime = context.startDateTime
-        AuditInfoHolder.set(batchId, startDateTime)
+        AuditInfoHolder.set(batchId!!, startDateTime!!)
         return super.doRead()
     }
 

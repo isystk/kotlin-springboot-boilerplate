@@ -38,7 +38,7 @@ class UserService : BaseTransactionalService() {
      * @param pageable
      * @return
      */
-    fun findPage(dto: UserSearchConditionDto, pageable: Pageable?): Page<UserRepositoryDto> {
+    fun findPage(dto: UserSearchConditionDto, pageable: Pageable): Page<UserRepositoryDto> {
         return userRepository!!.findPage(dtoToCriteria(dto), pageable)
     }
 
@@ -70,7 +70,7 @@ class UserService : BaseTransactionalService() {
      * @param userId
      * @return
      */
-    fun findById(userId: BigInteger?): UserRepositoryDto {
+    fun findById(userId: BigInteger): UserRepositoryDto {
         return userRepository!!.findById(userId)
     }
 }

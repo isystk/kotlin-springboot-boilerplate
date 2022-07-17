@@ -7,14 +7,14 @@ import org.apache.poi.ss.usermodel.FillPatternType
 import org.apache.poi.ss.usermodel.Workbook
 
 class StockExcel : ExcelView.Callback {
-    override fun buildExcelWorkbook(model: Map<String, Any>, data: Collection<*>, workbook: Workbook) {
+    override fun buildExcelWorkbook(model: Map<String, Any>?, data: Collection<*>?, workbook: Workbook?) {
 
         // シートを作成する
-        val sheet = workbook.createSheet("商品一覧")
+        val sheet = workbook!!.createSheet("商品一覧")
         sheet.defaultColumnWidth = 30
 
         // フォント
-        val font = workbook.createFont()
+        val font = workbook!!.createFont()
         font.fontName = "メイリオ"
         font.bold = true
         font.color = HSSFColorPredefined.WHITE.index

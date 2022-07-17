@@ -53,7 +53,7 @@ class ContactEditController : AbstractHtmlController() {
     fun editIndex(@ModelAttribute form: ContactEditForm, model: Model): String {
 
         // 1件取得する
-        val contact = contactService!!.findById(form.contactId)
+        val contact = contactService!!.findById(form.contactId!!)
 
         // 取得したDtoをFromに詰め替える
         ObjectMapperUtils.map(contact, form)
@@ -88,7 +88,7 @@ class ContactEditController : AbstractHtmlController() {
      */
     @PutMapping(params = ["confirm"])
     fun editConfirm(@Validated @ModelAttribute form: ContactEditForm, br: BindingResult,
-                    sessionStatus: SessionStatus?, attributes: RedirectAttributes?, model: Model): String {
+                    sessionStatus: SessionStatus?, attributes: RedirectAttributes, model: Model): String {
 
         // 入力チェックエラーがある場合は、元の画面にもどる
         if (br.hasErrors()) {
@@ -109,7 +109,7 @@ class ContactEditController : AbstractHtmlController() {
      */
     @PutMapping(params = ["back"])
     fun editBack(@Validated @ModelAttribute form: ContactEditForm, br: BindingResult?,
-                 sessionStatus: SessionStatus?, attributes: RedirectAttributes?, model: Model): String {
+                 sessionStatus: SessionStatus?, attributes: RedirectAttributes, model: Model): String {
         return showEditIndex(form, model)
     }
 
@@ -124,7 +124,7 @@ class ContactEditController : AbstractHtmlController() {
      */
     @PutMapping(params = ["complete"])
     fun updateComplete(@Validated @ModelAttribute form: ContactEditForm, br: BindingResult,
-                       sessionStatus: SessionStatus, attributes: RedirectAttributes?, model: Model): String {
+                       sessionStatus: SessionStatus, attributes: RedirectAttributes, model: Model): String {
 
         // 入力チェックエラーがある場合は、元の画面にもどる
         if (br.hasErrors()) {

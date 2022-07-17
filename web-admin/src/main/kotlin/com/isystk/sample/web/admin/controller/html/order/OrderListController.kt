@@ -49,8 +49,8 @@ class OrderListController : AbstractHtmlController() {
      * @return
      */
     @GetMapping
-    fun index(@ModelAttribute form: @Valid OrderListForm?, br: BindingResult,
-              sessionStatus: SessionStatus?, attributes: RedirectAttributes?, model: Model): String {
+    fun index(@ModelAttribute form: @Valid OrderListForm, br: BindingResult,
+              sessionStatus: SessionStatus?, attributes: RedirectAttributes, model: Model): String {
         if (br.hasErrors()) {
             setFlashAttributeErrors(attributes, br)
             return "modules/order/list"
