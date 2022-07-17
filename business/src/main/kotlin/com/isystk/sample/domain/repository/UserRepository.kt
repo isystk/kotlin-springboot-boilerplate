@@ -32,7 +32,7 @@ class UserRepository : BaseRepository() {
      * @param criteria
      * @return
      */
-    fun findAll(criteria: UserCriteria?): List<UserRepositoryDto> {
+    fun findAll(criteria: UserCriteria): List<UserRepositoryDto> {
         val options = DomaUtils.createSelectOptions(1, Int.MAX_VALUE)
         return convertDto(userDao!!.findAll(criteria, options, Collectors.toList()))
     }
@@ -44,7 +44,7 @@ class UserRepository : BaseRepository() {
      * @param pageable
      * @return
      */
-    fun findPage(criteria: UserCriteria?, pageable: Pageable): Page<UserRepositoryDto> {
+    fun findPage(criteria: UserCriteria, pageable: Pageable): Page<UserRepositoryDto> {
         val options = DomaUtils.createSelectOptions(pageable)
         val userList = convertDto(userDao!!.findAll(criteria, options.count(), Collectors.toList()))
         return pageFactory!!.create(userList, pageable, options.count)

@@ -123,7 +123,7 @@ class CartRepository : BaseRepository() {
      * @param cartId
      * @return
      */
-    fun removeCart(userId: BigInteger?, cartId: BigInteger?): List<CartRepositoryDto> {
+    fun removeCart(userId: BigInteger, cartId: BigInteger): List<CartRepositoryDto> {
         val cart = cartDao!!.selectById(cartId).orElseThrow()
         cartDao!!.delete(cart)
         return findCart(userId)

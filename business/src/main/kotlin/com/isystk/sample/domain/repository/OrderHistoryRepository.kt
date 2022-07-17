@@ -45,7 +45,7 @@ class OrderHistoryRepository : BaseRepository() {
      * @param criteria
      * @return
      */
-    fun findAll(criteria: OrderHistoryCriteria?): List<OrderHistoryRepositoryDto> {
+    fun findAll(criteria: OrderHistoryCriteria): List<OrderHistoryRepositoryDto> {
         val options = DomaUtils.createSelectOptions(1, Int.MAX_VALUE)
         return convertDto(orderHistoryDao!!.findAll(criteria, options, Collectors.toList()))
     }
@@ -57,7 +57,7 @@ class OrderHistoryRepository : BaseRepository() {
      * @param pageable
      * @return
      */
-    fun findPage(criteria: OrderHistoryCriteria?, pageable: Pageable): Page<OrderHistoryRepositoryDto> {
+    fun findPage(criteria: OrderHistoryCriteria, pageable: Pageable): Page<OrderHistoryRepositoryDto> {
         val options = DomaUtils.createSelectOptions(pageable)
         val orderHistoryList = convertDto(orderHistoryDao!!.findAll(criteria, options.count(), Collectors.toList()))
         return pageFactory!!.create(orderHistoryList, pageable, options.count)

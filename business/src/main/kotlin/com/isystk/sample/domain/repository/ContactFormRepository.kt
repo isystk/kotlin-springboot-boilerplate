@@ -44,7 +44,7 @@ class ContactFormRepository : BaseRepository() {
      * @param criteria
      * @return
      */
-    fun findAll(criteria: ContactFormCriteria?): List<ContactFormRepositoryDto> {
+    fun findAll(criteria: ContactFormCriteria): List<ContactFormRepositoryDto> {
         val options = DomaUtils.createSelectOptions(1, Int.MAX_VALUE)
         return convertDto(contactFormDao!!.findAll(criteria, options, Collectors.toList()))
     }
@@ -56,7 +56,7 @@ class ContactFormRepository : BaseRepository() {
      * @param pageable
      * @return
      */
-    fun findPage(criteria: ContactFormCriteria?, pageable: Pageable): Page<ContactFormRepositoryDto> {
+    fun findPage(criteria: ContactFormCriteria, pageable: Pageable): Page<ContactFormRepositoryDto> {
         val options = DomaUtils.createSelectOptions(pageable)
         val contactFormList = convertDto(contactFormDao!!.findAll(criteria, options.count(), Collectors.toList()))
         return pageFactory!!.create(contactFormList, pageable, options.count)
@@ -173,7 +173,7 @@ class ContactFormRepository : BaseRepository() {
         val criteria = ContactFormImageCriteria()
         criteria.contactFormIdEq = contactFormDto.id
         val contactFormImageList = contactFormImageDao!!.findAll(criteria)
-        contactFormImageList.stream().forEach { e: ContactFormImage? -> contactFormImageDao!!.delete(e) }
+        contactFormImageList.stream().forEach { e: ContactFormImage -> contactFormImageDao!!.delete(e) }
         Optional.ofNullable(contactFormDto.imageList).orElse(Lists.newArrayList()).stream()
                 .forEach { e: ContactFormImageRepositoryDto ->
                     val contactFormImage = ContactFormImage()

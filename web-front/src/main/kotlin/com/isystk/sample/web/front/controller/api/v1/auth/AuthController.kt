@@ -29,7 +29,7 @@ class AuthController : AbstractRestController() {
      */
     @PostMapping(FrontUrl.API_V1_SESSION)
     fun session(session: HttpSession): Resource {
-        val userId = AuditInfoHolder.getAuditUser()
+        val userId = AuditInfoHolder.auditUser
         val resource = resourceFactory!!.create()
         if (Optional.of(userId).isEmpty || "GUEST" == userId) {
             val dto = AuthUserDto()

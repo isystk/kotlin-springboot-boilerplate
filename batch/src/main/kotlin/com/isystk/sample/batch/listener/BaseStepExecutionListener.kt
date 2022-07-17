@@ -62,7 +62,7 @@ abstract class BaseStepExecutionListener : StepExecutionListenerSupport() {
     protected fun setAuditInfoIfEmpty(context: BatchContext?) {
         val batchId = context?.batchId
         val startDateTime = context?.startDateTime
-        AuditInfoHolder.set(batchId, startDateTime)
+        AuditInfoHolder.set(batchId!!, startDateTime!!)
     }
 
     /**

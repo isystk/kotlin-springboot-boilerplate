@@ -22,7 +22,7 @@ class StaffHelper {
      * ログイン済みかどうか
      */
     val isLogined: Boolean
-        get() = AuditInfoHolder.getAuditUser() != null
+        get() = AuditInfoHolder.auditUser != null
 
     /**
      * ログインユーザーを取得します。
@@ -40,10 +40,10 @@ class StaffHelper {
     val loginStaff: Admin
         get() {
             val criteria = AdminCriteria()
-            criteria.emailEq = AuditInfoHolder.getAuditUser()
+            criteria.emailEq = AuditInfoHolder.auditUser
             return adminDao!!.findOne(criteria).orElseThrow {
                 NoDataFoundException(
-                        "email=" + AuditInfoHolder.getAuditUser() + "のデータが見つかりません。")
+                        "email=" + AuditInfoHolder.auditUser + "のデータが見つかりません。")
             }
         }
 
