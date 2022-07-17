@@ -29,7 +29,7 @@ class StockDetailController : AbstractHtmlController() {
      * @return
      */
     @GetMapping("{stockId}")
-    fun show(@PathVariable stockId: BigInteger?, model: Model): String {
+    fun show(@PathVariable stockId: BigInteger, model: Model): String {
         val stock = stockService!!.findById(stockId)
         model.addAttribute("stock", stock)
         return "modules/stock/detail"

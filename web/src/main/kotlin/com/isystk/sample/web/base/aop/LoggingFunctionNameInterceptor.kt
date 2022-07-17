@@ -16,7 +16,7 @@ class LoggingFunctionNameInterceptor : BaseHandlerInterceptor() {
         // コントローラーの動作前
         val fna = getBean(handler, FunctionNameAware::class.java)
         if (fna != null) {
-            val functionName = fna.functionName
+            val functionName = fna.getFunctionName()
             MDC.put(MDC_FUNCTION_NAME, functionName)
         }
         return true

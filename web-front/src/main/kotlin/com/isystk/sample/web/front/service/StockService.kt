@@ -50,7 +50,7 @@ class StockService : BaseTransactionalService() {
                 solrStockList.add(convertSolrToFrontStockDto(solrStock))
             }
         }
-        return pageFactory.create(solrStockList, pageable, count)
+        return pageFactory!!.create(solrStockList, pageable, count)
     }
 
     /**
@@ -72,9 +72,9 @@ class StockService : BaseTransactionalService() {
     private fun convertSolrToFrontStockDto(solrStock: SolrStock): StockSearchResultDto {
         // 入力値を詰め替える
         val dto = ObjectMapperUtils.map(solrStock, StockSearchResultDto::class.java)
-        dto.imgUrl = imageHelper!!.getImageUrl("/stocks", solrStock.imgpath)
-        dto.createdAtYYYYMMDD = DateUtils.format(solrStock.createdAtDate, DateTimeFormatter.ofPattern("yyyy/MM/dd"))
-        dto.createdAtMMDD = DateUtils.format(solrStock.createdAtDate, DateTimeFormatter.ofPattern("MM/dd"))
+        dto.imgUrl = imageHelper!!.getImageUrl("/stocks", solrStock.imgpath!!)
+        dto.createdAtYYYYMMDD = DateUtils.format(solrStock.createdAtDate!!, DateTimeFormatter.ofPattern("yyyy/MM/dd"))
+        dto.createdAtMMDD = DateUtils.format(solrStock.createdAtDate!!, DateTimeFormatter.ofPattern("MM/dd"))
         return dto
     }
 

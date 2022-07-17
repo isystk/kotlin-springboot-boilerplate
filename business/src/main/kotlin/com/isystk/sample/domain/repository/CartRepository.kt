@@ -102,7 +102,7 @@ class CartRepository : BaseRepository() {
      * @return
      */
     fun addCart(userId: BigInteger?, stockId: BigInteger?): List<CartRepositoryDto> {
-        val time = DateUtils.getNow()
+        val time = DateUtils.now
 
         // 商品テーブル
         val cart = Cart()
@@ -179,7 +179,7 @@ class CartRepository : BaseRepository() {
      * @return
      */
     fun checkout(user: User): Boolean {
-        val time = DateUtils.getNow()
+        val time = DateUtils.now
         val cartList = findCart(user.id)
 
         // stockId をkeyとした、cartListのMapを生成

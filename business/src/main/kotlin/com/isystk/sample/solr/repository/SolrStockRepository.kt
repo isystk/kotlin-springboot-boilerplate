@@ -273,7 +273,7 @@ class SolrStockRepository : BaseRepository() {
         if (0 < count) {
             stockList = query(criteria, pageable)
         }
-        return pageFactory.create(stockList, pageable, count)
+        return pageFactory!!.create(stockList, pageable, count)
     }
 
     /**
