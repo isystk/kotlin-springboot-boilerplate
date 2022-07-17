@@ -36,7 +36,7 @@ class StockRepository : BaseRepository() {
      * @param criteria
      * @return
      */
-    fun findAll(criteria: StockCriteria?): List<StockRepositoryDto> {
+    fun findAll(criteria: StockCriteria): List<StockRepositoryDto> {
         return convertDto(stockDao!!.findAll(criteria))
     }
 
@@ -47,7 +47,7 @@ class StockRepository : BaseRepository() {
      * @param pageable
      * @return
      */
-    fun findPage(criteria: StockCriteria?, pageable: Pageable): Page<StockRepositoryDto> {
+    fun findPage(criteria: StockCriteria, pageable: Pageable): Page<StockRepositoryDto> {
         val options = DomaUtils.createSelectOptions(pageable)
         val stockList = convertDto(stockDao!!.findAll(criteria, options.count(), Collectors.toList()))
         return pageFactory!!.create(stockList, pageable, options.count)

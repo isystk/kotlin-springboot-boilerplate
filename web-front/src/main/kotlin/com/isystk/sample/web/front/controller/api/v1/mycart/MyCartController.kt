@@ -59,7 +59,7 @@ class MyCartController : AbstractRestController() {
     @PostMapping("/remove")
     fun removeCart(@RequestParam("cart_id") cartId: BigInteger?): Resource {
         val resource = resourceFactory!!.create()
-        resource.data = Arrays.asList(cartService!!.removeCart(cartId))
+        resource.data = Arrays.asList(cartService!!.removeCart(cartId!!))
         resource.message = getMessage(Const.MESSAGE_SUCCESS)
         resource.result = true
         return resource

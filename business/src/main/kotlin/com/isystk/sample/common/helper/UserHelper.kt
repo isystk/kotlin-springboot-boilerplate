@@ -58,10 +58,10 @@ class UserHelper {
     val user: User
         get() {
             val criteria = UserCriteria()
-            criteria.emailEq = AuditInfoHolder.getAuditUser()
+            criteria.emailEq = AuditInfoHolder.auditUser
             return userDao!!.findOne(criteria).orElseThrow {
                 NoDataFoundException(
-                        "email=" + AuditInfoHolder.getAuditUser() + "のデータが見つかりません。")
+                        "email=" + AuditInfoHolder.auditUser + "のデータが見つかりません。")
             }
         }
 

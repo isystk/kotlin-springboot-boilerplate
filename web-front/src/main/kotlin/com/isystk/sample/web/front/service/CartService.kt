@@ -67,7 +67,7 @@ class CartService : BaseTransactionalService() {
      *
      * @return
      */
-    fun removeCart(cartId: BigInteger?): CartSearchResultDto {
+    fun removeCart(cartId: BigInteger): CartSearchResultDto {
         val user = userHelper!!.user
         Assert.notNull(user, "user must not be null")
         val cartList = cartRepository!!.removeCart(user.id, cartId)
