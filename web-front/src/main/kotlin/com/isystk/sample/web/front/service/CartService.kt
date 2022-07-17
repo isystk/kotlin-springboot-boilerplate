@@ -79,7 +79,7 @@ class CartService : BaseTransactionalService() {
      *
      * @return
      */
-    fun createPayment(amount: Int?, email: String?): StripePaymentDto {
+    fun createPayment(amount: Int, email: String): StripePaymentDto {
         val user = userHelper!!.user
         return cartRepository!!.createPayment(user, amount, email)
     }

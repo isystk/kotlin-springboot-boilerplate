@@ -19,7 +19,7 @@ class ContactService : BaseTransactionalService() {
      * @param contactDto
      * @return
      */
-    fun create(contactDto: ContactFormRepositoryDto?): ContactForm {
+    fun create(contactDto: ContactFormRepositoryDto): ContactForm {
         Assert.notNull(contactDto, "input must not be null")
         return contactRepository!!.create(contactDto)
     }
