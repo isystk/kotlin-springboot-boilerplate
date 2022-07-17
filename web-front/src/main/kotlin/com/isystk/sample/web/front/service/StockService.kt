@@ -38,7 +38,7 @@ class StockService : BaseTransactionalService() {
      * @return
      */
     @Transactional(readOnly = true) // 読み取りのみの場合は指定する
-    fun findSolrAll(criteria: SolrStockCriteria?, pageable: Pageable?): Page<StockSearchResultDto> {
+    fun findSolrAll(criteria: SolrStockCriteria?, pageable: Pageable): Page<StockSearchResultDto> {
         Assert.notNull(criteria, "criteria must not be null")
 
         // Solrから商品データを取得する
@@ -59,7 +59,7 @@ class StockService : BaseTransactionalService() {
      * @param stockId
      * @return
      */
-    fun findById(stockId: BigInteger?): StockSearchResultDto {
+    fun findById(stockId: BigInteger): StockSearchResultDto {
         // 1件取得する
         val stock = stockRepository!!.findById(stockId)
         return convertDbToFrontStockDto(stock)

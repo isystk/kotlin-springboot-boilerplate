@@ -53,7 +53,7 @@ class RegisterService : BaseTransactionalService() {
      *
      * @param userId
      */
-    fun sendMail(userId: BigInteger?) {
+    fun sendMail(userId: BigInteger) {
         val user = userRepository!!.findById(userId)
         if (user.emailVerifiedAt != null) {
             throw NoDataFoundException("既に本会員の状態です。")

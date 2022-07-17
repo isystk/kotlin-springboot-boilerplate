@@ -71,7 +71,7 @@ class MyCartController : AbstractRestController() {
      * @return
      */
     @PostMapping("/payment")
-    fun payment(@RequestParam("amount") amount: Int?, @RequestParam("username") email: String?): Resource {
+    fun payment(@RequestParam("amount") amount: Int, @RequestParam("username") email: String): Resource {
         val dto = cartService!!.createPayment(amount, email)
         val resource = resourceFactory!!.create()
         resource.data = Arrays.asList(dto)
