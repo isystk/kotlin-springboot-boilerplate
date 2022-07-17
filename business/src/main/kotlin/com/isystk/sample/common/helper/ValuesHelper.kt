@@ -1,44 +1,37 @@
-package com.isystk.sample.common.helper;
+package com.isystk.sample.common.helper
 
-import com.google.common.reflect.ClassPath;
-import com.isystk.sample.common.values.Values;
-
-import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-import org.springframework.stereotype.Component;
-
-import java.io.IOException;
-import java.util.Map;
-import java.util.stream.Collectors;
+import com.google.common.reflect.ClassPath
+import com.isystk.sample.common.values.Values
+import org.springframework.stereotype.Component
+import java.util.function.Function
+import java.util.stream.Collectors
 
 @Component("vh")
-public class ValuesHelper {
+class ValuesHelper private constructor() {
+    private val valuesObjList: Map<String, String>
 
-  private final Map<String, String> valuesObjList;
+    init {
+        val loader = Thread.currentThread().contextClassLoader
+        valuesObjList = ClassPath.from(loader)
+                .getTopLevelClassesRecursive("com.isystk.sample.common.values").stream()
+                .filter { classInfo: ClassPath.ClassInfo ->
+                    try {
+                        val clazz = Class.forName(classInfo.name)
+                        return@filter clazz != Values::class.java && Values::class.java.isAssignableFrom(clazz)
+                    } catch (e: ClassNotFoundException) {
+                        throw RuntimeException(e)
+                    }
+                }
+                .collect(Collectors.toList())
+                .associateBy({ it.simpleName }, { it.name })
+    }
 
-  private ValuesHelper() throws IOException {
-    ClassLoader loader = Thread.currentThread().getContextClassLoader();
-    valuesObjList = ClassPath.from(loader)
-        .getTopLevelClassesRecursive("com.isystk.sample.common.values").stream()
-        .filter(classInfo -> {
-          try {
-            Class<?> clazz = Class.forName(classInfo.getName());
-            return !clazz.equals(Values.class) && Values.class.isAssignableFrom(clazz);
-          } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
-          }
-        }).collect(
-            Collectors.toMap(ClassPath.ClassInfo::getSimpleName, ClassPath.ClassInfo::getName));
-  }
-
-  /**
-   * JSPからアクセス用
-   */
-  public <T extends Enum<T> & Values> T[] values(String classSimpleName)
-      throws ClassNotFoundException {
-    Class<T> enumType = (Class<T>) Class.forName(this.valuesObjList.get(classSimpleName));
-    return enumType.getEnumConstants();
-  }
-
+    /**
+     * JSPからアクセス用
+     */
+    @Throws(ClassNotFoundException::class)
+    fun <T> values(classSimpleName: String): Array<T> where T : Enum<T>?, T : Values<*>? {
+        val enumType = Class.forName(valuesObjList[classSimpleName]) as Class<T>
+        return enumType.enumConstants
+    }
 }
