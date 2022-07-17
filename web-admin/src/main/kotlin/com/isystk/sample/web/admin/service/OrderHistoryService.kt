@@ -23,13 +23,13 @@ import java.util.stream.Collectors
 @Service
 class OrderHistoryService : BaseTransactionalService() {
     @Autowired
-    var orderHistoryRepository: OrderHistoryRepository? = null
+    val orderHistoryRepository: OrderHistoryRepository? = null
 
     @Autowired
-    var userDao: UserDao? = null
+    val userDao: UserDao? = null
 
     @Autowired
-    var stockDao: StockDao? = null
+    val stockDao: StockDao? = null
 
     /**
      * 商品を複数取得します。

@@ -9,6 +9,7 @@ object MDCUtils {
      * @param key
      * @param value
      */
+    @JvmStatic
     fun put(key: String?, value: String?) {
         MDC.put(key, value)
     }
@@ -19,6 +20,7 @@ object MDCUtils {
      * @param key
      * @param value
      */
+    @JvmStatic
     fun putIfAbsent(key: String?, value: String?) {
         if (MDC.get(key) == null) {
             MDC.put(key, value)
@@ -30,6 +32,7 @@ object MDCUtils {
      *
      * @param key
      */
+    @JvmStatic
     fun remove(key: String?) {
         MDC.remove(key)
     }

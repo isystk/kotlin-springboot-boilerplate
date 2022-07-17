@@ -18,6 +18,7 @@ object FileUtils {
      *
      * @param location
      */
+    @JvmStatic
     fun createDirectory(location: Path) {
         try {
             Files.createDirectory(location)
@@ -33,6 +34,7 @@ object FileUtils {
      *
      * @param location
      */
+    @JvmStatic
     fun createDirectories(location: Path) {
         try {
             Files.createDirectories(location)
@@ -50,6 +52,7 @@ object FileUtils {
      * @param extensions 対応する拡張子
      * @return true / false
      */
+    @JvmStatic
     fun isExtension(file: File?, extensions: Array<String?>?): Boolean {
         if (file == null) {
             return false
@@ -72,6 +75,7 @@ object FileUtils {
      *
      * @param fileName ファイル
      */
+    @JvmStatic
     fun getExtension(fileName: String?): String {
         if (StringUtils.isBlankOrSpace(fileName)) {
             return ""
@@ -87,6 +91,7 @@ object FileUtils {
      * @param maxSize 最大のファイルサイズ（バイト）
      * @return true / false
      */
+    @JvmStatic
     fun maxFileSize(file: File?, maxSize: Long): Boolean {
         if (file == null) {
             return false
@@ -102,6 +107,7 @@ object FileUtils {
      * @param imageFile 画像ファイル
      * @return true / false
      */
+    @JvmStatic
     fun isImageFile(imageFile: File?): Boolean {
         if (imageFile == null) {
             return false
@@ -131,6 +137,7 @@ object FileUtils {
      * @param path パス
      * @return true=削除成功、false=削除失敗
      */
+    @JvmStatic
     fun delete(path: String?): Boolean {
         if (StringUtils.isNullOrEmpty(path)) {
             return false
@@ -145,6 +152,7 @@ object FileUtils {
      * @param file java.io.File
      * @return true=削除成功、false=削除失敗
      */
+    @JvmStatic
     fun delete(file: File?): Boolean {
         if (file == null) {
             return false

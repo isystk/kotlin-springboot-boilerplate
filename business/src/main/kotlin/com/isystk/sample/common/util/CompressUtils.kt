@@ -20,6 +20,7 @@ object CompressUtils {
      * @param input
      * @return
      */
+    @JvmStatic
     fun compress(input: ByteArray?): ByteArray {
         var ref: ByteArrayOutputStream? = null
         try {
@@ -44,6 +45,7 @@ object CompressUtils {
      * @param input
      * @return
      */
+    @JvmStatic
     fun decompress(input: ByteArray?): ByteArray {
         var ref: ByteArrayOutputStream? = null
         try {
