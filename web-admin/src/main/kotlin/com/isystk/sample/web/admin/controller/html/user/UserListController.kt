@@ -49,8 +49,8 @@ class UserListController : AbstractHtmlController() {
      * @return
      */
     @GetMapping
-    fun index(@ModelAttribute form: @Valid UserListForm?, br: BindingResult,
-              sessionStatus: SessionStatus?, attributes: RedirectAttributes?, model: Model): String {
+    fun index(@ModelAttribute form: @Valid UserListForm, br: BindingResult,
+              sessionStatus: SessionStatus?, attributes: RedirectAttributes, model: Model): String {
         if (br.hasErrors()) {
             setFlashAttributeErrors(attributes, br)
             return "modules/user/list"

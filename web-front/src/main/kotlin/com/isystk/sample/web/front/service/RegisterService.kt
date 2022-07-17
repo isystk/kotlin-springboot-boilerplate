@@ -53,7 +53,7 @@ class RegisterService : BaseTransactionalService() {
      *
      * @param userId
      */
-    fun sendMail(userId: BigInteger?) {
+    fun sendMail(userId: BigInteger) {
         val user = userRepository!!.findById(userId)
         if (user.emailVerifiedAt != null) {
             throw NoDataFoundException("既に本会員の状態です。")
@@ -87,7 +87,7 @@ class RegisterService : BaseTransactionalService() {
                 .orElseThrow { NoDataFoundException("onetimeKey=$onetimeKey のデータが見つかりません。") }
 
         // メールアドレスを検証済みにする
-        user.emailVerifiedAt = DateUtils.getNow()
+        user.emailVerifiedAt = DateUtils.now
         // ワンタイムトークンを削除する
         user.rememberToken = null
         userRepository!!.update(user)

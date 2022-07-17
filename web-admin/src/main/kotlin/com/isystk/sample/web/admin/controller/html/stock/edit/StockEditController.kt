@@ -50,7 +50,7 @@ class StockEditController : AbstractHtmlController() {
     fun editIndex(@ModelAttribute form: StockEditForm, model: Model): String {
 
         // 1件取得する
-        val stock = stockService!!.findById(form.stockId)
+        val stock = stockService!!.findById(form.stockId!!)
 
         // 取得したDtoをFromに詰め替える
         ObjectMapperUtils.map(stock, form)
@@ -80,7 +80,7 @@ class StockEditController : AbstractHtmlController() {
      */
     @PutMapping(params = ["confirm"])
     fun editConfirm(@Validated @ModelAttribute form: StockEditForm, br: BindingResult,
-                    sessionStatus: SessionStatus?, attributes: RedirectAttributes?, model: Model): String {
+                    sessionStatus: SessionStatus?, attributes: RedirectAttributes, model: Model): String {
 
         // 入力チェックエラーがある場合は、元の画面にもどる
         if (br.hasErrors()) {
@@ -101,7 +101,7 @@ class StockEditController : AbstractHtmlController() {
      */
     @PutMapping(params = ["back"])
     fun editBack(@Validated @ModelAttribute form: StockEditForm, br: BindingResult?,
-                 sessionStatus: SessionStatus?, attributes: RedirectAttributes?, model: Model): String {
+                 sessionStatus: SessionStatus?, attributes: RedirectAttributes, model: Model): String {
         return showEditIndex(form, model)
     }
 
@@ -116,7 +116,7 @@ class StockEditController : AbstractHtmlController() {
      */
     @PutMapping(params = ["complete"])
     fun updateComplete(@Validated @ModelAttribute form: StockEditForm, br: BindingResult,
-                       sessionStatus: SessionStatus, attributes: RedirectAttributes?, model: Model): String {
+                       sessionStatus: SessionStatus, attributes: RedirectAttributes, model: Model): String {
 
         // 入力チェックエラーがある場合は、元の画面にもどる
         if (br.hasErrors()) {

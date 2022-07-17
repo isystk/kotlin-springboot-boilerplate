@@ -29,7 +29,7 @@ class OrderDetailController : AbstractHtmlController() {
      * @return
      */
     @GetMapping("{orderId}")
-    fun show(@PathVariable orderId: BigInteger?, model: Model): String {
+    fun show(@PathVariable orderId: BigInteger, model: Model): String {
         val order = orderHistoryService!!.findById(orderId)
         model.addAttribute("order", order)
         return "modules/order/detail"

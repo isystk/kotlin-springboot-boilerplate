@@ -16,3 +16,10 @@ dependencies {
   implementation("org.springframework.boot:spring-boot-starter-web")
 
 }
+
+// JavaとKotlinが混在する場合の設定
+sourceSets {
+  main.kotlin.srcDirs += 'src/main/java'
+  main.java.srcDirs += 'src/main/kotlin'
+  main.resources.srcDirs = ['src/main/resources']
+}

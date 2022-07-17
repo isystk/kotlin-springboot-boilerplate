@@ -49,7 +49,7 @@ class PasswordResetController : AbstractHtmlController() {
      */
     @PostMapping
     fun registOnetimePass(@Validated @ModelAttribute("form") passwordResetForm: PasswordResetForm,
-                          br: BindingResult, attributes: RedirectAttributes?): String {
+                          br: BindingResult, attributes: RedirectAttributes): String {
 
         // 入力チェックエラーがある場合は、元の画面にもどる
         if (br.hasErrors()) {

@@ -44,7 +44,7 @@ class ContactService : BaseTransactionalService() {
      * @param pageable
      * @return
      */
-    fun findPage(dto: ContactSearchConditionDto, pageable: Pageable?): Page<ContactFormRepositoryDto> {
+    fun findPage(dto: ContactSearchConditionDto, pageable: Pageable): Page<ContactFormRepositoryDto> {
         return contactRepository!!.findPage(dtoToCriteria(dto), pageable)
     }
 
@@ -75,7 +75,7 @@ class ContactService : BaseTransactionalService() {
      * @param contactId
      * @return
      */
-    fun findById(contactId: BigInteger?): ContactFormRepositoryDto {
+    fun findById(contactId: BigInteger): ContactFormRepositoryDto {
         val contact = contactRepository!!.findById(contactId)
         val imageList = Optional.of(contact.imageList).orElse(Lists.newArrayList()).stream()
                 .map { e: ContactFormImageRepositoryDto ->
@@ -94,7 +94,7 @@ class ContactService : BaseTransactionalService() {
      * @param contactDto
      * @return
      */
-    fun create(contactDto: ContactFormRepositoryDto?): ContactForm {
+    fun create(contactDto: ContactFormRepositoryDto): ContactForm {
         Assert.notNull(contactDto, "input must not be null")
         return contactRepository!!.create(contactDto)
     }
@@ -105,7 +105,7 @@ class ContactService : BaseTransactionalService() {
      * @param contactDto
      * @return
      */
-    fun update(contactDto: ContactFormRepositoryDto?): ContactForm {
+    fun update(contactDto: ContactFormRepositoryDto): ContactForm {
         Assert.notNull(contactDto, "input must not be null")
         return contactRepository!!.update(contactDto)
     }
@@ -115,7 +115,7 @@ class ContactService : BaseTransactionalService() {
      *
      * @return
      */
-    fun delete(id: BigInteger?): ContactForm {
+    fun delete(id: BigInteger): ContactForm {
         Assert.notNull(id, "id must not be null")
         return contactRepository!!.delete(id)
     }

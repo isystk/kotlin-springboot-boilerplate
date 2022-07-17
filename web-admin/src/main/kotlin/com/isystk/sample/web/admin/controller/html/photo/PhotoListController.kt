@@ -45,7 +45,7 @@ class PhotoListController : AbstractHtmlController() {
      */
     @GetMapping
     fun index(@ModelAttribute form: @Valid PhotoListForm?, br: BindingResult,
-              sessionStatus: SessionStatus?, attributes: RedirectAttributes?, model: Model): String {
+              sessionStatus: SessionStatus?, attributes: RedirectAttributes, model: Model): String {
         if (br.hasErrors()) {
             setFlashAttributeErrors(attributes, br)
             return "modules/photo/list"
@@ -66,7 +66,7 @@ class PhotoListController : AbstractHtmlController() {
      * @return
      */
     @DeleteMapping
-    fun delete(@RequestParam(value = "name") imageName: String?): String {
+    fun delete(@RequestParam(value = "name") imageName: String): String {
         photoService!!.delete(imageName)
         return "redirect:/photos"
     }

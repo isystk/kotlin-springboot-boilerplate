@@ -59,8 +59,8 @@ class StockController : AbstractRestController() {
      * @return
      */
     @GetMapping(value = ["/{stockId}"])
-    fun show(@PathVariable stockId: BigInteger?): Resource {
-        val resource = resourceFactory.create()
+    fun show(@PathVariable stockId: BigInteger): Resource {
+        val resource = resourceFactory!!.create()
         resource.data = Arrays.asList(stockService!!.findById(stockId))
         resource.message = getMessage(Const.MESSAGE_SUCCESS)
         resource.result = true

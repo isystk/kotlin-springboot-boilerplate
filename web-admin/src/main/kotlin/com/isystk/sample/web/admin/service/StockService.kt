@@ -40,7 +40,7 @@ class StockService : BaseTransactionalService() {
      * @param pageable
      * @return
      */
-    fun findPage(dto: StockSearchConditionDto, pageable: Pageable?): Page<StockRepositoryDto> {
+    fun findPage(dto: StockSearchConditionDto, pageable: Pageable): Page<StockRepositoryDto> {
         return stockRepository!!.findPage(dtoToCriteria(dto), pageable)
     }
 
@@ -72,7 +72,7 @@ class StockService : BaseTransactionalService() {
      * @param stockId
      * @return
      */
-    fun findById(stockId: BigInteger?): StockRepositoryDto {
+    fun findById(stockId: BigInteger): StockRepositoryDto {
         // 1件取得する
         val stock = stockRepository!!.findById(stockId)
         val imageData = imageHelper!!.getImageData("/stocks", stock.imgpath)
@@ -87,7 +87,7 @@ class StockService : BaseTransactionalService() {
      * @param stockDto
      * @return
      */
-    fun create(stockDto: StockRepositoryDto?): Stock {
+    fun create(stockDto: StockRepositoryDto): Stock {
         Assert.notNull(stockDto, "input must not be null")
         return stockRepository!!.create(stockDto)
     }
@@ -98,7 +98,7 @@ class StockService : BaseTransactionalService() {
      * @param stockDto
      * @return
      */
-    fun update(stockDto: StockRepositoryDto?): Stock {
+    fun update(stockDto: StockRepositoryDto): Stock {
         Assert.notNull(stockDto, "input must not be null")
         return stockRepository!!.update(stockDto)
     }
@@ -108,7 +108,7 @@ class StockService : BaseTransactionalService() {
      *
      * @return
      */
-    fun delete(id: BigInteger?): Stock {
+    fun delete(id: BigInteger): Stock {
         Assert.notNull(id, "id must not be null")
         return stockRepository!!.delete(id)
     }

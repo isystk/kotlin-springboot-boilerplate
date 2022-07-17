@@ -38,7 +38,7 @@ class StockService : BaseTransactionalService() {
      * @return
      */
     @Transactional(readOnly = true) // 読み取りのみの場合は指定する
-    fun findSolrAll(criteria: SolrStockCriteria?, pageable: Pageable?): Page<StockSearchResultDto> {
+    fun findSolrAll(criteria: SolrStockCriteria?, pageable: Pageable): Page<StockSearchResultDto> {
         Assert.notNull(criteria, "criteria must not be null")
 
         // Solrから商品データを取得する
@@ -50,7 +50,7 @@ class StockService : BaseTransactionalService() {
                 solrStockList.add(convertSolrToFrontStockDto(solrStock))
             }
         }
-        return pageFactory.create(solrStockList, pageable, count)
+        return pageFactory!!.create(solrStockList, pageable, count)
     }
 
     /**
@@ -59,7 +59,7 @@ class StockService : BaseTransactionalService() {
      * @param stockId
      * @return
      */
-    fun findById(stockId: BigInteger?): StockSearchResultDto {
+    fun findById(stockId: BigInteger): StockSearchResultDto {
         // 1件取得する
         val stock = stockRepository!!.findById(stockId)
         return convertDbToFrontStockDto(stock)
@@ -72,9 +72,9 @@ class StockService : BaseTransactionalService() {
     private fun convertSolrToFrontStockDto(solrStock: SolrStock): StockSearchResultDto {
         // 入力値を詰め替える
         val dto = ObjectMapperUtils.map(solrStock, StockSearchResultDto::class.java)
-        dto.imgUrl = imageHelper!!.getImageUrl("/stocks", solrStock.imgpath)
-        dto.createdAtYYYYMMDD = DateUtils.format(solrStock.createdAtDate, DateTimeFormatter.ofPattern("yyyy/MM/dd"))
-        dto.createdAtMMDD = DateUtils.format(solrStock.createdAtDate, DateTimeFormatter.ofPattern("MM/dd"))
+        dto.imgUrl = imageHelper!!.getImageUrl("/stocks", solrStock.imgpath!!)
+        dto.createdAtYYYYMMDD = DateUtils.format(solrStock.createdAtDate!!, DateTimeFormatter.ofPattern("yyyy/MM/dd"))
+        dto.createdAtMMDD = DateUtils.format(solrStock.createdAtDate!!, DateTimeFormatter.ofPattern("MM/dd"))
         return dto
     }
 

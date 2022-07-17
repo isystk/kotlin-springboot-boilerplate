@@ -67,8 +67,8 @@ class PasswordResetService : BaseTransactionalService() {
         passwordReset.email = user.email
         val onetimeKey = generateOnetimeKey()
         passwordReset.token = onetimeKey
-        passwordReset.createdAt = DateUtils.getNow()
-        passwordReset.updatedAt = DateUtils.getNow()
+        passwordReset.createdAt = DateUtils.now
+        passwordReset.updatedAt = DateUtils.now
         passwordReset.deleteFlg = false
         passwordResetDao!!.insert(passwordReset)
 

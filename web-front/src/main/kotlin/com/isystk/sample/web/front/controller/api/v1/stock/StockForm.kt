@@ -5,7 +5,7 @@ import com.isystk.sample.web.base.controller.html.BaseSearchForm
 
 class StockForm : BaseSearchForm(), Pageable {
 
-    override fun getPerpage(): Int {
+    override fun perpage(): Int {
         return 6
     }
 

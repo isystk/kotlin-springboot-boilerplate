@@ -176,11 +176,11 @@ class SingleJobCommandLineRunner : CommandLineRunner, ApplicationEventPublisherA
         return status == BatchStatus.STOPPED || status == BatchStatus.FAILED
     }
 
-    protected fun removeNonIdentifying(parameters: MutableMap<String?, JobParameter>) {
-        val copy: Map<String?, JobParameter> = HashMap(parameters)
-        for ((key, value) in copy) {
-            if (!value.isIdentifying) {
-                parameters.remove(key)
+    protected fun removeNonIdentifying(parameters: MutableMap<String, JobParameter>) {
+        val copy: Map<String, JobParameter> = HashMap<String, JobParameter>(parameters)
+        for (parameter in copy.entries) {
+            if (!parameter.value.isIdentifying()) {
+                parameters.filter { (key, value) -> !parameter.key.equals(key) }
             }
         }
     }

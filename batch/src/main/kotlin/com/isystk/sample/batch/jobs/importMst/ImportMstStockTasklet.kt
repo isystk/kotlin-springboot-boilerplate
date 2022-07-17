@@ -53,7 +53,7 @@ class ImportMstStockTasklet : BaseTasklet<ImportMstStockDto?>() {
         val list: MutableList<ImportMstStockDto> = Lists.newArrayList<ImportMstStockDto>()
         try {
             val lines = Files.readAllLines(path, StandardCharsets.UTF_8)
-            lines.forEach(Consumer { line: String? ->
+            lines.forEach(Consumer { line: String ->
                 val row = StringUtils.csvSplit(line)
                 val dto = ImportMstStockDto()
                 dto.sourceName = path.toString()
@@ -69,8 +69,8 @@ class ImportMstStockTasklet : BaseTasklet<ImportMstStockDto?>() {
         }
         val stockList = ObjectMapperUtils.map<Array<Stock>, List<*>>(list, Array<Stock>::class.java)
         for (stock in stockList) {
-            stock.createdAt = DateUtils.getNow()
-            stock.updatedAt = DateUtils.getNow()
+            stock.createdAt = DateUtils.now
+            stock.updatedAt = DateUtils.now
             // TODO DeleteFlgがデフォルト値0のカラムなのに設定しないとエラーになる。。
             // Caused by: java.sql.SQLIntegrityConstraintViolationException: Column 'delete_flg' cannot be null
             stock.deleteFlg = false

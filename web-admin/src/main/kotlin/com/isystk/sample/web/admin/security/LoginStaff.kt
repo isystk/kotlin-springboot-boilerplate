@@ -11,11 +11,10 @@ class LoginStaff(// 管理者情報。
         return staff
     }
 
-    override fun getUserId(): String {
-        return staff!!.id.toString()
-    }
+    override val userId: String?
+        get() = staff!!.id.toString()
 
-    override fun getUserName(): String {
-        return staff!!.name.toString()
-    }
+    override val userName: String?
+        get() = staff!!.name.toString()
+
 }

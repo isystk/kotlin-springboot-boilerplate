@@ -47,8 +47,8 @@ class ContactListController : AbstractHtmlController() {
      * @return
      */
     @GetMapping
-    fun index(@ModelAttribute form: @Valid ContactListForm?, br: BindingResult,
-              sessionStatus: SessionStatus?, attributes: RedirectAttributes?, model: Model): String {
+    fun index(@ModelAttribute form: @Valid ContactListForm, br: BindingResult,
+              sessionStatus: SessionStatus?, attributes: RedirectAttributes, model: Model): String {
         if (br.hasErrors()) {
             setFlashAttributeErrors(attributes, br)
             return "modules/contact/list"
@@ -81,7 +81,7 @@ class ContactListController : AbstractHtmlController() {
      * @return
      */
     @DeleteMapping("{id}")
-    fun delete(@PathVariable id: BigInteger?): String {
+    fun delete(@PathVariable id: BigInteger): String {
         contactService!!.delete(id)
         return "redirect:/contacts"
     }

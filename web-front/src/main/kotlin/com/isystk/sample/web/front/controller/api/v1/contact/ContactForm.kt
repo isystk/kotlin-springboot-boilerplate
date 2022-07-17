@@ -23,4 +23,5 @@ class ContactForm : BaseSearchForm(), Pageable {
     companion object {
         private const val serialVersionUID = 7593564324192730932L
     }
+
 }
