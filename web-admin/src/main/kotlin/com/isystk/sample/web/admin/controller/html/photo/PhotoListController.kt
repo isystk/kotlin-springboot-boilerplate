@@ -66,7 +66,7 @@ class PhotoListController : AbstractHtmlController() {
      * @return
      */
     @DeleteMapping
-    fun delete(@RequestParam(value = "name") imageName: String?): String {
+    fun delete(@RequestParam(value = "name") imageName: String): String {
         photoService!!.delete(imageName)
         return "redirect:/photos"
     }

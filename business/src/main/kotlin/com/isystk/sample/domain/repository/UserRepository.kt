@@ -47,7 +47,7 @@ class UserRepository : BaseRepository() {
     fun findPage(criteria: UserCriteria?, pageable: Pageable): Page<UserRepositoryDto> {
         val options = DomaUtils.createSelectOptions(pageable)
         val userList = convertDto(userDao!!.findAll(criteria, options.count(), Collectors.toList()))
-        return pageFactory.create(userList, pageable, options.count)
+        return pageFactory!!.create(userList, pageable, options.count)
     }
 
     /**
@@ -92,7 +92,7 @@ class UserRepository : BaseRepository() {
     fun create(inputUser: User): User {
 
         // 1件登録
-        val time = DateUtils.getNow()
+        val time = DateUtils.now
         inputUser.createdAt = time // 作成日
         inputUser.updatedAt = time // 更新日
         inputUser.deleteFlg = false // 削除フラグ
@@ -109,7 +109,7 @@ class UserRepository : BaseRepository() {
      */
     fun update(inputUser: User): User {
         // 1件更新
-        val time = DateUtils.getNow()
+        val time = DateUtils.now
         inputUser.updatedAt = time // 更新日
         val updated = userDao!!.update(inputUser)
         if (updated < 1) {

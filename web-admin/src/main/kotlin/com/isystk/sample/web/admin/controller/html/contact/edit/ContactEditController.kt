@@ -53,7 +53,7 @@ class ContactEditController : AbstractHtmlController() {
     fun editIndex(@ModelAttribute form: ContactEditForm, model: Model): String {
 
         // 1件取得する
-        val contact = contactService!!.findById(form.contactId)
+        val contact = contactService!!.findById(form.contactId!!)
 
         // 取得したDtoをFromに詰め替える
         ObjectMapperUtils.map(contact, form)

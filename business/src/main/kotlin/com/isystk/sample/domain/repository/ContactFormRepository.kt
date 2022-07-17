@@ -59,7 +59,7 @@ class ContactFormRepository : BaseRepository() {
     fun findPage(criteria: ContactFormCriteria?, pageable: Pageable): Page<ContactFormRepositoryDto> {
         val options = DomaUtils.createSelectOptions(pageable)
         val contactFormList = convertDto(contactFormDao!!.findAll(criteria, options.count(), Collectors.toList()))
-        return pageFactory.create(contactFormList, pageable, options.count)
+        return pageFactory!!.create(contactFormList, pageable, options.count)
     }
 
     /**
@@ -125,7 +125,7 @@ class ContactFormRepository : BaseRepository() {
         // 画像ファイルをS3にアップロードする
         contactFormDto.imageList.stream()
                 .forEach { e: ContactFormImageRepositoryDto -> imageHelper!!.saveFileData(e.contactImageData, "/contacts", e.contactImageName, true) }
-        val time = DateUtils.getNow()
+        val time = DateUtils.now
 
         // お問い合わせテーブル
         val contactForm = ObjectMapperUtils.map(contactFormDto, ContactForm::class.java)
@@ -160,7 +160,7 @@ class ContactFormRepository : BaseRepository() {
         // 画像ファイルをS3にアップロードする
         contactFormDto.imageList.stream()
                 .forEach { e: ContactFormImageRepositoryDto -> imageHelper!!.saveFileData(e.contactImageData, "/contacts", e.contactImageName, true) }
-        val time = DateUtils.getNow()
+        val time = DateUtils.now
         val before = contactFormDao!!.selectById(contactFormDto.id)
                 .orElseThrow { NoDataFoundException("contactForm_id=" + contactFormDto.id + " のデータが見つかりません。") }
 
@@ -196,7 +196,7 @@ class ContactFormRepository : BaseRepository() {
     fun delete(contactFormId: BigInteger): ContactForm {
         val contactForm = contactFormDao!!.selectById(contactFormId)
                 .orElseThrow { NoDataFoundException("contactForm_id=$contactFormId のデータが見つかりません。") }
-        val time = DateUtils.getNow()
+        val time = DateUtils.now
         run {
             contactForm.updatedAt = time // 削除日
             contactForm.deleteFlg = true // 削除フラグ

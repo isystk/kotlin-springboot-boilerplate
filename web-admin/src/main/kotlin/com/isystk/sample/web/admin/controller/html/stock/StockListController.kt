@@ -51,7 +51,7 @@ class StockListController : AbstractHtmlController() {
      * @return
      */
     @GetMapping
-    fun index(@ModelAttribute form: @Valid StockListForm?, br: BindingResult,
+    fun index(@ModelAttribute form: @Valid StockListForm, br: BindingResult,
               sessionStatus: SessionStatus?, attributes: RedirectAttributes, model: Model): String {
         if (br.hasErrors()) {
             setFlashAttributeErrors(attributes, br)
@@ -85,7 +85,7 @@ class StockListController : AbstractHtmlController() {
      * @return
      */
     @DeleteMapping("{id}")
-    fun delete(@PathVariable id: BigInteger?): String {
+    fun delete(@PathVariable id: BigInteger): String {
         stockService!!.delete(id)
         return "redirect:/stocks"
     }

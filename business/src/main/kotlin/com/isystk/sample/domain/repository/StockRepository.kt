@@ -50,7 +50,7 @@ class StockRepository : BaseRepository() {
     fun findPage(criteria: StockCriteria?, pageable: Pageable): Page<StockRepositoryDto> {
         val options = DomaUtils.createSelectOptions(pageable)
         val stockList = convertDto(stockDao!!.findAll(criteria, options.count(), Collectors.toList()))
-        return pageFactory.create(stockList, pageable, options.count)
+        return pageFactory!!.create(stockList, pageable, options.count)
     }
 
     /**
@@ -99,7 +99,7 @@ class StockRepository : BaseRepository() {
 
         // 画像ファイルをS3にアップロードする
         imageHelper!!.saveFileData(stockDto.stockImageData, "/stocks", stockDto.stockImageName, true)
-        val time = DateUtils.getNow()
+        val time = DateUtils.now
 
         // 商品テーブル
         val stock = ObjectMapperUtils.map(stockDto, Stock::class.java)
@@ -121,7 +121,7 @@ class StockRepository : BaseRepository() {
     fun update(stockDto: StockRepositoryDto): Stock {
         // 画像ファイルをS3にアップロードする
         imageHelper!!.saveFileData(stockDto.stockImageData, "/stocks", stockDto.stockImageName, true)
-        val time = DateUtils.getNow()
+        val time = DateUtils.now
         val before = stockDao!!.selectById(stockDto.id)
                 .orElseThrow { NoDataFoundException("stock_id=" + stockDto.id + " のデータが見つかりません。") }
 
@@ -141,7 +141,7 @@ class StockRepository : BaseRepository() {
     fun delete(stockId: BigInteger): Stock {
         val stock = stockDao!!.selectById(stockId)
                 .orElseThrow { NoDataFoundException("stock_id=$stockId のデータが見つかりません。") }
-        val time = DateUtils.getNow()
+        val time = DateUtils.now
         stock.updatedAt = time // 削除日
         stock.deleteFlg = true // 削除フラグ
         val updated = stockDao!!.update(stock)

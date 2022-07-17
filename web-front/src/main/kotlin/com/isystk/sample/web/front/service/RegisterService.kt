@@ -87,7 +87,7 @@ class RegisterService : BaseTransactionalService() {
                 .orElseThrow { NoDataFoundException("onetimeKey=$onetimeKey のデータが見つかりません。") }
 
         // メールアドレスを検証済みにする
-        user.emailVerifiedAt = DateUtils.getNow()
+        user.emailVerifiedAt = DateUtils.now
         // ワンタイムトークンを削除する
         user.rememberToken = null
         userRepository!!.update(user)

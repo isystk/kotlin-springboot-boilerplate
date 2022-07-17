@@ -60,7 +60,7 @@ class OrderHistoryRepository : BaseRepository() {
     fun findPage(criteria: OrderHistoryCriteria?, pageable: Pageable): Page<OrderHistoryRepositoryDto> {
         val options = DomaUtils.createSelectOptions(pageable)
         val orderHistoryList = convertDto(orderHistoryDao!!.findAll(criteria, options.count(), Collectors.toList()))
-        return pageFactory.create(orderHistoryList, pageable, options.count)
+        return pageFactory!!.create(orderHistoryList, pageable, options.count)
     }
 
     /**
@@ -157,7 +157,7 @@ class OrderHistoryRepository : BaseRepository() {
      * @return
      */
     fun create(orderHistoryDto: OrderHistoryRepositoryDto): OrderHistory {
-        val time = DateUtils.getNow()
+        val time = DateUtils.now
 
         // 注文履歴テーブル
         val orderHistory = ObjectMapperUtils.map(orderHistoryDto, OrderHistory::class.java)
@@ -176,7 +176,7 @@ class OrderHistoryRepository : BaseRepository() {
      * @return
      */
     fun update(orderHistoryDto: OrderHistoryRepositoryDto): OrderHistory {
-        val time = DateUtils.getNow()
+        val time = DateUtils.now
         val before = orderHistoryDao!!.selectById(orderHistoryDto.id)
                 .orElseThrow { NoDataFoundException("orderHistory_id=" + orderHistoryDto.id + " のデータが見つかりません。") }
 
@@ -195,7 +195,7 @@ class OrderHistoryRepository : BaseRepository() {
     fun delete(orderHistoryId: BigInteger): OrderHistory {
         val orderHistory = orderHistoryDao!!.selectById(orderHistoryId)
                 .orElseThrow { NoDataFoundException("orderHistory_id=$orderHistoryId のデータが見つかりません。") }
-        val time = DateUtils.getNow()
+        val time = DateUtils.now
         orderHistory.updatedAt = time // 削除日
         orderHistory.deleteFlg = true // 削除フラグ
         val updated = orderHistoryDao!!.update(orderHistory)

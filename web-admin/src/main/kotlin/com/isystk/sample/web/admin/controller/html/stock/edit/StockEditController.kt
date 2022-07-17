@@ -50,7 +50,7 @@ class StockEditController : AbstractHtmlController() {
     fun editIndex(@ModelAttribute form: StockEditForm, model: Model): String {
 
         // 1件取得する
-        val stock = stockService!!.findById(form.stockId)
+        val stock = stockService!!.findById(form.stockId!!)
 
         // 取得したDtoをFromに詰め替える
         ObjectMapperUtils.map(stock, form)
