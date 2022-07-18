@@ -12,9 +12,9 @@ class LoginStaff(// 管理者情報。
     }
 
     override val userId: String?
-        get() = staff!!.id.toString()
+        get() = staff?.id.toString()
 
     override val userName: String?
-        get() = staff!!.name.toString()
+        get() = staff?.name.toString()
 
 }

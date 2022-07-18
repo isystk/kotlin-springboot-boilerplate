@@ -55,12 +55,8 @@ class StockService : BaseTransactionalService() {
         val criteria = StockCriteria()
         criteria.idEq = dto.stockId
         criteria.nameLike = dto.name
-        if (dto.createdAtFrom != null) {
-            criteria.createdAtGe = dto.createdAtFrom!!.atStartOfDay()
-        }
-        if (dto.createdAtTo != null) {
-            criteria.createdAtLe = dto.createdAtTo!!.atTime(LocalTime.MAX)
-        }
+        criteria.createdAtGe = dto.createdAtFrom?.atStartOfDay()
+        criteria.createdAtLe = dto.createdAtTo?.atTime(LocalTime.MAX)
         criteria.isDeleteFlgFalse = true
         criteria.orderBy = "order by updated_at desc"
         return criteria

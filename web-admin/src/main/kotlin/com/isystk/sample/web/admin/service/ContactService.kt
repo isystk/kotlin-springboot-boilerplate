@@ -10,14 +10,11 @@ import com.isystk.sample.domain.dto.ContactFormRepositoryDto
 import com.isystk.sample.domain.entity.ContactForm
 import com.isystk.sample.domain.repository.ContactFormRepository
 import com.isystk.sample.web.admin.dto.ContactSearchConditionDto
-import org.apache.commons.compress.utils.Lists
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 import org.springframework.util.Assert
 import java.math.BigInteger
 import java.time.LocalTime
-import java.util.*
-import java.util.stream.Collectors
 
 @Service
 class ContactService : BaseTransactionalService() {
@@ -58,12 +55,8 @@ class ContactService : BaseTransactionalService() {
         // 入力値を詰め替える
         val criteria = ContactFormCriteria()
         criteria.yourNameLike = dto.userName
-        if (dto.createdAtFrom != null) {
-            criteria.createdAtGe = dto.createdAtFrom!!.atStartOfDay()
-        }
-        if (dto.createdAtTo != null) {
-            criteria.createdAtLe = dto.createdAtTo!!.atTime(LocalTime.MAX)
-        }
+        criteria.createdAtGe = dto.createdAtFrom?.atStartOfDay()
+        criteria.createdAtLe = dto.createdAtTo?.atTime(LocalTime.MAX)
         criteria.isDeleteFlgFalse = true
         criteria.orderBy = "order by updated_at desc"
         return criteria
@@ -77,13 +70,13 @@ class ContactService : BaseTransactionalService() {
      */
     fun findById(contactId: BigInteger): ContactFormRepositoryDto {
         val contact = contactRepository!!.findById(contactId)
-        val imageList = Optional.of(contact.imageList).orElse(Lists.newArrayList()).stream()
-                .map { e: ContactFormImageRepositoryDto ->
-                    val imageData = imageHelper!!.getImageData("/contacts", e.fileName)
-                    e.contactImageData = imageData
-                    e.contactImageName = e.fileName
-                    e
-                }.collect(Collectors.toList())
+        val imageList = contact.imageList?.map {
+           e: ContactFormImageRepositoryDto ->
+                val imageData = imageHelper!!.getImageData("/contacts", e.fileName)
+                e.contactImageData = imageData
+                e.contactImageName = e.fileName
+                e
+        } ?: emptyList()
         contact.imageList = imageList
         return contact
     }
