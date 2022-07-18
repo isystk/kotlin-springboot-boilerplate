@@ -30,20 +30,9 @@ class StaffDaoRealm : BaseRealm() {
             // 担当者を取得して、セッションに保存する
             staff = adminDao!!.findOne(criteria)
                     .orElseThrow { UsernameNotFoundException("no staff found [id=$email]") }
-            //
-//            // 担当者権限を取得する
-//            List<StaffRole> staffRoles = staffRoleDao.selectByStaffId(staff.getId(), toList());
-//
-//            // 役割キーにプレフィックスをつけてまとめる
-//            Set<String> roleKeys = staffRoles.stream().map(StaffRole::getRoleKey).collect(toSet());
-//
-//            // 権限キーをまとめる
-//            Set<String> permissionKeys = staffRoles.stream().map(StaffRole::getPermissionKey).collect(toSet());
 
             // 役割と権限を両方ともGrantedAuthorityとして渡す
             val authorities: Set<String> = HashSet()
-            //            authorities.addAll(roleKeys);
-//            authorities.addAll(permissionKeys);
             authorityList = AuthorityUtils.createAuthorityList(*authorities.toTypedArray())
             LoginStaff(staff, authorityList)
         } catch (e: Exception) {

@@ -7,7 +7,6 @@ import com.isystk.sample.common.values.ImageType
 import com.isystk.sample.web.admin.dto.PhotoSearchResultDto
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
-import java.util.stream.Collectors
 
 @Service
 class PhotoService : BaseTransactionalService() {
@@ -22,7 +21,7 @@ class PhotoService : BaseTransactionalService() {
      */
     fun findAll(name: String?): List<PhotoSearchResultDto> {
         val stockImages = imageHelper!!.getImageList("")
-        return stockImages.stream()
+        return stockImages
                 .filter { e: String ->
                     if (StringUtils.isBlankOrSpace(name)) {
                         return@filter true
@@ -40,7 +39,7 @@ class PhotoService : BaseTransactionalService() {
                     }
                     dto.imageName = e
                     dto
-                }.collect(Collectors.toList())
+                }
     }
 
     /**

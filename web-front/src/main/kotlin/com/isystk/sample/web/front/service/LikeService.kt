@@ -8,7 +8,6 @@ import com.isystk.sample.web.base.util.CookieUtils
 import org.springframework.stereotype.Service
 import org.springframework.util.Assert
 import java.math.BigInteger
-import java.util.stream.Collectors
 
 @Service
 class LikeService : BaseTransactionalService() {
@@ -17,17 +16,16 @@ class LikeService : BaseTransactionalService() {
      *
      * @return
      */
-    val likes: MutableList<BigInteger>
+    val likes: List<BigInteger>
         get() {
             val cookieString = CookieUtils.getValue(LIKE_COOKIE_KEY)
             val likes = parseCommaSeparatedValue(cookieString)
-            return likes.stream()
+            return likes
                     .filter { e: String? ->
                         val stockId = NumberUtils.toBigInteger(e)
                         stockId != null
                     }
-                    .map { e: String? -> NumberUtils.toBigInteger(e) }
-                    .collect(Collectors.toList())
+                    .map { e: String -> NumberUtils.toBigInteger(e)!! }
         }
 
     /**
@@ -58,7 +56,7 @@ class LikeService : BaseTransactionalService() {
      * @return
      */
     fun addLike(stockId: BigInteger): List<BigInteger> {
-        val likes = likes
+        var likes = likes.toMutableList()
         Assert.notNull(likes, "likes must not be null")
         likes.add(stockId)
         val join = StringUtils.join("-", *likes.toTypedArray())
@@ -74,7 +72,7 @@ class LikeService : BaseTransactionalService() {
     fun removeLike(stockId: BigInteger): List<BigInteger> {
         var likes: List<BigInteger> = likes
         Assert.notNull(likes, "likes must not be null")
-        likes = likes.stream().filter { e: BigInteger -> e != stockId }.collect(Collectors.toList())
+        likes = likes.filter { e: BigInteger -> e != stockId }
         val join = StringUtils.join("-", *likes.toTypedArray())
         CookieUtils.setCookie(LIKE_COOKIE_KEY, join, "/", COOKIE_MAXAGE, null)
         return likes

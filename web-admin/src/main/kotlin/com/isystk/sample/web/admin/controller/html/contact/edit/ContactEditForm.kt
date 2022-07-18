@@ -4,12 +4,11 @@ import com.isystk.sample.web.base.controller.html.BaseForm
 import org.springframework.format.annotation.NumberFormat
 import java.math.BigInteger
 import javax.validation.constraints.NotBlank
-import javax.validation.constraints.NotEmpty
 import javax.validation.constraints.NotNull
 
 class ContactEditForm : BaseForm() {
 
-    @NotEmpty
+    @NotNull
     var contactId: BigInteger? = null
 
     @NotBlank

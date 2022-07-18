@@ -12,7 +12,6 @@ import org.springframework.stereotype.Service
 import org.springframework.util.Assert
 import java.math.BigInteger
 import java.util.function.ToIntFunction
-import java.util.stream.Collectors
 
 @Service
 class CartService : BaseTransactionalService() {
@@ -34,8 +33,7 @@ class CartService : BaseTransactionalService() {
         val dto = CartSearchResultDto()
         dto.cartList = cartList
         dto.count = cartList.size
-        dto.sum = cartList.stream().map { e: CartRepositoryDto -> e.stock.price }
-                .collect(Collectors.summingInt(ToIntFunction { obj: Int -> obj }))
+        dto.sum = cartList.map { e: CartRepositoryDto -> e.stock.price }.sum()
         dto.username = user.name
         return dto
     }
@@ -56,8 +54,7 @@ class CartService : BaseTransactionalService() {
         val dto = CartSearchResultDto()
         dto.cartList = cartList
         dto.count = cartList.size
-        dto.sum = cartList.stream().map { e: CartRepositoryDto -> e.stock.price }
-                .collect(Collectors.summingInt(ToIntFunction { obj: Int -> obj }))
+        dto.sum = cartList.map { e: CartRepositoryDto -> e.stock.price }.sum()
         dto.username = user.name
         return dto
     }
