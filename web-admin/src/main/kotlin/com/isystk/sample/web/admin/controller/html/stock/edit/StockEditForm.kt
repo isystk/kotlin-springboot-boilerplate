@@ -7,17 +7,29 @@ import javax.validation.constraints.NotBlank
 import javax.validation.constraints.NotNull
 
 class StockEditForm : BaseForm() {
-    var stockId: @NotNull BigInteger? = null
-    var name: @NotBlank String? = null
-    var detail: @NotBlank String? = null
 
-    @NumberFormat
-    var price: @NotBlank String? = null
+    @NotNull
+    var stockId: BigInteger? = null
 
+    @NotBlank
+    var name: String? = null
+
+    @NotBlank
+    var detail: String? = null
+
+    @NotNull
     @NumberFormat
-    var quantity: @NotBlank String? = null
-    var stockImageName: @NotBlank String? = null
-    var stockImageData: @NotBlank String? = null
+    var price: String? = null
+
+    @NotNull
+    @NumberFormat
+    var quantity: String? = null
+
+    @NotBlank
+    var stockImageName: String? = null
+
+    @NotBlank
+    var stockImageData: String? = null
 
     companion object {
         private const val serialVersionUID = 7593564324192730932L

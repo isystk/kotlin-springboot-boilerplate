@@ -4,6 +4,7 @@ import com.isystk.sample.common.dto.Pageable
 import com.isystk.sample.web.base.controller.html.BaseSearchForm
 
 class PhotoListForm : BaseSearchForm(), Pageable {
+
     var name: String? = null
 
     companion object {

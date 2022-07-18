@@ -5,16 +5,26 @@ import org.springframework.format.annotation.NumberFormat
 import javax.validation.constraints.NotBlank
 
 class StockRegistForm : BaseForm() {
-    var name: @NotBlank String? = null
-    var detail: @NotBlank String? = null
 
-    @NumberFormat
-    var price: @NotBlank String? = null
+    @NotBlank
+    var name: String? = null
 
+    @NotBlank
+    var detail: String? = null
+
+    @NotBlank
     @NumberFormat
-    var quantity: @NotBlank String? = null
-    var stockImageName: @NotBlank String? = null
-    var stockImageData: @NotBlank String? = null
+    var price: String? = null
+
+    @NotBlank
+    @NumberFormat
+    var quantity: String? = null
+
+    @NotBlank
+    var stockImageName: String? = null
+
+    @NotBlank
+    var stockImageData: String? = null
 
     companion object {
         private const val serialVersionUID = 7593564324192730932L

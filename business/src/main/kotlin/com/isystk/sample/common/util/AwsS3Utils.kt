@@ -50,11 +50,9 @@ class AwsS3Utils {
         var ENDPOINT_URL: String? = null
         var REGION: String? = null
 
-        //  private static String PROFILE_NAME;
         private var AWS_ACCESS_KEY: String? = null
-        private var AWS_SECRET_KEY: String? = null// ローカル環境の場合のみクレディンシャルのパスを指定する
-        //			ProfileCredentialsProvider credentialsProvider = new ProfileCredentialsProvider(CREDENTIALS, PROFILE_NAME);
-        // AWS環境の場合はIAMロール認証なのでクレディンシャルは設定しない
+        private var AWS_SECRET_KEY: String? = null
+
         /**
          * S3クライアントを取得する
          * @return AmazonS3
@@ -83,15 +81,7 @@ class AwsS3Utils {
                 // AWS環境の場合はIAMロール認証なのでクレディンシャルは設定しない
                 return clientBuilder.build()
             }
-        /**
-         * S3にファイルをアップロードします。
-         * delete がtrueの場合、ローカルファイルを削除します。
-         * @param filePath
-         * @param remotePath
-         * @param bucket
-         * @param delete
-         * @return
-         */
+
         /**
          * S3にファイルをアップロードします。
          * アップロード後にローカルファイルを削除します。

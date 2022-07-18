@@ -96,9 +96,7 @@ object FileUtils {
         if (file == null) {
             return false
         }
-        return if (maxSize < file.length()) {
-            false
-        } else true
+        return maxSize >= file.length()
     }
 
     /**

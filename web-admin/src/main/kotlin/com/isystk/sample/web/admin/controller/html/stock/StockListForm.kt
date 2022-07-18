@@ -8,7 +8,10 @@ import java.time.LocalDate
 import javax.validation.constraints.Digits
 
 class StockListForm : BaseSearchForm(), Pageable {
-    var stockId: @Digits(integer = 9, fraction = 0) BigInteger? = null
+
+    @Digits(integer = 9, fraction = 0)
+    var stockId: BigInteger? = null
+
     var name: String? = null
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")

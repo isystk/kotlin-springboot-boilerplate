@@ -4,23 +4,42 @@ import com.isystk.sample.web.base.controller.html.BaseForm
 import org.springframework.format.annotation.NumberFormat
 import java.math.BigInteger
 import javax.validation.constraints.NotBlank
+import javax.validation.constraints.NotEmpty
 import javax.validation.constraints.NotNull
 
 class ContactEditForm : BaseForm() {
-    var contactId: @NotNull BigInteger? = null
-    var yourName: @NotBlank String? = null
-    var email: @NotBlank String? = null
 
-    @NumberFormat
-    var gender: @NotBlank String? = null
+    @NotEmpty
+    var contactId: BigInteger? = null
 
+    @NotBlank
+    var yourName: String? = null
+
+    @NotBlank
+    var email:String? = null
+
+    @NotBlank
     @NumberFormat
-    var age: @NotBlank String? = null
-    var title: @NotBlank String? = null
-    var contact: @NotBlank String? = null
-    var url: @NotBlank String? = null
-    var contactImageName: @NotBlank String? = null
-    var contactImageData: @NotBlank String? = null
+    var gender: String? = null
+
+    @NotBlank
+    @NumberFormat
+    var age: String? = null
+
+    @NotBlank
+    var title: String? = null
+
+    @NotBlank
+    var contact: String? = null
+
+    @NotBlank
+    var url: String? = null
+
+    @NotBlank
+    var contactImageName: String? = null
+
+    @NotBlank
+    var contactImageData: String? = null
 
     companion object {
         private const val serialVersionUID = 7593564324192730932L
