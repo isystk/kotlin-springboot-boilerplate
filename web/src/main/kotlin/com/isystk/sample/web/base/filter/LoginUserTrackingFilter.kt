@@ -24,24 +24,26 @@ class LoginUserTrackingFilter : OncePerRequestFilter() {
         try {
             if (!shouldNotFilter(request)) {
                 MDC.put(Const.MDC_LOGIN_USER_ID, "GUEST")
-                userId.ifPresent { userId: String? -> MDC.put(Const.MDC_LOGIN_USER_ID, userId) }
+                if(userId !== null ) {
+                    MDC.put(Const.MDC_LOGIN_USER_ID, userId)
+                }
             }
         } finally {
             filterChain.doFilter(request, response)
         }
     }
 
-    protected val userId: Optional<String>
-        protected get() {
+    protected val userId: String?
+        get() {
             val authentication = SecurityContextHolder.getContext().authentication
             if (authentication != null) {
                 val principal = authentication.principal
                 if (principal is UserIdAware) {
                     val loginId = principal.userId + ""
-                    return Optional.of(loginId)
+                    return loginId
                 }
             }
-            return Optional.empty()
+            return null
         }
 
     override fun shouldNotFilter(request: HttpServletRequest): Boolean {

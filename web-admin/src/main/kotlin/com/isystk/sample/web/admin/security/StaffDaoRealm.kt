@@ -29,7 +29,7 @@ class StaffDaoRealm : BaseRealm() {
 
             // 担当者を取得して、セッションに保存する
             staff = adminDao!!.findOne(criteria)
-                    .orElseThrow { UsernameNotFoundException("no staff found [id=$email]") }
+                ?: throw UsernameNotFoundException("no staff found [id=$email]")
 
             // 役割と権限を両方ともGrantedAuthorityとして渡す
             val authorities: Set<String> = HashSet()

@@ -29,7 +29,7 @@ class RegisterFormValidator : AbstractValidator<RegisterForm?>() {
         if (form != null) {
             criteria.emailEq = form.email
         }
-        if (userDao!!.findOne(criteria).orElse(null) != null) {
+        if (userDao!!.findOne(criteria) !== null) {
             errors?.rejectValue("email", "errros.emailExist")
         }
     }

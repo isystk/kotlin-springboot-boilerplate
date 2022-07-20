@@ -55,7 +55,7 @@ interface UserDao {
      * @return the User entity
      */
     @Select
-    fun selectById(id: BigInteger): Optional<User>
+    fun selectById(id: BigInteger): User?
 
     /**
      * @param id
@@ -63,12 +63,12 @@ interface UserDao {
      * @return the User entity
      */
     @Select(ensureResult = true)
-    fun selectByIdAndVersion(id: BigInteger, version: Long): Optional<User>
+    fun selectByIdAndVersion(id: BigInteger, version: Long): User?
 
     /**
      * @param criteria
      * @return
      */
     @Select
-    fun findOne(criteria: UserCriteria): Optional<User>
+    fun findOne(criteria: UserCriteria): User?
 }

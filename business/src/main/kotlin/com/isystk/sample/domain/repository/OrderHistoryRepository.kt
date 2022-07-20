@@ -104,10 +104,10 @@ class OrderHistoryRepository : BaseRepository() {
      * @param criteria
      * @return
      */
-    fun findOne(criteria: OrderHistoryCriteria): Optional<OrderHistoryRepositoryDto> {
+    fun findOne(criteria: OrderHistoryCriteria): OrderHistoryRepositoryDto? {
         val data = orderHistoryDao!!.findOne(criteria)
-                .orElseThrow { NoDataFoundException(criteria.toString() + "のデータが見つかりません。") }
-        return Optional.ofNullable(convertDto(mutableListOf(data))[0])
+            ?: throw NoDataFoundException(criteria.toString() + "のデータが見つかりません。")
+        return convertDto(mutableListOf(data))[0]
     }
 
     /**
@@ -117,7 +117,7 @@ class OrderHistoryRepository : BaseRepository() {
      */
     fun findById(id: BigInteger): OrderHistoryRepositoryDto {
         val data = orderHistoryDao!!.selectById(id)
-                .orElseThrow { NoDataFoundException("orderHistory_id=$id のデータが見つかりません。") }
+            ?: throw NoDataFoundException("orderHistory_id=$id のデータが見つかりません。")
         return convertDto(mutableListOf(data))[0]
     }
 
@@ -134,13 +134,13 @@ class OrderHistoryRepository : BaseRepository() {
         // stock
         val stockCriteria = StockCriteria()
         stockCriteria.idEq = orderHistory.stockId
-        val stock = stockDao!!.findOne(stockCriteria).orElse(Stock())
+        val stock = stockDao!!.findOne(stockCriteria) ?: Stock()
         dto.stock = stock
 
         // user
         val userCriteria = UserCriteria()
         userCriteria.idEq = orderHistory.userId
-        val user = userDao!!.findOne(userCriteria).orElse(User())
+        val user = userDao!!.findOne(userCriteria) ?: User()
         dto.user = user
         return dto
     }
@@ -173,7 +173,7 @@ class OrderHistoryRepository : BaseRepository() {
     fun update(orderHistoryDto: OrderHistoryRepositoryDto): OrderHistory {
         val time = DateUtils.now
         val before = orderHistoryDao!!.selectById(orderHistoryDto.id)
-                .orElseThrow { NoDataFoundException("orderHistory_id=" + orderHistoryDto.id + " のデータが見つかりません。") }
+            ?: throw NoDataFoundException("orderHistory_id=" + orderHistoryDto.id + " のデータが見つかりません。")
 
         // 注文履歴テーブル
         val orderHistory = ObjectMapperUtils.mapExcludeNull(orderHistoryDto, before)
@@ -189,7 +189,7 @@ class OrderHistoryRepository : BaseRepository() {
      */
     fun delete(orderHistoryId: BigInteger): OrderHistory {
         val orderHistory = orderHistoryDao!!.selectById(orderHistoryId)
-                .orElseThrow { NoDataFoundException("orderHistory_id=$orderHistoryId のデータが見つかりません。") }
+            ?: throw NoDataFoundException("orderHistory_id=$orderHistoryId のデータが見つかりません。")
         val time = DateUtils.now
         orderHistory.updatedAt = time // 削除日
         orderHistory.deleteFlg = true // 削除フラグ

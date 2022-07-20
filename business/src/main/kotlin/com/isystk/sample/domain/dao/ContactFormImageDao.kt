@@ -55,7 +55,7 @@ interface ContactFormImageDao {
      * @return the ContactFormImage entity
      */
     @Select
-    fun selectById(id: BigInteger): Optional<ContactFormImage>
+    fun selectById(id: BigInteger): ContactFormImage?
 
     /**
      * @param id
@@ -63,12 +63,12 @@ interface ContactFormImageDao {
      * @return the ContactFormImage entity
      */
     @Select(ensureResult = true)
-    fun selectByIdAndVersion(id: BigInteger, version: Long): Optional<ContactFormImage>
+    fun selectByIdAndVersion(id: BigInteger, version: Long): ContactFormImage?
 
     /**
      * @param criteria
      * @return
      */
     @Select
-    fun findOne(criteria: ContactFormImageCriteria): Optional<ContactFormImage>
+    fun findOne(criteria: ContactFormImageCriteria): ContactFormImage?
 }

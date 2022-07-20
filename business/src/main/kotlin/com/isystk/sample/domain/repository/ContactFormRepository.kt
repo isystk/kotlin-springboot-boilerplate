@@ -93,10 +93,10 @@ class ContactFormRepository : BaseRepository() {
      * @param criteria
      * @return
      */
-    fun findOne(criteria: ContactFormCriteria): Optional<ContactFormRepositoryDto> {
+    fun findOne(criteria: ContactFormCriteria): ContactFormRepositoryDto?{
         val data = contactFormDao!!.findOne(criteria)
-                .orElseThrow { NoDataFoundException(criteria.toString() + "のデータが見つかりません。") }
-        return Optional.ofNullable(convertDto(mutableListOf(data))[0])
+            ?: throw NoDataFoundException(criteria.toString() + "のデータが見つかりません。")
+        return convertDto(mutableListOf(data))[0]
     }
 
     /**
@@ -104,9 +104,9 @@ class ContactFormRepository : BaseRepository() {
      *
      * @return
      */
-    fun findById(id: BigInteger): ContactFormRepositoryDto {
+    fun findById(id: BigInteger): ContactFormRepositoryDto? {
         val data = contactFormDao!!.selectById(id)
-                .orElseThrow { NoDataFoundException("contactForm_id=$id のデータが見つかりません。") }
+            ?: throw NoDataFoundException("contactForm_id=$id のデータが見つかりません。")
         return convertDto(mutableListOf(data))[0]
     }
 
@@ -158,7 +158,7 @@ class ContactFormRepository : BaseRepository() {
                 .forEach { e: ContactFormImageRepositoryDto -> imageHelper!!.saveFileData(e.contactImageData, "/contacts", e.contactImageName, true) }
         val time = DateUtils.now
         val before = contactFormDao!!.selectById(contactFormDto.id)
-                .orElseThrow { NoDataFoundException("contactForm_id=" + contactFormDto.id + " のデータが見つかりません。") }
+            ?: throw NoDataFoundException("contactForm_id=" + contactFormDto.id + " のデータが見つかりません。")
 
         // お問い合わせテーブル
         val contactForm = ObjectMapperUtils.mapExcludeNull(contactFormDto, before)
@@ -170,7 +170,7 @@ class ContactFormRepository : BaseRepository() {
         criteria.contactFormIdEq = contactFormDto.id
         val contactFormImageList = contactFormImageDao!!.findAll(criteria)
         contactFormImageList.forEach { e: ContactFormImage -> contactFormImageDao!!.delete(e) }
-        Optional.ofNullable(contactFormDto.imageList).orElse(mutableListOf())
+        contactFormDto.imageList
                 .forEach { e: ContactFormImageRepositoryDto ->
                     val contactFormImage = ContactFormImage()
                     contactFormImage.contactFormId = contactForm.id
@@ -191,7 +191,7 @@ class ContactFormRepository : BaseRepository() {
      */
     fun delete(contactFormId: BigInteger): ContactForm {
         val contactForm = contactFormDao!!.selectById(contactFormId)
-                .orElseThrow { NoDataFoundException("contactForm_id=$contactFormId のデータが見つかりません。") }
+            ?: throw NoDataFoundException("contactForm_id=$contactFormId のデータが見つかりません。")
         val time = DateUtils.now
         run {
             contactForm.updatedAt = time // 削除日
