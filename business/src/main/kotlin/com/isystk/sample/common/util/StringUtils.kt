@@ -12,7 +12,6 @@ object StringUtils {
      * @param str 文字列
      * @return 空かスペース構成文字のみのときtrue
      */
-    @JvmStatic
     fun isBlankOrSpace(str: String?): Boolean {
         return if (str == null) {
             true
@@ -25,7 +24,6 @@ object StringUtils {
      * @param string 対象文字列
      * @return 文字列
      */
-    @JvmStatic
     fun nullToEmpty(string: Any?): String {
         return string?.toString() ?: ""
     }
@@ -36,7 +34,6 @@ object StringUtils {
      * @param string 対象文字列
      * @return 文字列がnullまたは空文字列の場合true.そうでなければfalse.
      */
-    @JvmStatic
     fun isNullOrEmpty(string: Any?): Boolean {
         return string == null || string.toString().length == 0
     }
@@ -47,7 +44,6 @@ object StringUtils {
      * @param str 文字列
      * @return すべての値が、空かスペース構成文字のみのときtrue
      */
-    @JvmStatic
     fun isAllBlankOrSpace(str: Array<String?>?): Boolean {
         if (str == null) {
             return true
@@ -67,7 +63,6 @@ object StringUtils {
      * @param line
      * @return
      */
-    @JvmStatic
     fun csvSplit(line: String): List<String> {
         val list: MutableList<String> = Lists.newArrayList()
         if (isBlankOrSpace(line)) {
@@ -85,7 +80,6 @@ object StringUtils {
      * @param str 文字列
      * @return 前後のダブルクォーテーションを削除した文字列
      */
-    @JvmStatic
     fun trimDoubleQuot(str: String): String {
         var str = str
         if (isBlankOrSpace(str)) {
@@ -107,7 +101,6 @@ object StringUtils {
      * @param objects Stringの集合
      * @return 連結後の文字列
      */
-    @JvmStatic
     fun join(separator: String?, vararg objects: Any?): String {
         val sb = StringBuilder()
         var first = true

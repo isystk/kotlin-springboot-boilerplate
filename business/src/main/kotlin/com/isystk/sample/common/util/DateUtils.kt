@@ -21,7 +21,6 @@ object DateUtils {
      * @param formatter
      * @return
      */
-    @JvmStatic
     fun format(fromDate: Date, formatter: DateTimeFormatter): String {
         val zoneId = zoneId
         val localDateTime = fromDate.toInstant().atZone(zoneId).toLocalDateTime()
@@ -35,7 +34,6 @@ object DateUtils {
      * @param formatter
      * @return
      */
-    @JvmStatic
     fun format(fromLocalDateTime: LocalDateTime?,
                formatter: DateTimeFormatter): String {
         return formatter.format(fromLocalDateTime)
@@ -47,7 +45,6 @@ object DateUtils {
      * @param fromDate
      * @return
      */
-    @JvmStatic
     fun toLocalDateTime(fromDate: Date): LocalDateTime {
         val zoneId = zoneId
         return fromDate.toInstant().atZone(zoneId).toLocalDateTime()
@@ -59,7 +56,6 @@ object DateUtils {
      * @param fromLocalDateTime
      * @return
      */
-    @JvmStatic
     fun toDate(fromLocalDateTime: LocalDateTime?): Date {
         val zoneId = zoneId
         val zoneDateTime = ZonedDateTime.of(fromLocalDateTime, zoneId)
@@ -72,7 +68,6 @@ object DateUtils {
      * @param localDate
      * @return
      */
-    @JvmStatic
     fun toDate(localDate: LocalDate): Date {
         val zoneId = zoneId
         val zoneDateTime = localDate.atStartOfDay(zoneId).toInstant()
@@ -87,7 +82,6 @@ object DateUtils {
      *
      * @return
      */
-    @JvmStatic
     val now: LocalDateTime
         get() = LocalDateTime.now()
 
@@ -97,7 +91,6 @@ object DateUtils {
      * @param fromLocalDateTime
      * @return
      */
-    @JvmStatic
     fun afterNow(fromLocalDateTime: LocalDateTime): Boolean {
         return fromLocalDateTime.isAfter(LocalDateTime.now())
     }
@@ -108,7 +101,6 @@ object DateUtils {
      * @param fromLocalDateTime
      * @return
      */
-    @JvmStatic
     fun beforeNow(fromLocalDateTime: LocalDateTime): Boolean {
         return fromLocalDateTime.isBefore(LocalDateTime.now())
     }
@@ -120,7 +112,6 @@ object DateUtils {
      * @param time2
      * @return
      */
-    @JvmStatic
     fun compareTo(time1: LocalDateTime, time2: LocalDateTime?): Int {
         return time1.compareTo(time2)
     }
@@ -132,7 +123,6 @@ object DateUtils {
      * @param minutes
      * @return
      */
-    @JvmStatic
     fun addMinutes(time: LocalDateTime, minutes: Long): LocalDateTime {
         return time.plusMinutes(minutes)
     }

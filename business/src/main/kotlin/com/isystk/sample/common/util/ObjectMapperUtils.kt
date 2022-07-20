@@ -27,7 +27,6 @@ object ObjectMapperUtils {
      * @param outClass class of result object.
      * @return new object of `outClass` type.
     </T></D> */
-    @JvmStatic
     fun <D, T> map(entity: T, outClass: Class<D>?): D {
         return modelMapper.map(entity, outClass)
     }
@@ -42,7 +41,6 @@ object ObjectMapperUtils {
      * @param <T>        type of entity in `entityList`
      * @return list of mapped object with `<D></D>` type.
     </T></D> */
-    @JvmStatic
     fun <D, T> mapAll(entityList: Collection<T>, outCLass: Class<D>?): List<D> {
         return entityList
                 .map { entity: T -> map(entity, outCLass) }
@@ -54,7 +52,6 @@ object ObjectMapperUtils {
      * @param source      object to map from
      * @param destination object to map to
      */
-    @JvmStatic
     fun <S, D> map(source: S, destination: D): D {
         modelMapper.map(source, destination)
         return destination
@@ -66,7 +63,6 @@ object ObjectMapperUtils {
      * @param source      object to map from
      * @param destination object to map to
      */
-    @JvmStatic
     fun <S, D> mapExcludeNull(source: S, destination: D): D {
         // Nullは除いてコピー
         modelMapper.configuration.propertyCondition = Conditions.isNotNull()

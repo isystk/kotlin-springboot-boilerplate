@@ -91,7 +91,6 @@ class AwsS3Utils {
          * @return
          */
         @JvmOverloads
-        @JvmStatic
         fun s3PutObject(filePath: String, remotePath: String, bucket: String?, delete: Boolean = true): Boolean {
             var remotePath = remotePath
             val s3 = s3Client
@@ -110,7 +109,6 @@ class AwsS3Utils {
             return true
         }
 
-        @JvmStatic
         fun s3Exist(bucket: String?, filePath: String?): Boolean {
             val s3 = s3Client
             return s3.doesObjectExist(bucket, filePath)
@@ -124,7 +122,6 @@ class AwsS3Utils {
          * @param filePath
          * @return
          */
-        @JvmStatic
         fun s3GetListsObject(bucket: String?, filePath: String): List<S3ObjectSummary> {
             val s3 = s3Client
             val list = s3.listObjects(ListObjectsRequest().withBucketName(bucket)
@@ -132,13 +129,11 @@ class AwsS3Utils {
             return list.objectSummaries
         }
 
-        @JvmStatic
         fun s3GetObject(bucket: String?, filePath: String?): S3Object {
             val s3 = s3Client
             return s3.getObject(bucket, filePath)
         }
 
-        @JvmStatic
         fun s3DeleteObject(bucket: String?, filePath: String?) {
             val s3 = s3Client
             val objects = s3.listObjects(bucket, filePath)
@@ -147,7 +142,6 @@ class AwsS3Utils {
             }
         }
 
-        @JvmStatic
         fun s3CopyObject(fromBucket: String?, fromObjectKey: String?, toBucket: String?, toObjectKey: String?): CopyObjectResult {
             val s3 = s3Client
             val copyObjectRequest = CopyObjectRequest(fromBucket, fromObjectKey, toBucket, toObjectKey)
@@ -161,7 +155,6 @@ class AwsS3Utils {
          * @param filePath
          * @return
          */
-        @JvmStatic
         fun s3GetListsObjectV2(bucket: String?, filePath: String): List<S3ObjectSummary> {
             val s3 = s3Client
             val resultList: MutableList<S3ObjectSummary> = Lists.newArrayList()

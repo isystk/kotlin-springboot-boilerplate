@@ -19,7 +19,6 @@ object ReflectionUtils {
      * @param <A>
      * @return
     </A> */
-    @JvmStatic
     fun <A : Annotation?> findWithAnnotation(clazz: Class<*>,
                                              annotationType: Class<A>?): Stream<Field> {
         return Optional.ofNullable(clazz.declaredFields).map<Stream<Field>> { array: Array<Field?>? -> Arrays.stream(array) }
@@ -34,7 +33,6 @@ object ReflectionUtils {
      * @param obj
      * @return
      */
-    @JvmStatic
     fun getFieldValue(f: Field, obj: Any?): Any? {
         try {
             f.isAccessible = true
