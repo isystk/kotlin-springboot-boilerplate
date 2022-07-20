@@ -55,7 +55,7 @@ interface StockDao {
      * @return the Stock entity
      */
     @Select
-    fun selectById(id: BigInteger): Optional<Stock>
+    fun selectById(id: BigInteger): Stock?
 
     /**
      * @param id
@@ -63,12 +63,12 @@ interface StockDao {
      * @return the Stock entity
      */
     @Select(ensureResult = true)
-    fun selectByIdAndVersion(id: BigInteger, version: Long): Optional<Stock>
+    fun selectByIdAndVersion(id: BigInteger, version: Long): Stock?
 
     /**
      * @param criteria
      * @return
      */
     @Select
-    fun findOne(criteria: StockCriteria): Optional<Stock>
+    fun findOne(criteria: StockCriteria): Stock?
 }

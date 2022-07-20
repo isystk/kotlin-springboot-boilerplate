@@ -3,7 +3,6 @@ package com.isystk.sample.common.util
 import org.modelmapper.Conditions
 import org.modelmapper.ModelMapper
 import org.modelmapper.convention.MatchingStrategies
-import java.util.stream.Collectors
 
 object ObjectMapperUtils {
     private var modelMapper = ModelMapper()
@@ -43,9 +42,8 @@ object ObjectMapperUtils {
      * @return list of mapped object with `<D></D>` type.
     </T></D> */
     fun <D, T> mapAll(entityList: Collection<T>, outCLass: Class<D>?): List<D> {
-        return entityList.stream()
+        return entityList
                 .map { entity: T -> map(entity, outCLass) }
-                .collect(Collectors.toList())
     }
 
     /**

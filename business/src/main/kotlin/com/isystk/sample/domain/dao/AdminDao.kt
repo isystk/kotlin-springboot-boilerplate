@@ -54,7 +54,7 @@ interface AdminDao {
      * @return the Admin entity
      */
     @Select
-    fun selectById(id: Long): Optional<Admin>
+    fun selectById(id: Long): Admin?
 
     /**
      * @param id
@@ -62,12 +62,12 @@ interface AdminDao {
      * @return the Admin entity
      */
     @Select(ensureResult = true)
-    fun selectByIdAndVersion(id: Long, version: Long): Optional<Admin>
+    fun selectByIdAndVersion(id: Long, version: Long): Admin?
 
     /**
      * @param criteria
      * @return
      */
     @Select
-    fun findOne(criteria: AdminCriteria): Optional<Admin>
+    fun findOne(criteria: AdminCriteria): Admin?
 }

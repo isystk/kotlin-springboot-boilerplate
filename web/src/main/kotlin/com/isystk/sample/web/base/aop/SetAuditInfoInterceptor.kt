@@ -23,9 +23,9 @@ class SetAuditInfoInterceptor : BaseHandlerInterceptor() {
         AuditInfoHolder.set("GUEST", now)
 
         // ログインユーザーが存在する場合
-        loginUser.ifPresent { loginUser: UserDetails ->
+        if(loginUser!==null) {
             // 監査情報を設定する
-            AuditInfoHolder.set(loginUser.username, now)
+            AuditInfoHolder.set(loginUser!!.username, now)
         }
         return true
     }
@@ -44,16 +44,16 @@ class SetAuditInfoInterceptor : BaseHandlerInterceptor() {
      *
      * @return
      */
-    protected val loginUser: Optional<UserDetails>
-        protected get() {
+    protected val loginUser: UserDetails?
+        get() {
             val auth = SecurityContextHolder.getContext().authentication
             if (auth != null) {
                 val principal = auth.principal
                 if (principal is UserDetails) {
-                    return Optional.ofNullable(principal)
+                    return principal
                 }
             }
-            return Optional.empty()
+            return null
         }
 
     companion object {

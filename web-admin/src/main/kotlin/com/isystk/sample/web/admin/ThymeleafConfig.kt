@@ -8,12 +8,12 @@ import org.springframework.context.annotation.Configuration
 @Configuration
 class ThymeleafConfig {
     @Bean
-    open fun layoutDialect(): LayoutDialect {
+    fun layoutDialect(): LayoutDialect {
         return LayoutDialect()
     }
 
     @Bean
-    open fun myDialect(): CustomDialect {
+    fun myDialect(): CustomDialect {
         return CustomDialect()
     }
 }

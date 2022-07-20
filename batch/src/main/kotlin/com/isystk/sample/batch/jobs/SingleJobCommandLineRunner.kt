@@ -21,8 +21,6 @@ import java.io.IOException
 import java.nio.file.FileAlreadyExistsException
 import java.nio.file.Files
 import java.nio.file.Paths
-import java.util.function.Function
-import java.util.stream.Collectors
 
 /**
  * 単一のジョブのみを処理するCommandLineJobRunner
@@ -56,10 +54,11 @@ class SingleJobCommandLineRunner : CommandLineRunner, ApplicationEventPublisherA
 
         // 引数のjobNameでJobインスタンスを取り出す
         val targetJobName = jobParameters.getString(JOB_PARAMETER_JOB_NAME)
-        val jobOpt = jobs.stream().filter { s: Job -> s.name.equals(targetJobName, ignoreCase = true) }
-                .findFirst()
-        val job = jobOpt
-                .orElseThrow { IllegalArgumentException("指定されたジョブが見つかりません。[jobName=$targetJobName]") }
+        val jobOpt = jobs.filter { s: Job -> s.name.equals(targetJobName, ignoreCase = true) }
+        if (jobOpt.isEmpty()) {
+            throw IllegalArgumentException("指定されたジョブが見つかりません。[jobName=$targetJobName]")
+        }
+        val job = jobOpt.first()
 
         // 二重起動防止ファイルを作成する
         createProcessFile(processFileLocation, targetJobName)
@@ -80,7 +79,7 @@ class SingleJobCommandLineRunner : CommandLineRunner, ApplicationEventPublisherA
     protected fun getJobParameters(args: Array<String>?): JobParameters {
         val props = StringUtils.splitArrayElementsIntoProperties(args!!, "=")
         if (log.isDebugEnabled && props != null) {
-            props.entries.stream()
+            props.entries
                     .forEach { (key, value): Map.Entry<Any?, Any> -> log.debug("args: key={}, value={}", key, value.toString()) }
         }
         return converter!!.getJobParameters(props)

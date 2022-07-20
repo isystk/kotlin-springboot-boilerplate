@@ -7,16 +7,10 @@ import java.math.BigDecimal
 import java.math.BigInteger
 
 /**
- *
+ * 数値に関するユーティリティ。
  */
 object NumberUtils {
-    /**
-     * 文字列をIntegerに変換します
-     *
-     * @param str          文字列
-     * @param defaultValue 数値変換に失敗した場合のデフォルト値
-     * @return Integer
-     */
+
     /**
      * 文字列をIntegerに変換します
      *
@@ -98,13 +92,7 @@ object NumberUtils {
     fun toBigInteger(num: BigInteger?, defaultValue: BigInteger): BigInteger {
         return num ?: defaultValue
     }
-    /**
-     * 文字列をBigIntegerに変換します
-     *
-     * @param str          文字列
-     * @param defaultValue 数値変換に失敗した場合のデフォルト値
-     * @return BigInteger
-     */
+
     /**
      * 文字列をBigIntegerに変換します
      *
@@ -136,13 +124,7 @@ object NumberUtils {
         }
         return intArray
     }
-    /**
-     * IntegerをBigIntegerに変換します
-     *
-     * @param num          Integer値
-     * @param defaultValue 数値変換に失敗した場合のデフォルト値
-     * @return BigInteger
-     */
+
     /**
      * IntegerをBigIntegerに変換します
      *
@@ -167,13 +149,6 @@ object NumberUtils {
      * @param defaultValue 数値変換に失敗した場合のデフォルト値
      * @return Double
      */
-    /**
-     * 文字列をDoubleに変換します
-     *
-     * @param str 文字列
-     * @return Double
-     * @see NumberUtils.toDouble
-     */
     @JvmOverloads
     fun toDouble(str: String?, defaultValue: Double? = null): Double? {
         return if (str == null) {
@@ -184,13 +159,7 @@ object NumberUtils {
             defaultValue
         }
     }
-    /**
-     * 文字列をDoubleに変換します
-     *
-     * @param str          文字列
-     * @param defaultValue 数値変換に失敗した場合のデフォルト値
-     * @return Double
-     */
+
     /**
      * 文字列をBigDecimalに変換します
      *

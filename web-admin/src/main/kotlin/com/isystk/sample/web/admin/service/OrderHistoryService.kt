@@ -18,18 +18,17 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 import java.math.BigInteger
 import java.time.LocalTime
-import java.util.stream.Collectors
 
 @Service
 class OrderHistoryService : BaseTransactionalService() {
     @Autowired
-    var orderHistoryRepository: OrderHistoryRepository? = null
+    val orderHistoryRepository: OrderHistoryRepository? = null
 
     @Autowired
-    var userDao: UserDao? = null
+    val userDao: UserDao? = null
 
     @Autowired
-    var stockDao: StockDao? = null
+    val stockDao: StockDao? = null
 
     /**
      * 商品を複数取得します。
@@ -68,8 +67,7 @@ class OrderHistoryService : BaseTransactionalService() {
             userCriteria.nameLike = dto.userName
             val userList = userDao!!.findAll(userCriteria)
             // userListからuserIdのListを抽出
-            val userIdList = userList.stream().map { e: User -> e.id }
-                    .collect(Collectors.toList())
+            val userIdList = userList.map { e: User -> e.id }
             criteria.userIdIn = userIdList
         }
 
@@ -79,16 +77,11 @@ class OrderHistoryService : BaseTransactionalService() {
             stockCriteria.nameLike = dto.stockName
             val stockList = stockDao!!.findAll(stockCriteria)
             // stockListからstockIdのListを抽出
-            val stockIdList = stockList.stream().map { e: Stock -> e.id }
-                    .collect(Collectors.toList())
+            val stockIdList = stockList.map { e: Stock -> e.id }
             criteria.stockIdIn = stockIdList
         }
-        if (dto.createdAtFrom != null) {
-            criteria.createdAtGe = dto.createdAtFrom!!.atStartOfDay()
-        }
-        if (dto.createdAtTo != null) {
-            criteria.createdAtLe = dto.createdAtTo!!.atTime(LocalTime.MAX)
-        }
+        criteria.createdAtGe = dto.createdAtFrom?.atStartOfDay()
+        criteria.createdAtLe = dto.createdAtTo?.atTime(LocalTime.MAX)
         criteria.isDeleteFlgFalse = true
         criteria.orderBy = "order by updated_at desc"
         return criteria

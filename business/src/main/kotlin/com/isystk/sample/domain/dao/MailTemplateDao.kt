@@ -54,7 +54,7 @@ interface MailTemplateDao {
      * @return the MailTemplate entity
      */
     @Select
-    fun selectById(mailTemplateId: Long): Optional<MailTemplate>
+    fun selectById(mailTemplateId: Long): MailTemplate?
 
     /**
      * @param mailTemplateId
@@ -62,12 +62,12 @@ interface MailTemplateDao {
      * @return the MailTemplate entity
      */
     @Select(ensureResult = true)
-    fun selectByIdAndVersion(mailTemplateId: Long, version: Long): Optional<MailTemplate>
+    fun selectByIdAndVersion(mailTemplateId: Long, version: Long): MailTemplate?
 
     /**
      * @param criteria
      * @return
      */
     @Select
-    fun findOne(criteria: MailTemplateCriteria): Optional<MailTemplate>
+    fun findOne(criteria: MailTemplateCriteria): MailTemplate?
 }

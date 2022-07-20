@@ -85,7 +85,7 @@ class RegisterController : AbstractHtmlController() {
      */
     @PostMapping("/resend")
     fun resend(): String {
-        val userId = Optional.of(userHelper!!.loginUserId).orElseThrow { NoDataFoundException("未ログイン状態です") }
+        val userId = userHelper!!.loginUserId
 
         // 仮会員登録メール再送信
         registerService!!.sendMail(userId)

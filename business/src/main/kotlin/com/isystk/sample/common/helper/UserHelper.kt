@@ -39,7 +39,7 @@ class UserHelper {
     fun getUser(userId: BigInteger): User {
         val criteria = UserCriteria()
         criteria.idEq = userId
-        return userDao!!.findOne(criteria).orElseThrow { NoDataFoundException("userId=" + userId + "のデータが見つかりません。") }
+        return userDao!!.findOne(criteria) ?: throw NoDataFoundException("userId=" + userId + "のデータが見つかりません。")
     }
 
     /**
@@ -59,10 +59,9 @@ class UserHelper {
         get() {
             val criteria = UserCriteria()
             criteria.emailEq = AuditInfoHolder.auditUser
-            return userDao!!.findOne(criteria).orElseThrow {
+            return userDao!!.findOne(criteria) ?: throw
                 NoDataFoundException(
                         "email=" + AuditInfoHolder.auditUser + "のデータが見つかりません。")
-            }
         }
 
     /**

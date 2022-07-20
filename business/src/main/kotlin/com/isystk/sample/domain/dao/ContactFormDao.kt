@@ -55,7 +55,7 @@ interface ContactFormDao {
      * @return the ContactForm entity
      */
     @Select
-    fun selectById(id: BigInteger): Optional<ContactForm>
+    fun selectById(id: BigInteger): ContactForm?
 
     /**
      * @param id
@@ -63,12 +63,12 @@ interface ContactFormDao {
      * @return the ContactForm entity
      */
     @Select(ensureResult = true)
-    fun selectByIdAndVersion(id: BigInteger, version: Long): Optional<ContactForm>
+    fun selectByIdAndVersion(id: BigInteger, version: Long): ContactForm?
 
     /**
      * @param criteria
      * @return
      */
     @Select
-    fun findOne(criteria: ContactFormCriteria): Optional<ContactForm>
+    fun findOne(criteria: ContactFormCriteria): ContactForm?
 }

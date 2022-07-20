@@ -7,10 +7,10 @@ import java.util.*
  * バリデーションエラー
  */
 class ValidationErrorException(errors: Errors?) : RuntimeException() {
-    val errors: Optional<Errors>
+    val errors: Errors?
 
     init {
-        this.errors = Optional.ofNullable(errors)
+        this.errors = errors
     }
 
     companion object {

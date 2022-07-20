@@ -82,7 +82,6 @@ object DateUtils {
      *
      * @return
      */
-    @JvmStatic
     val now: LocalDateTime
         get() = LocalDateTime.now()
 

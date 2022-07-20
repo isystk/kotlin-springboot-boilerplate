@@ -1,6 +1,5 @@
 package com.isystk.sample.domain.repository
 
-import com.google.common.collect.Lists
 import com.isystk.sample.common.dto.Page
 import com.isystk.sample.common.dto.Pageable
 import com.isystk.sample.common.exception.NoDataFoundException
@@ -22,7 +21,6 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Repository
 import java.math.BigInteger
 import java.util.*
-import java.util.function.Function
 import java.util.stream.Collectors
 
 /**
@@ -72,30 +70,27 @@ class OrderHistoryRepository : BaseRepository() {
     private fun convertDto(orderHistoryList: List<OrderHistory>): List<OrderHistoryRepositoryDto> {
 
         // orderHistoryListからstockIdのListを抽出
-        val stockIdList = orderHistoryList.stream().map { e: OrderHistory -> e.stockId }
-                .collect(Collectors.toList())
+        val stockIdList = orderHistoryList.map { e: OrderHistory -> e.stockId }
 
         // stockId をkeyとした、stockListのMapを生成
         val stockCriteria = StockCriteria()
         stockCriteria.idIn = stockIdList
         val stockMap = stockDao!!.findAll(stockCriteria)
-                .stream().collect(Collectors.groupingBy(Function { obj: Stock -> obj.id }))
+                .groupBy({ it.id }, {it})
 
         // orderHistoryListからuserIdのListを抽出
-        val userIdList = orderHistoryList.stream().map { e: OrderHistory -> e.userId }
-                .collect(Collectors.toList())
+        val userIdList = orderHistoryList.map { e: OrderHistory -> e.userId }
 
         // userList をkeyとした、userListのMapを生成
         val userCriteria = UserCriteria()
         userCriteria.idIn = userIdList
         val userMap = userDao!!.findAll(userCriteria)
-                .stream().collect(Collectors.groupingBy(Function { obj: User -> obj.id }))
+                .groupBy({ it.id }, {it})
 
         // orderHistoryList を元に、orderHistoryDtoList へコピー
         val orderHistoryDtoList = ObjectMapperUtils
                 .mapAll(orderHistoryList, OrderHistoryRepositoryDto::class.java)
         orderHistoryDtoList
-                .stream()
                 .forEach { e: OrderHistoryRepositoryDto ->
                     e.stock = stockMap[e.stockId]!![0]
                     e.user = userMap[e.userId]!![0]
@@ -109,10 +104,10 @@ class OrderHistoryRepository : BaseRepository() {
      * @param criteria
      * @return
      */
-    fun findOne(criteria: OrderHistoryCriteria): Optional<OrderHistoryRepositoryDto> {
+    fun findOne(criteria: OrderHistoryCriteria): OrderHistoryRepositoryDto? {
         val data = orderHistoryDao!!.findOne(criteria)
-                .orElseThrow { NoDataFoundException(criteria.toString() + "のデータが見つかりません。") }
-        return Optional.ofNullable(convertDto(Lists.newArrayList(data))[0])
+            ?: throw NoDataFoundException(criteria.toString() + "のデータが見つかりません。")
+        return convertDto(mutableListOf(data))[0]
     }
 
     /**
@@ -122,8 +117,8 @@ class OrderHistoryRepository : BaseRepository() {
      */
     fun findById(id: BigInteger): OrderHistoryRepositoryDto {
         val data = orderHistoryDao!!.selectById(id)
-                .orElseThrow { NoDataFoundException("orderHistory_id=$id のデータが見つかりません。") }
-        return convertDto(Lists.newArrayList(data))[0]
+            ?: throw NoDataFoundException("orderHistory_id=$id のデータが見つかりません。")
+        return convertDto(mutableListOf(data))[0]
     }
 
     /**
@@ -139,13 +134,13 @@ class OrderHistoryRepository : BaseRepository() {
         // stock
         val stockCriteria = StockCriteria()
         stockCriteria.idEq = orderHistory.stockId
-        val stock = stockDao!!.findOne(stockCriteria).orElse(Stock())
+        val stock = stockDao!!.findOne(stockCriteria) ?: Stock()
         dto.stock = stock
 
         // user
         val userCriteria = UserCriteria()
         userCriteria.idEq = orderHistory.userId
-        val user = userDao!!.findOne(userCriteria).orElse(User())
+        val user = userDao!!.findOne(userCriteria) ?: User()
         dto.user = user
         return dto
     }
@@ -178,7 +173,7 @@ class OrderHistoryRepository : BaseRepository() {
     fun update(orderHistoryDto: OrderHistoryRepositoryDto): OrderHistory {
         val time = DateUtils.now
         val before = orderHistoryDao!!.selectById(orderHistoryDto.id)
-                .orElseThrow { NoDataFoundException("orderHistory_id=" + orderHistoryDto.id + " のデータが見つかりません。") }
+            ?: throw NoDataFoundException("orderHistory_id=" + orderHistoryDto.id + " のデータが見つかりません。")
 
         // 注文履歴テーブル
         val orderHistory = ObjectMapperUtils.mapExcludeNull(orderHistoryDto, before)
@@ -194,7 +189,7 @@ class OrderHistoryRepository : BaseRepository() {
      */
     fun delete(orderHistoryId: BigInteger): OrderHistory {
         val orderHistory = orderHistoryDao!!.selectById(orderHistoryId)
-                .orElseThrow { NoDataFoundException("orderHistory_id=$orderHistoryId のデータが見つかりません。") }
+            ?: throw NoDataFoundException("orderHistory_id=$orderHistoryId のデータが見つかりません。")
         val time = DateUtils.now
         orderHistory.updatedAt = time // 削除日
         orderHistory.deleteFlg = true // 削除フラグ

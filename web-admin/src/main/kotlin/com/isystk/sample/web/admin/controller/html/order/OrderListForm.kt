@@ -6,7 +6,9 @@ import org.springframework.format.annotation.DateTimeFormat
 import java.time.LocalDate
 
 class OrderListForm : BaseSearchForm(), Pageable {
+
     var userName: String? = null
+
     var stockName: String? = null
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")

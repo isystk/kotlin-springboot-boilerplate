@@ -16,7 +16,7 @@ object EncodeUtils {
      * @param filename
      * @return
      */
-    fun encodeUtf8(filename: String?): String? {
+    fun encodeUtf8(filename: String): String? {
         var encoded: String? = null
         try {
             encoded = URLEncoder.encode(filename, "UTF-8")

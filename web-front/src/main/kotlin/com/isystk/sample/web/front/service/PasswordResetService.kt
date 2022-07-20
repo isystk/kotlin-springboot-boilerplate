@@ -51,15 +51,14 @@ class PasswordResetService : BaseTransactionalService() {
         criteria.emailEq = email
         criteria.isDeleteFlgFalse = true
         val user: User = userRepository!!.findOne(criteria)
-                .orElseThrow { NoDataFoundException("email=$email のデータが見つかりません。") }
+            ?: throw NoDataFoundException("email=$email のデータが見つかりません。")
 
         // パスワード変更ワンタイムパスを登録する(Delete→Insert)
         run {
             val passwordResetCriteria = PasswordResetCriteria()
             passwordResetCriteria.emailEq = user.email
             val passwordReset = passwordResetDao!!.findOne(passwordResetCriteria)
-                    .orElse(null)
-            if (passwordReset != null) {
+            if (passwordReset !== null) {
                 passwordResetDao!!.delete(passwordReset)
             }
         }
@@ -97,7 +96,7 @@ class PasswordResetService : BaseTransactionalService() {
         // ワンタイムキーからユーザーIDを取得する
         val criteria = PasswordResetCriteria()
         criteria.tokenEq = onetimeKey
-        val passwordReset = passwordResetDao!!.findOne(criteria).orElseThrow { NoDataFoundException("指定されたワンタイムキーが見つかりません。[onetimeKey=$onetimeKey]") }
+        val passwordReset = passwordResetDao!!.findOne(criteria) ?: throw NoDataFoundException("指定されたワンタイムキーが見つかりません。[onetimeKey=$onetimeKey]")
 
         // 承認期限オーバー
         if (DateUtils.beforeNow(DateUtils.addMinutes(passwordReset.createdAt, 60))) {
@@ -107,11 +106,7 @@ class PasswordResetService : BaseTransactionalService() {
         // ユーザー情報を取得する
         val userCriteria = UserCriteria()
         userCriteria.emailEq = passwordReset.email
-        val user: User = userRepository!!.findOne(userCriteria)
-                .orElseThrow {
-                    NoDataFoundException(
-                            "email=" + passwordReset.email + " のデータが見つかりません。")
-                }
+        val user: User = userRepository!!.findOne(userCriteria) ?: throw NoDataFoundException("email=" + passwordReset.email + " のデータが見つかりません。")
 
         // パスワードを変更する
         user.password = password

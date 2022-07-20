@@ -4,7 +4,6 @@ import com.isystk.sample.common.dto.Pageable
 import com.isystk.sample.web.base.controller.html.BaseSearchForm
 
 class StockForm : BaseSearchForm(), Pageable {
-
     override fun perpage(): Int {
         return 6
     }

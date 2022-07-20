@@ -3,8 +3,6 @@ package com.isystk.sample.common.helper
 import com.google.common.reflect.ClassPath
 import com.isystk.sample.common.values.Values
 import org.springframework.stereotype.Component
-import java.util.function.Function
-import java.util.stream.Collectors
 
 @Component("vh")
 class ValuesHelper private constructor() {
@@ -13,7 +11,7 @@ class ValuesHelper private constructor() {
     init {
         val loader = Thread.currentThread().contextClassLoader
         valuesObjList = ClassPath.from(loader)
-                .getTopLevelClassesRecursive("com.isystk.sample.common.values").stream()
+                .getTopLevelClassesRecursive("com.isystk.sample.common.values")
                 .filter { classInfo: ClassPath.ClassInfo ->
                     try {
                         val clazz = Class.forName(classInfo.name)
@@ -22,7 +20,6 @@ class ValuesHelper private constructor() {
                         throw RuntimeException(e)
                     }
                 }
-                .collect(Collectors.toList())
                 .associateBy({ it.simpleName }, { it.name })
     }
 

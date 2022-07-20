@@ -37,7 +37,6 @@ class SolrStockService : BaseTransactionalService() {
         }
         val solrStockList: MutableList<SolrStock> = Lists.newArrayList()
         stockList
-                .stream()
                 .forEach { stock: StockRepositoryDto ->
                     val solrStock = ObjectMapperUtils.map(stock, SolrStock::class.java)
                     solrStock.stockId = stock.id.toInt()

@@ -84,7 +84,7 @@ class RegisterService : BaseTransactionalService() {
         val criteria = UserCriteria()
         criteria.rememberTokenEq = onetimeKey
         val user = userRepository!!.findOne(criteria)
-                .orElseThrow { NoDataFoundException("onetimeKey=$onetimeKey のデータが見つかりません。") }
+            ?: throw NoDataFoundException("onetimeKey=$onetimeKey のデータが見つかりません。")
 
         // メールアドレスを検証済みにする
         user.emailVerifiedAt = DateUtils.now
