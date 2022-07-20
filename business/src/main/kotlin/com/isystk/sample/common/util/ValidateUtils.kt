@@ -12,7 +12,6 @@ object ValidateUtils {
      * @param value
      * @return
      */
-    @JvmStatic
     fun isTrue(value: Boolean?): Boolean {
         return value != null && value
     }
@@ -23,7 +22,6 @@ object ValidateUtils {
      * @param value
      * @return
      */
-    @JvmStatic
     fun isFalse(value: Boolean?): Boolean {
         return !isTrue(value)
     }
@@ -34,7 +32,6 @@ object ValidateUtils {
      * @param value
      * @return
      */
-    @JvmStatic
     fun isEmpty(value: String?): Boolean {
         return value == null || value.length == 0
     }
@@ -45,7 +42,6 @@ object ValidateUtils {
      * @param collection
      * @return
      */
-    @JvmStatic
     fun isEmpty(collection: Collection<*>?): Boolean {
         return collection == null || collection.isEmpty()
     }
@@ -56,7 +52,6 @@ object ValidateUtils {
      * @param array
      * @return
      */
-    @JvmStatic
     fun isEmpty(array: Array<Any?>?): Boolean {
         return array == null || array.size == 0
     }
@@ -67,7 +62,6 @@ object ValidateUtils {
      * @param map
      * @return
      */
-    @JvmStatic
     fun isEmpty(map: Map<*, *>?): Boolean {
         return map == null || map.isEmpty()
     }
@@ -78,7 +72,6 @@ object ValidateUtils {
      * @param value
      * @return
      */
-    @JvmStatic
     fun isNotEmpty(value: String?): Boolean {
         return !isEmpty(value)
     }
@@ -89,7 +82,6 @@ object ValidateUtils {
      * @param collection
      * @return
      */
-    @JvmStatic
     fun isNotEmpty(collection: Collection<*>?): Boolean {
         return !isEmpty(collection)
     }
@@ -100,7 +92,6 @@ object ValidateUtils {
      * @param array
      * @return
      */
-    @JvmStatic
     fun isNotEmpty(array: Array<Any?>?): Boolean {
         return !isEmpty(array)
     }
@@ -111,7 +102,6 @@ object ValidateUtils {
      * @param map
      * @return
      */
-    @JvmStatic
     fun isNotEmpty(map: Map<*, *>?): Boolean {
         return !isEmpty(map)
     }
@@ -123,7 +113,6 @@ object ValidateUtils {
      * @param regex
      * @return
      */
-    @JvmStatic
     fun matches(value: String, regex: Regex): Boolean {
         return isNotEmpty(value) && value.matches(regex)
     }
@@ -134,7 +123,6 @@ object ValidateUtils {
      * @param value
      * @return
      */
-    @JvmStatic
     fun isNumeric(value: String?): Boolean {
         return StringUtils.isNumeric(value)
     }
@@ -145,7 +133,6 @@ object ValidateUtils {
      * @param value
      * @return
      */
-    @JvmStatic
     fun isAscii(value: String?): Boolean {
         return StringUtils.isAsciiPrintable(value)
     }
@@ -157,7 +144,6 @@ object ValidateUtils {
      * @param obj2
      * @return
      */
-    @JvmStatic
     fun isEquals(obj1: Any?, obj2: Any?): Boolean {
         return obj1 == obj2
     }
@@ -169,7 +155,6 @@ object ValidateUtils {
      * @param obj2
      * @return
      */
-    @JvmStatic
     fun isNotEquals(obj1: Any?, obj2: Any?): Boolean {
         return !isEquals(obj1, obj2)
     }

@@ -17,7 +17,6 @@ object NumberUtils {
      * @param str 文字列
      * @return Integer
      */
-    @JvmStatic
     @JvmOverloads
     fun toInteger(str: String?, defaultValue: Int? = null): Int? {
         return if (str == null) {
@@ -35,7 +34,6 @@ object NumberUtils {
      * @param strArray 文字列の配列
      * @return Integerの配列
      */
-    @JvmStatic
     fun toIntegerArray(strArray: Array<String?>?): Array<Int>? {
         if (strArray == null) {
             return null
@@ -56,7 +54,6 @@ object NumberUtils {
      * @param strArray 文字列の配列
      * @return Integerの配列
      */
-    @JvmStatic
     fun toIntegerArrayIncludeNull(strArray: Array<String?>?): Array<Int?>? {
         if (strArray == null) {
             return null
@@ -76,7 +73,6 @@ object NumberUtils {
      * @param defaultValue 数値変換に失敗した場合のデフォルト値
      * @return Integer
      */
-    @JvmStatic
     fun toIntegerArray(strArray: Array<String?>?, defaultValue: Array<Int>?): Array<Int>? {
         return if (strArray == null) {
             defaultValue
@@ -86,7 +82,6 @@ object NumberUtils {
     /**
      * 値がNULLの場合にデフォルト値を設定します。
      */
-    @JvmStatic
     fun toInteger(num: Int?, defaultValue: Int): Int {
         return num ?: defaultValue
     }
@@ -94,7 +89,6 @@ object NumberUtils {
     /**
      * 値がNULLの場合にデフォルト値を設定します。
      */
-    @JvmStatic
     fun toBigInteger(num: BigInteger?, defaultValue: BigInteger): BigInteger {
         return num ?: defaultValue
     }
@@ -106,7 +100,6 @@ object NumberUtils {
      * @return BigInteger
      * @see NumberUtils.toBigInteger
      */
-    @JvmStatic
     @JvmOverloads
     fun toBigInteger(str: String?, defaultValue: BigInteger? = null): BigInteger? {
         return if (str == null) {
@@ -124,7 +117,6 @@ object NumberUtils {
      * @param strArray 文字列の配列
      * @return BigIntegerの配列
      */
-    @JvmStatic
     fun toBigIntegerArray(strArray: Array<String?>): Array<BigInteger?> {
         val intArray = arrayOfNulls<BigInteger>(strArray.size)
         for (i in strArray.indices) {
@@ -140,7 +132,6 @@ object NumberUtils {
      * @return BigInteger
      * @see NumberUtils.toBigInteger
      */
-    @JvmStatic
     @JvmOverloads
     fun toBigInteger(num: Int?, defaultValue: BigInteger? = null): BigInteger? {
         return if (num == null) {
@@ -158,14 +149,6 @@ object NumberUtils {
      * @param defaultValue 数値変換に失敗した場合のデフォルト値
      * @return Double
      */
-    /**
-     * 文字列をDoubleに変換します
-     *
-     * @param str 文字列
-     * @return Double
-     * @see NumberUtils.toDouble
-     */
-    @JvmStatic
     @JvmOverloads
     fun toDouble(str: String?, defaultValue: Double? = null): Double? {
         return if (str == null) {
@@ -176,13 +159,7 @@ object NumberUtils {
             defaultValue
         }
     }
-    /**
-     * 文字列をDoubleに変換します
-     *
-     * @param str          文字列
-     * @param defaultValue 数値変換に失敗した場合のデフォルト値
-     * @return Double
-     */
+
     /**
      * 文字列をBigDecimalに変換します
      *
@@ -190,7 +167,6 @@ object NumberUtils {
      * @return BigDecimal
      * @see NumberUtils.toBigDecimal
      */
-    @JvmStatic
     @JvmOverloads
     fun toBigDecimal(str: String?, defaultValue: BigDecimal? = null): BigDecimal? {
         return if (str == null) {
@@ -207,7 +183,6 @@ object NumberUtils {
      *
      * @return
      */
-    @JvmStatic
     val randomInteger: Int
         get() = Integer.valueOf((Math.random() * 999999999 + 1).toInt())
 
@@ -216,7 +191,6 @@ object NumberUtils {
      *
      * @return
      */
-    @JvmStatic
     fun defaultValue(target: Int?, defaultValue: Int): Int {
         return target ?: defaultValue
     }
@@ -226,7 +200,6 @@ object NumberUtils {
      *
      * @return
      */
-    @JvmStatic
     fun defaultValue(target: BigInteger?, defaultValue: BigInteger): BigInteger {
         return target ?: defaultValue
     }
@@ -236,7 +209,6 @@ object NumberUtils {
      *
      * @return
      */
-    @JvmStatic
     fun sum(targets: List<Any>?): Double {
         if (targets == null) {
             return java.lang.Double.valueOf(0.0)
@@ -254,7 +226,6 @@ object NumberUtils {
      *
      * @return
      */
-    @JvmStatic
     fun avg(targets: List<Any>?): Double {
         if (targets == null) {
             return java.lang.Double.valueOf(0.0)

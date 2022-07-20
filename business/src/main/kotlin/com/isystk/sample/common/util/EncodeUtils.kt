@@ -16,7 +16,6 @@ object EncodeUtils {
      * @param filename
      * @return
      */
-    @JvmStatic
     fun encodeUtf8(filename: String): String? {
         var encoded: String? = null
         try {
