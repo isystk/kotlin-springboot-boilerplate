@@ -41,10 +41,9 @@ class StaffHelper {
         get() {
             val criteria = AdminCriteria()
             criteria.emailEq = AuditInfoHolder.auditUser
-            return adminDao!!.findOne(criteria).orElseThrow {
+            return adminDao!!.findOne(criteria) ?: throw
                 NoDataFoundException(
                         "email=" + AuditInfoHolder.auditUser + "のデータが見つかりません。")
-            }
         }
 
     /**

@@ -68,16 +68,18 @@ class ContactService : BaseTransactionalService() {
      * @param contactId
      * @return
      */
-    fun findById(contactId: BigInteger): ContactFormRepositoryDto {
+    fun findById(contactId: BigInteger): ContactFormRepositoryDto? {
         val contact = contactRepository!!.findById(contactId)
-        val imageList = contact.imageList?.map {
+        val imageList = contact?.imageList?.map {
            e: ContactFormImageRepositoryDto ->
                 val imageData = imageHelper!!.getImageData("/contacts", e.fileName)
                 e.contactImageData = imageData
                 e.contactImageName = e.fileName
                 e
         } ?: emptyList()
-        contact.imageList = imageList
+        if (contact != null) {
+            contact.imageList = imageList
+        }
         return contact
     }
 

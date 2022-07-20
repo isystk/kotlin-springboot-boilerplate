@@ -21,10 +21,8 @@ class PasswordResetFormValidator : AbstractValidator<PasswordResetForm?>() {
         if (form != null) {
             criteria.emailEq = form.email
         }
-        if (userDao!!.findOne(criteria).orElse(null) == null) {
-            if (errors != null) {
-                errors.rejectValue("email", "errros.emailNotExist")
-            }
+        if (userDao!!.findOne(criteria) === null) {
+            errors?.rejectValue("email", "errros.emailNotExist")
         }
     }
 }

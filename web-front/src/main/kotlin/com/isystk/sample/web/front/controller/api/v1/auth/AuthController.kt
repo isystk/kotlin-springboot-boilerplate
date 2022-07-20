@@ -31,7 +31,7 @@ class AuthController : AbstractRestController() {
     fun session(session: HttpSession): Resource {
         val userId = AuditInfoHolder.auditUser
         val resource = resourceFactory!!.create()
-        if (Optional.of(userId).isEmpty || "GUEST" == userId) {
+        if ("GUEST" == userId) {
             val dto = AuthUserDto()
             dto.sessionId = session.id
             resource.data = Arrays.asList(dto)

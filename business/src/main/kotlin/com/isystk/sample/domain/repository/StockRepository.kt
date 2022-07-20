@@ -72,10 +72,10 @@ class StockRepository : BaseRepository() {
      * @param criteria
      * @return
      */
-    fun findOne(criteria: StockCriteria): Optional<StockRepositoryDto> {
+    fun findOne(criteria: StockCriteria): StockRepositoryDto? {
         val data = stockDao!!.findOne(criteria)
-                .orElseThrow { NoDataFoundException(criteria.toString() + "のデータが見つかりません。") }
-        return Optional.ofNullable(convertDto(Lists.newArrayList(data))[0])
+            ?: throw NoDataFoundException(criteria.toString() + "のデータが見つかりません。")
+        return convertDto(Lists.newArrayList(data))[0]
     }
 
     /**
@@ -85,7 +85,7 @@ class StockRepository : BaseRepository() {
      */
     fun findById(id: BigInteger): StockRepositoryDto {
         val data = stockDao!!.selectById(id)
-                .orElseThrow { NoDataFoundException("stock_id=$id のデータが見つかりません。") }
+            ?: throw NoDataFoundException("stock_id=$id のデータが見つかりません。")
         return convertDto(Lists.newArrayList(data))[0]
     }
 
@@ -123,7 +123,7 @@ class StockRepository : BaseRepository() {
         imageHelper!!.saveFileData(stockDto.stockImageData, "/stocks", stockDto.stockImageName, true)
         val time = DateUtils.now
         val before = stockDao!!.selectById(stockDto.id)
-                .orElseThrow { NoDataFoundException("stock_id=" + stockDto.id + " のデータが見つかりません。") }
+            ?: throw NoDataFoundException("stock_id=" + stockDto.id + " のデータが見つかりません。")
 
         // 商品テーブル
         val stock = ObjectMapperUtils.mapExcludeNull(stockDto, before)
@@ -140,7 +140,7 @@ class StockRepository : BaseRepository() {
      */
     fun delete(stockId: BigInteger): Stock {
         val stock = stockDao!!.selectById(stockId)
-                .orElseThrow { NoDataFoundException("stock_id=$stockId のデータが見つかりません。") }
+            ?: throw NoDataFoundException("stock_id=$stockId のデータが見つかりません。")
         val time = DateUtils.now
         stock.updatedAt = time // 削除日
         stock.deleteFlg = true // 削除フラグ

@@ -55,7 +55,7 @@ interface CartDao {
      * @return the Cart entity
      */
     @Select
-    fun selectById(id: BigInteger): Optional<Cart>
+    fun selectById(id: BigInteger): Cart?
 
     /**
      * @param id
@@ -63,12 +63,12 @@ interface CartDao {
      * @return the Cart entity
      */
     @Select(ensureResult = true)
-    fun selectByIdAndVersion(id: BigInteger, version: Long): Optional<Cart>
+    fun selectByIdAndVersion(id: BigInteger, version: Long): Cart?
 
     /**
      * @param criteria
      * @return
      */
     @Select
-    fun findOne(criteria: CartCriteria): Optional<Cart>
+    fun findOne(criteria: CartCriteria): Cart?
 }

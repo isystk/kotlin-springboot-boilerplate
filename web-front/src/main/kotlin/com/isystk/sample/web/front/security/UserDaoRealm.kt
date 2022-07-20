@@ -29,7 +29,7 @@ class UserDaoRealm : BaseRealm() {
 
             // 担当者を取得して、セッションに保存する
             user = userDao!!.findOne(criteria)
-                    .orElseThrow { UsernameNotFoundException("no user found [id=$email]") }
+                ?: throw UsernameNotFoundException("no user found [id=$email]")
 
             // 役割と権限を両方ともGrantedAuthorityとして渡す
             authorityList = AuthorityUtils.createAuthorityList()

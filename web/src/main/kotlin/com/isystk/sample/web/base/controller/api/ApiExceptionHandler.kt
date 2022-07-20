@@ -40,8 +40,8 @@ class ApiExceptionHandler : ResponseEntityExceptionHandler() {
         val status = HttpStatus.BAD_REQUEST
         val fieldErrorContexts: MutableList<FieldErrorResource> = ArrayList()
         if (ex is ValidationErrorException) {
-            ex.errors.ifPresent { errors: Errors ->
-                val fieldErrors = errors.fieldErrors
+            if (ex.errors !== null) {
+                val fieldErrors = ex.errors!!.fieldErrors
                 if (fieldErrors != null) {
                     fieldErrors.forEach(Consumer { fieldError: FieldError ->
                         val fieldErrorResource = FieldErrorResource()

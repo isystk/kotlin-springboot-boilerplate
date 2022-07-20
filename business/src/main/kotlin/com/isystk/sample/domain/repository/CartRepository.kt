@@ -3,6 +3,7 @@ package com.isystk.sample.domain.repository
 import com.isystk.sample.common.dto.StripePaymentDto
 import com.isystk.sample.common.dto.mail.MailStockPaymentComplete
 import com.isystk.sample.common.exception.ErrorMessagesException
+import com.isystk.sample.common.exception.NoDataFoundException
 import com.isystk.sample.common.exception.SystemException
 import com.isystk.sample.common.helper.SendMailHelper
 import com.isystk.sample.common.service.BaseRepository
@@ -119,7 +120,10 @@ class CartRepository : BaseRepository() {
      * @return
      */
     fun removeCart(userId: BigInteger, cartId: BigInteger): List<CartRepositoryDto> {
-        val cart = cartDao!!.selectById(cartId).orElseThrow()
+        val cart = cartDao!!.selectById(cartId)
+             ?: throw
+                NoDataFoundException(
+                        "cartId=" + cartId + "のデータが見つかりません。")
         cartDao!!.delete(cart)
         return findCart(userId)
     }
@@ -195,7 +199,9 @@ class CartRepository : BaseRepository() {
             }
 
             // 在庫を減らす
-            val stock = stockDao!!.selectById(cartStock.id).orElseThrow()
+            val stock = stockDao!!.selectById(cartStock.id) ?: throw
+                 NoDataFoundException(
+                        "stockId=" + cartStock.id + "のデータが見つかりません。")
             stock.quantity = stock.quantity - quantity
             stock.updatedAt = time // 更新日
             stockDao!!.update(stock)

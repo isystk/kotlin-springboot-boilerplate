@@ -66,10 +66,10 @@ class UserRepository : BaseRepository() {
      * @param criteria
      * @return
      */
-    fun findOne(criteria: UserCriteria): Optional<UserRepositoryDto> {
+    fun findOne(criteria: UserCriteria): UserRepositoryDto? {
         val data = userDao!!.findOne(criteria)
-                .orElseThrow { NoDataFoundException(criteria.toString() + "のデータが見つかりません。") }
-        return Optional.ofNullable(convertDto(Lists.newArrayList(data))[0])
+            ?: throw NoDataFoundException(criteria.toString() + "のデータが見つかりません。")
+        return convertDto(Lists.newArrayList(data))[0]
     }
 
     /**
@@ -79,7 +79,7 @@ class UserRepository : BaseRepository() {
      */
     fun findById(id: BigInteger): UserRepositoryDto {
         val data = userDao!!.selectById(id)
-                .orElseThrow { NoDataFoundException("user_id=$id のデータが見つかりません。") }
+            ?: throw NoDataFoundException("user_id=$id のデータが見つかりません。")
         return convertDto(Lists.newArrayList(data))[0]
     }
 
@@ -125,7 +125,7 @@ class UserRepository : BaseRepository() {
      */
     fun delete(id: BigInteger): User {
         val user = userDao!!.selectById(id)
-                .orElseThrow { NoDataFoundException("user_id=$id のデータが見つかりません。") }
+            ?: throw NoDataFoundException("user_id=$id のデータが見つかりません。")
         val updated = userDao!!.delete(user)
         if (updated < 1) {
             throw NoDataFoundException("user_id=$id は更新できませんでした。")

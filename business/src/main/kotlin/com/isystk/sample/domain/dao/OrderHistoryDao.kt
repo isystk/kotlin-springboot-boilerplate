@@ -55,7 +55,7 @@ interface OrderHistoryDao {
      * @return the OrderHistory entity
      */
     @Select
-    fun selectById(id: BigInteger): Optional<OrderHistory>
+    fun selectById(id: BigInteger): OrderHistory?
 
     /**
      * @param id
@@ -63,12 +63,12 @@ interface OrderHistoryDao {
      * @return the OrderHistory entity
      */
     @Select(ensureResult = true)
-    fun selectByIdAndVersion(id: BigInteger, version: Long): Optional<OrderHistory>
+    fun selectByIdAndVersion(id: BigInteger, version: Long): OrderHistory?
 
     /**
      * @param criteria
      * @return
      */
     @Select
-    fun findOne(criteria: OrderHistoryCriteria): Optional<OrderHistory>
+    fun findOne(criteria: OrderHistoryCriteria): OrderHistory?
 }

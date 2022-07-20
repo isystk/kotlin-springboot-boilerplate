@@ -57,5 +57,5 @@ interface PasswordResetDao {
      * @return
      */
     @Select
-    fun findOne(criteria: PasswordResetCriteria): Optional<PasswordReset>
+    fun findOne(criteria: PasswordResetCriteria): PasswordReset?
 }
