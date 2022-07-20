@@ -8,7 +8,7 @@ executors:
     environment:
       # Customize the JVM maximum heap limit
       JVM_OPTS: -Xmx2048m
-      GRADLE_OPTS: '-Dorg.gradle.jvmargs="-Xmx4096m" -XX:+HeapDumpOnOutOfMemoryError -Dorg.gradle.daemon=false'
+      GRADLE_OPTS: '-Dorg.gradle.jvmargs="-Xmx2048m" -XX:+HeapDumpOnOutOfMemoryError -Dorg.gradle.daemon=false'
 
 commands:
   restore_gradle:
