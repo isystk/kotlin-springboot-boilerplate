@@ -1,6 +1,5 @@
 package com.isystk.sample.domain.repository
 
-import com.google.common.collect.Lists
 import com.isystk.sample.common.dto.Page
 import com.isystk.sample.common.dto.Pageable
 import com.isystk.sample.common.exception.NoDataFoundException
@@ -21,7 +20,6 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Repository
 import java.math.BigInteger
 import java.util.*
-import java.util.function.Function
 import java.util.stream.Collectors
 
 /**
@@ -71,24 +69,22 @@ class ContactFormRepository : BaseRepository() {
     private fun convertDto(contactFormList: List<ContactForm>): List<ContactFormRepositoryDto> {
 
         // contactFormListからcontactFormIdのListを抽出
-        val contactFormIdList = contactFormList.stream().map { e: ContactForm -> e.id }
-                .collect(Collectors.toList())
+        val contactFormIdList = contactFormList.map { e: ContactForm -> e.id }
 
         // contactFormId をkeyとした、contactFormImageListのMapを生成
         val contactFormImageCriteria = ContactFormImageCriteria()
         contactFormImageCriteria.contactFormIdIn = contactFormIdList
         val contactFormImageMap = contactFormImageDao!!.findAll(contactFormImageCriteria)
-                .stream()
                 .map { e: ContactFormImage -> ObjectMapperUtils.map(e, ContactFormImageRepositoryDto::class.java) }
-                .collect(Collectors.groupingBy(Function { obj: ContactFormImageRepositoryDto -> obj.contactFormId }))
+                .groupBy({ it.contactFormId }, { it })
 
         // contactFormList を元に、contactFormDtoList へコピー
         return ObjectMapperUtils
                 .mapAll(contactFormList, ContactFormRepositoryDto::class.java)
-                .stream().map { e: ContactFormRepositoryDto ->
+                .map { e: ContactFormRepositoryDto ->
                     e.imageList = contactFormImageMap[e.id]
                     e
-                }.collect(Collectors.toList())
+                }
     }
 
     /**
@@ -100,7 +96,7 @@ class ContactFormRepository : BaseRepository() {
     fun findOne(criteria: ContactFormCriteria): Optional<ContactFormRepositoryDto> {
         val data = contactFormDao!!.findOne(criteria)
                 .orElseThrow { NoDataFoundException(criteria.toString() + "のデータが見つかりません。") }
-        return Optional.ofNullable(convertDto(Lists.newArrayList(data))[0])
+        return Optional.ofNullable(convertDto(mutableListOf(data))[0])
     }
 
     /**
@@ -111,7 +107,7 @@ class ContactFormRepository : BaseRepository() {
     fun findById(id: BigInteger): ContactFormRepositoryDto {
         val data = contactFormDao!!.selectById(id)
                 .orElseThrow { NoDataFoundException("contactForm_id=$id のデータが見つかりません。") }
-        return convertDto(Lists.newArrayList(data))[0]
+        return convertDto(mutableListOf(data))[0]
     }
 
     /**
@@ -123,7 +119,7 @@ class ContactFormRepository : BaseRepository() {
     fun create(contactFormDto: ContactFormRepositoryDto): ContactForm {
 
         // 画像ファイルをS3にアップロードする
-        contactFormDto.imageList.stream()
+        contactFormDto.imageList
                 .forEach { e: ContactFormImageRepositoryDto -> imageHelper!!.saveFileData(e.contactImageData, "/contacts", e.contactImageName, true) }
         val time = DateUtils.now
 
@@ -136,7 +132,7 @@ class ContactFormRepository : BaseRepository() {
         contactFormDao!!.insert(contactForm)
 
         // お問い合わせ画像テーブル
-        contactFormDto.imageList.stream()
+        contactFormDto.imageList
                 .forEach { e: ContactFormImageRepositoryDto ->
                     val contactFormImage = ContactFormImage()
                     contactFormImage.contactFormId = contactForm.id
@@ -158,7 +154,7 @@ class ContactFormRepository : BaseRepository() {
      */
     fun update(contactFormDto: ContactFormRepositoryDto): ContactForm {
         // 画像ファイルをS3にアップロードする
-        contactFormDto.imageList.stream()
+        contactFormDto.imageList
                 .forEach { e: ContactFormImageRepositoryDto -> imageHelper!!.saveFileData(e.contactImageData, "/contacts", e.contactImageName, true) }
         val time = DateUtils.now
         val before = contactFormDao!!.selectById(contactFormDto.id)
@@ -173,8 +169,8 @@ class ContactFormRepository : BaseRepository() {
         val criteria = ContactFormImageCriteria()
         criteria.contactFormIdEq = contactFormDto.id
         val contactFormImageList = contactFormImageDao!!.findAll(criteria)
-        contactFormImageList.stream().forEach { e: ContactFormImage -> contactFormImageDao!!.delete(e) }
-        Optional.ofNullable(contactFormDto.imageList).orElse(Lists.newArrayList()).stream()
+        contactFormImageList.forEach { e: ContactFormImage -> contactFormImageDao!!.delete(e) }
+        Optional.ofNullable(contactFormDto.imageList).orElse(mutableListOf())
                 .forEach { e: ContactFormImageRepositoryDto ->
                     val contactFormImage = ContactFormImage()
                     contactFormImage.contactFormId = contactForm.id
@@ -208,7 +204,7 @@ class ContactFormRepository : BaseRepository() {
         val criteria = ContactFormImageCriteria()
         criteria.contactFormIdEq = contactFormId
         val contactFormImageList = contactFormImageDao!!.findAll(criteria)
-        contactFormImageList.stream().forEach { e: ContactFormImage ->
+        contactFormImageList.forEach { e: ContactFormImage ->
             e.updatedAt = time // 削除日
             e.deleteFlg = true // 削除フラグ
             val updated = contactFormImageDao!!.update(e)

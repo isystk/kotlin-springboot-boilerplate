@@ -45,8 +45,8 @@ class LoginUserTrackingFilter : OncePerRequestFilter() {
         }
 
     override fun shouldNotFilter(request: HttpServletRequest): Boolean {
-        val exclude = excludeUrlPatterns!!.stream()
-                .anyMatch { p: String? -> pathMatcher.match(p!!, request.servletPath) }
+        val exclude = excludeUrlPatterns!!
+                .any { p: String? -> pathMatcher.match(p!!, request.servletPath) }
         return if (exclude) {
             true
         } else false

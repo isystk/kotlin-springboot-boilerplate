@@ -1,6 +1,5 @@
 package com.isystk.sample.web.front.service
 
-import com.google.common.collect.Lists
 import com.isystk.sample.common.service.BaseTransactionalService
 import com.isystk.sample.common.util.NumberUtils
 import com.isystk.sample.common.util.StringUtils
@@ -34,8 +33,8 @@ class LikeService : BaseTransactionalService() {
      * @param cookieString カンマ区切りの文字列
      * @return
      */
-    private fun parseCommaSeparatedValue(cookieString: String?): List<String> {
-        val result: MutableList<String> = Lists.newArrayList()
+    private fun parseCommaSeparatedValue(cookieString: String?): MutableList<String> {
+        val result: MutableList<String> = mutableListOf()
         try {
             if (cookieString != null) {
                 for (`val` in cookieString.split("-".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()) {

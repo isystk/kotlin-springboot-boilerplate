@@ -14,6 +14,7 @@ import org.springframework.batch.core.StepContribution
 import org.springframework.batch.core.scope.context.ChunkContext
 import org.springframework.batch.repeat.RepeatStatus
 import org.springframework.beans.factory.annotation.Autowired
+import java.io.File
 import java.io.IOException
 import java.nio.charset.StandardCharsets
 import java.nio.file.Files
@@ -78,9 +79,8 @@ class ImportMstStockTasklet : BaseTasklet<ImportMstStockDto?>() {
         }
 
         // S3に商品画像をアップロード
-        val images = Paths.get("src/main/resources/data/stocks")
         try {
-            Files.list(images).use { stream -> stream.forEach { p: Path -> imageHelper!!.saveFile(p.toAbsolutePath().toString(), "/stocks", p.fileName.toString(), false) } }
+            File("src/main/resources/data/stocks").walk().filter{it -> it.isFile}.forEach  { it -> imageHelper!!.saveFile(it.path, "/stocks", it.name, false) }
         } catch (e: IOException) {
             e.printStackTrace()
         }

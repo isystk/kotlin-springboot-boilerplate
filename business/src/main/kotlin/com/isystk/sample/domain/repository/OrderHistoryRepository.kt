@@ -1,6 +1,5 @@
 package com.isystk.sample.domain.repository
 
-import com.google.common.collect.Lists
 import com.isystk.sample.common.dto.Page
 import com.isystk.sample.common.dto.Pageable
 import com.isystk.sample.common.exception.NoDataFoundException
@@ -22,7 +21,6 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Repository
 import java.math.BigInteger
 import java.util.*
-import java.util.function.Function
 import java.util.stream.Collectors
 
 /**
@@ -72,30 +70,27 @@ class OrderHistoryRepository : BaseRepository() {
     private fun convertDto(orderHistoryList: List<OrderHistory>): List<OrderHistoryRepositoryDto> {
 
         // orderHistoryListからstockIdのListを抽出
-        val stockIdList = orderHistoryList.stream().map { e: OrderHistory -> e.stockId }
-                .collect(Collectors.toList())
+        val stockIdList = orderHistoryList.map { e: OrderHistory -> e.stockId }
 
         // stockId をkeyとした、stockListのMapを生成
         val stockCriteria = StockCriteria()
         stockCriteria.idIn = stockIdList
         val stockMap = stockDao!!.findAll(stockCriteria)
-                .stream().collect(Collectors.groupingBy(Function { obj: Stock -> obj.id }))
+                .groupBy({ it.id }, {it})
 
         // orderHistoryListからuserIdのListを抽出
-        val userIdList = orderHistoryList.stream().map { e: OrderHistory -> e.userId }
-                .collect(Collectors.toList())
+        val userIdList = orderHistoryList.map { e: OrderHistory -> e.userId }
 
         // userList をkeyとした、userListのMapを生成
         val userCriteria = UserCriteria()
         userCriteria.idIn = userIdList
         val userMap = userDao!!.findAll(userCriteria)
-                .stream().collect(Collectors.groupingBy(Function { obj: User -> obj.id }))
+                .groupBy({ it.id }, {it})
 
         // orderHistoryList を元に、orderHistoryDtoList へコピー
         val orderHistoryDtoList = ObjectMapperUtils
                 .mapAll(orderHistoryList, OrderHistoryRepositoryDto::class.java)
         orderHistoryDtoList
-                .stream()
                 .forEach { e: OrderHistoryRepositoryDto ->
                     e.stock = stockMap[e.stockId]!![0]
                     e.user = userMap[e.userId]!![0]
@@ -112,7 +107,7 @@ class OrderHistoryRepository : BaseRepository() {
     fun findOne(criteria: OrderHistoryCriteria): Optional<OrderHistoryRepositoryDto> {
         val data = orderHistoryDao!!.findOne(criteria)
                 .orElseThrow { NoDataFoundException(criteria.toString() + "のデータが見つかりません。") }
-        return Optional.ofNullable(convertDto(Lists.newArrayList(data))[0])
+        return Optional.ofNullable(convertDto(mutableListOf(data))[0])
     }
 
     /**
@@ -123,7 +118,7 @@ class OrderHistoryRepository : BaseRepository() {
     fun findById(id: BigInteger): OrderHistoryRepositoryDto {
         val data = orderHistoryDao!!.selectById(id)
                 .orElseThrow { NoDataFoundException("orderHistory_id=$id のデータが見つかりません。") }
-        return convertDto(Lists.newArrayList(data))[0]
+        return convertDto(mutableListOf(data))[0]
     }
 
     /**
