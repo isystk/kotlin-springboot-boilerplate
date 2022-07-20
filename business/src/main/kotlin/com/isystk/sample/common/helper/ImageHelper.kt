@@ -12,7 +12,6 @@ import org.springframework.util.Assert
 import java.awt.image.BufferedImage
 import java.io.*
 import java.util.*
-import java.util.stream.Collectors
 import javax.imageio.ImageIO
 
 /**
@@ -75,7 +74,7 @@ class ImageHelper {
         return try {
             // S3を探索
             val list: List<S3ObjectSummary> = AwsS3Utils.Companion.s3GetListsObject(BUCKET_NAME, dirPath)
-            list.stream().map { e: S3ObjectSummary -> e.key }.collect(Collectors.toList())
+            list.map { e: S3ObjectSummary -> e.key }
         } catch (e: AmazonS3Exception) {
             throw RuntimeException(e)
         }

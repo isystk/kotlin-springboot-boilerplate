@@ -1,6 +1,5 @@
 package com.isystk.sample.domain.repository
 
-import com.google.common.collect.Maps
 import com.isystk.sample.common.dto.StripePaymentDto
 import com.isystk.sample.common.dto.mail.MailStockPaymentComplete
 import com.isystk.sample.common.exception.ErrorMessagesException
@@ -18,7 +17,6 @@ import com.isystk.sample.domain.dto.CartRepositoryDto
 import com.isystk.sample.domain.dto.StockCriteria
 import com.isystk.sample.domain.entity.Cart
 import com.isystk.sample.domain.entity.OrderHistory
-import com.isystk.sample.domain.entity.Stock
 import com.isystk.sample.domain.entity.User
 import com.stripe.Stripe
 import com.stripe.exception.StripeException
@@ -28,8 +26,6 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Repository
 import java.math.BigInteger
-import java.util.function.Function
-import java.util.stream.Collectors
 
 /**
  * マイカートリポジトリ
@@ -77,21 +73,20 @@ class CartRepository : BaseRepository() {
      */
     private fun convertCartDto(cartList: List<Cart>): List<CartRepositoryDto> {
         // cartListからstockIdのListを抽出
-        val stockIdList = cartList.stream().map { e: Cart -> e.stockId }
-                .collect(Collectors.toList())
+        val stockIdList = cartList.map { e: Cart -> e.stockId }
 
         // stockId をkeyとした、stockListのMapを生成
         val stockCriteria = StockCriteria()
         stockCriteria.idIn = stockIdList
         val stockMap = stockDao!!.findAll(stockCriteria)
-                .stream().collect(Collectors.groupingBy(Function { obj: Stock -> obj.id }))
+                .groupBy({ it.id }, {it})
 
         // cartList を元に、cartDtoList へコピー
         return ObjectMapperUtils.mapAll(cartList, CartRepositoryDto::class.java)
-                .stream().map { e: CartRepositoryDto ->
+                .map { e: CartRepositoryDto ->
                     e.stock = stockMap[e.stockId]!![0]
                     e
-                }.collect(Collectors.toList())
+                }
     }
 
     /**
@@ -140,13 +135,13 @@ class CartRepository : BaseRepository() {
 
         // stockId をkeyとした、cartListのMapを生成
         val cartMap = cartList
-                .stream().collect(Collectors.groupingBy(Function { obj: CartRepositoryDto -> obj.stockId }))
+                .groupBy({ it.stockId }, {it})
 
         // ユニークなstockIdを取得
-        val stockIdList = cartList.stream().map { e: CartRepositoryDto -> e.stockId }.distinct().collect(Collectors.toList())
+        val stockIdList = cartList.map { e: CartRepositoryDto -> e.stockId }.distinct()
 
         // 発注履歴に追加する。
-        stockIdList.stream().forEach { stockId: BigInteger ->
+        stockIdList.forEach { stockId: BigInteger ->
             val stockCartList = cartMap[stockId]!!
             val cartStock = stockCartList[0].stock
             val quantity = stockCartList.size
@@ -157,9 +152,9 @@ class CartRepository : BaseRepository() {
         }
         val dto = StripePaymentDto()
         Stripe.apiKey = apiSecret
-        val metadata: MutableMap<String, Any> = Maps.newHashMap()
+        val metadata: MutableMap<String, Any> = mutableMapOf()
         metadata["username"] = email
-        val params: MutableMap<String, Any> = Maps.newHashMap()
+        val params: MutableMap<String, Any> = mutableMapOf()
         params["amount"] = amount
         params["description"] = "LaraEC"
         params["currency"] = "jpy"
@@ -184,13 +179,13 @@ class CartRepository : BaseRepository() {
 
         // stockId をkeyとした、cartListのMapを生成
         val cartMap = cartList
-                .stream().collect(Collectors.groupingBy(Function { obj: CartRepositoryDto -> obj.stockId }))
+                .groupBy({it.stockId}, {it} )
 
         // ユニークなstockIdを取得
-        val stockIdList = cartList.stream().map { e: CartRepositoryDto -> e.stockId }.distinct().collect(Collectors.toList())
+        val stockIdList = cartList.map { e: CartRepositoryDto -> e.stockId }.distinct()
 
         // 発注履歴に追加する。
-        stockIdList.stream().forEach { stockId: BigInteger ->
+        stockIdList.forEach { stockId: BigInteger ->
             val stockCartList = cartMap[stockId]!!
             val cartStock = stockCartList[0].stock
             val quantity = stockCartList.size
@@ -219,17 +214,17 @@ class CartRepository : BaseRepository() {
         }
 
         // カートから商品を削除
-        cartList.stream().forEach { e: CartRepositoryDto -> removeCart(user.id, e.id) }
+        cartList.forEach { e: CartRepositoryDto -> removeCart(user.id, e.id) }
 
         // ユーザ宛に購入完了メール送信
-        val amount = cartList.stream().mapToInt { e: CartRepositoryDto -> e.stock.price }.sum()
+        val amount = cartList.map { e: CartRepositoryDto -> e.stock.price }.sum()
         val mailTemplate = mailTemplateRepository!!.getMailTemplate(MailTemplateDiv.STOCK_PAYMENT_COMPLETE)
         val subject = mailTemplate!!.title
         val templateBody = mailTemplate.text
         val dto = MailStockPaymentComplete()
         dto.userName = user.name
         dto.amount = amount
-        val objects: MutableMap<String, Any> = Maps.newHashMap()
+        val objects: MutableMap<String, Any> = mutableMapOf()
         objects["dto"] = dto
         val body = sendMailHelper!!.getMailBody(templateBody, objects)
         sendMailHelper!!.sendMail(fromAddress, user.email, subject, body)
