@@ -5,7 +5,6 @@ import com.isystk.sample.domain.entity.OrderHistory
 import org.seasar.doma.*
 import org.seasar.doma.boot.ConfigAutowireable
 import org.seasar.doma.jdbc.SelectOptions
-import java.math.BigInteger
 import java.util.*
 import java.util.stream.Collector
 
@@ -55,7 +54,7 @@ interface OrderHistoryDao {
      * @return the OrderHistory entity
      */
     @Select
-    fun selectById(id: BigInteger): OrderHistory?
+    fun selectById(id: Long): OrderHistory?
 
     /**
      * @param id
@@ -63,7 +62,7 @@ interface OrderHistoryDao {
      * @return the OrderHistory entity
      */
     @Select(ensureResult = true)
-    fun selectByIdAndVersion(id: BigInteger, version: Long): OrderHistory?
+    fun selectByIdAndVersion(id: Long, version: Long): OrderHistory?
 
     /**
      * @param criteria

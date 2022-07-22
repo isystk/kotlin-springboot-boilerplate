@@ -1,8 +1,7 @@
-package com.isystk.sample.domain.entity
+package com.isystk.sample.domain.entity;
 
 import com.isystk.sample.domain.dto.DomaDtoImpl
 import org.seasar.doma.*
-import java.math.BigInteger
 import java.time.LocalDateTime
 
 /**
@@ -14,53 +13,55 @@ import java.time.LocalDateTime
 @Entity
 @Table(name = "contact_form")
 open class ContactForm : DomaDtoImpl() {
-    /** id  */
+
+
+    /** id */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    var id: BigInteger? = null
+    var id: Long? = null
 
-    /** お名前  */
+    /** お名前 */
     @Column(name = "your_name")
     var yourName: String? = null
 
-    /** タイトル  */
+    /** タイトル */
     @Column(name = "title")
     var title: String? = null
 
-    /** メールアドレス  */
+    /** メールアドレス */
     @Column(name = "email")
     var email: String? = null
 
-    /** URL  */
+    /** URL */
     @Column(name = "url")
     var url: String? = null
 
-    /** 性別  */
+    /** 性別 */
     @Column(name = "gender")
-    var gender: Byte? = null
+    var gender: Short? = null
 
-    /** 年齢  */
+    /** 年齢 */
     @Column(name = "age")
-    var age: Byte? = null
+    var age: Short? = null
 
-    /** お問い合わせ内容  */
+    /** お問い合わせ内容 */
     @Column(name = "contact")
     var contact: String? = null
 
-    /** 登録日時  */
+    /** 登録日時 */
     @Column(name = "created_at")
     var createdAt: LocalDateTime? = null
 
-    /** 更新日時  */
+    /** 更新日時 */
     @Column(name = "updated_at")
     var updatedAt: LocalDateTime? = null
 
-    /** 削除フラグ  */
+    /** 削除フラグ */
     @Column(name = "delete_flg")
     var deleteFlg: Boolean? = null
 
-    /** 楽観チェック用バージョン  */
+    /** 楽観チェック用バージョン */
     @Version
     @Column(name = "version")
     var version: Long? = null

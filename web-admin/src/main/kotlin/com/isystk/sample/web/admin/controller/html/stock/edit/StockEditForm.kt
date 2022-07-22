@@ -9,7 +9,7 @@ import javax.validation.constraints.NotNull
 class StockEditForm : BaseForm() {
 
     @NotNull
-    var stockId: BigInteger? = null
+    var stockId: Long? = null
 
     @NotBlank
     var name: String? = null

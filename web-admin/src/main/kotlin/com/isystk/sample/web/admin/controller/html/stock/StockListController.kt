@@ -85,7 +85,7 @@ class StockListController : AbstractHtmlController() {
      * @return
      */
     @DeleteMapping("{id}")
-    fun delete(@PathVariable id: BigInteger): String {
+    fun delete(@PathVariable id: Long): String {
         stockService!!.delete(id)
         return "redirect:/stocks"
     }

@@ -15,7 +15,6 @@ import com.isystk.sample.domain.entity.Stock
 import com.isystk.sample.domain.util.DomaUtils
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Repository
-import java.math.BigInteger
 import java.util.*
 import java.util.stream.Collectors
 
@@ -83,7 +82,7 @@ class StockRepository : BaseRepository() {
      *
      * @return
      */
-    fun findById(id: BigInteger): StockRepositoryDto {
+    fun findById(id: Long): StockRepositoryDto {
         val data = stockDao!!.selectById(id)
             ?: throw NoDataFoundException("stock_id=$id のデータが見つかりません。")
         return convertDto(Lists.newArrayList(data))[0]
@@ -140,7 +139,7 @@ class StockRepository : BaseRepository() {
      *
      * @return
      */
-    fun delete(stockId: BigInteger): Stock {
+    fun delete(stockId: Long): Stock {
         val stock = stockDao!!.selectById(stockId)
             ?: throw NoDataFoundException("stock_id=$stockId のデータが見つかりません。")
         val time = DateUtils.now

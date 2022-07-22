@@ -1,4 +1,4 @@
-package com.isystk.sample.domain.entity
+package com.isystk.sample.domain.entity;
 
 import com.isystk.sample.domain.dto.DomaDtoImpl
 import org.seasar.doma.*
@@ -12,46 +12,48 @@ import java.time.LocalDateTime
  */
 @Entity
 @Table(name = "admin")
-class Admin : DomaDtoImpl() {
-    /** 管理者ID  */
+open class Admin : DomaDtoImpl() {
+
+
+    /** 管理者ID */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     var id: Long? = null
 
-    /** 管理者名  */
+    /** 管理者名 */
     @Column(name = "name")
     var name: String? = null
 
-    /** メールアドレス  */
+    /** メールアドレス */
     @Column(name = "email")
     var email: String? = null
 
-    /** パスワード  */
+    /** パスワード */
     @Column(name = "password")
     var password: String? = null
 
-    /** remember_token  */
+    /** remember_token */
     @Column(name = "remember_token")
     var rememberToken: String? = null
 
-    /** 最終ログイン日時  */
+    /** 最終ログイン日時 */
     @Column(name = "last_login_at")
     var lastLoginAt: LocalDateTime? = null
 
-    /** 登録日時  */
+    /** 登録日時 */
     @Column(name = "created_at")
     var createdAt: LocalDateTime? = null
 
-    /** 更新日時  */
+    /** 更新日時 */
     @Column(name = "updated_at")
     var updatedAt: LocalDateTime? = null
 
-    /** 削除フラグ  */
+    /** 削除フラグ */
     @Column(name = "delete_flg")
     var deleteFlg: Boolean? = null
 
-    /** 楽観チェック用バージョン  */
+    /** 楽観チェック用バージョン */
     @Version
     @Column(name = "version")
     var version: Long? = null

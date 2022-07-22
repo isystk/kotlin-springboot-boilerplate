@@ -5,7 +5,6 @@ import com.isystk.sample.domain.entity.ContactForm
 import org.seasar.doma.*
 import org.seasar.doma.boot.ConfigAutowireable
 import org.seasar.doma.jdbc.SelectOptions
-import java.math.BigInteger
 import java.util.*
 import java.util.stream.Collector
 
@@ -55,7 +54,7 @@ interface ContactFormDao {
      * @return the ContactForm entity
      */
     @Select
-    fun selectById(id: BigInteger): ContactForm?
+    fun selectById(id: Long): ContactForm?
 
     /**
      * @param id
@@ -63,7 +62,7 @@ interface ContactFormDao {
      * @return the ContactForm entity
      */
     @Select(ensureResult = true)
-    fun selectByIdAndVersion(id: BigInteger, version: Long): ContactForm?
+    fun selectByIdAndVersion(id: Long, version: Long): ContactForm?
 
     /**
      * @param criteria

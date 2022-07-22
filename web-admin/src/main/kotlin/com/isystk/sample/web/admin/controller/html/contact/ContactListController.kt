@@ -81,7 +81,7 @@ class ContactListController : AbstractHtmlController() {
      * @return
      */
     @DeleteMapping("{id}")
-    fun delete(@PathVariable id: BigInteger): String {
+    fun delete(@PathVariable id: Long): String {
         contactService!!.delete(id)
         return "redirect:/contacts"
     }

@@ -43,7 +43,7 @@ class CartService : BaseTransactionalService() {
      *
      * @return
      */
-    fun addCart(stockId: BigInteger?): CartSearchResultDto {
+    fun addCart(stockId: Long?): CartSearchResultDto {
         val user = userHelper!!.user
         Assert.notNull(user, "user must not be null")
         val cartList = cartRepository!!.addCart(user.id, stockId)
@@ -64,7 +64,7 @@ class CartService : BaseTransactionalService() {
      *
      * @return
      */
-    fun removeCart(cartId: BigInteger): CartSearchResultDto {
+    fun removeCart(cartId: Long): CartSearchResultDto {
         val user = userHelper!!.user
         Assert.notNull(user, "user must not be null")
         val cartList = cartRepository!!.removeCart(user.id!!, cartId)

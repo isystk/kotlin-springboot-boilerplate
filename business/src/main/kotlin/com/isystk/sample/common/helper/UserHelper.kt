@@ -36,7 +36,7 @@ class UserHelper {
      *
      * @return
      */
-    fun getUser(userId: BigInteger): User {
+    fun getUser(userId: Long): User {
         val criteria = UserCriteria()
         criteria.idEq = userId
         return userDao!!.findOne(criteria) ?: throw NoDataFoundException("userId=" + userId + "のデータが見つかりません。")
@@ -47,7 +47,7 @@ class UserHelper {
      *
      * @return
      */
-    val loginUserId: BigInteger
+    val loginUserId: Long
         get() = user.id!!
 
     /**

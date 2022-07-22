@@ -1,6 +1,5 @@
 package com.isystk.sample.domain.dto;
 
-import java.math.BigInteger;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -13,38 +12,38 @@ import java.util.List;
 public class OrderHistoryCriteria {
 
 
-    BigInteger idEq;
-    BigInteger idNe;
-    BigInteger idLt;
-    BigInteger idLe;
-    BigInteger idGt;
-    BigInteger idGe;
+    Long idEq;
+    Long idNe;
+    Long idLt;
+    Long idLe;
+    Long idGt;
+    Long idGe;
     boolean idIsNull;
     boolean idIsNotNull;
-    List<BigInteger> idIn;
-    List<BigInteger> idNotIn;
+    List<Long> idIn;
+    List<Long> idNotIn;
 
-    BigInteger stockIdEq;
-    BigInteger stockIdNe;
-    BigInteger stockIdLt;
-    BigInteger stockIdLe;
-    BigInteger stockIdGt;
-    BigInteger stockIdGe;
+    Long stockIdEq;
+    Long stockIdNe;
+    Long stockIdLt;
+    Long stockIdLe;
+    Long stockIdGt;
+    Long stockIdGe;
     boolean stockIdIsNull;
     boolean stockIdIsNotNull;
-    List<BigInteger> stockIdIn;
-    List<BigInteger> stockIdNotIn;
+    List<Long> stockIdIn;
+    List<Long> stockIdNotIn;
 
-    BigInteger userIdEq;
-    BigInteger userIdNe;
-    BigInteger userIdLt;
-    BigInteger userIdLe;
-    BigInteger userIdGt;
-    BigInteger userIdGe;
+    Long userIdEq;
+    Long userIdNe;
+    Long userIdLt;
+    Long userIdLe;
+    Long userIdGt;
+    Long userIdGe;
     boolean userIdIsNull;
     boolean userIdIsNotNull;
-    List<BigInteger> userIdIn;
-    List<BigInteger> userIdNotIn;
+    List<Long> userIdIn;
+    List<Long> userIdNotIn;
 
     Integer priceEq;
     Integer priceNe;
@@ -92,27 +91,27 @@ public class OrderHistoryCriteria {
 
     String orderBy;
 
-    public BigInteger getIdEq() {
+    public Long getIdEq() {
         return this.idEq;
     }
 
-    public BigInteger getIdNe() {
+    public Long getIdNe() {
         return this.idNe;
     }
 
-    public BigInteger getIdLt() {
+    public Long getIdLt() {
         return this.idLt;
     }
 
-    public BigInteger getIdLe() {
+    public Long getIdLe() {
         return this.idLe;
     }
 
-    public BigInteger getIdGt() {
+    public Long getIdGt() {
         return this.idGt;
     }
 
-    public BigInteger getIdGe() {
+    public Long getIdGe() {
         return this.idGe;
     }
 
@@ -124,35 +123,35 @@ public class OrderHistoryCriteria {
         return this.idIsNotNull;
     }
 
-    public List<BigInteger> getIdIn() {
+    public List<Long> getIdIn() {
         return this.idIn;
     }
 
-    public List<BigInteger> getIdNotIn() {
+    public List<Long> getIdNotIn() {
         return this.idNotIn;
     }
 
-    public BigInteger getStockIdEq() {
+    public Long getStockIdEq() {
         return this.stockIdEq;
     }
 
-    public BigInteger getStockIdNe() {
+    public Long getStockIdNe() {
         return this.stockIdNe;
     }
 
-    public BigInteger getStockIdLt() {
+    public Long getStockIdLt() {
         return this.stockIdLt;
     }
 
-    public BigInteger getStockIdLe() {
+    public Long getStockIdLe() {
         return this.stockIdLe;
     }
 
-    public BigInteger getStockIdGt() {
+    public Long getStockIdGt() {
         return this.stockIdGt;
     }
 
-    public BigInteger getStockIdGe() {
+    public Long getStockIdGe() {
         return this.stockIdGe;
     }
 
@@ -164,35 +163,35 @@ public class OrderHistoryCriteria {
         return this.stockIdIsNotNull;
     }
 
-    public List<BigInteger> getStockIdIn() {
+    public List<Long> getStockIdIn() {
         return this.stockIdIn;
     }
 
-    public List<BigInteger> getStockIdNotIn() {
+    public List<Long> getStockIdNotIn() {
         return this.stockIdNotIn;
     }
 
-    public BigInteger getUserIdEq() {
+    public Long getUserIdEq() {
         return this.userIdEq;
     }
 
-    public BigInteger getUserIdNe() {
+    public Long getUserIdNe() {
         return this.userIdNe;
     }
 
-    public BigInteger getUserIdLt() {
+    public Long getUserIdLt() {
         return this.userIdLt;
     }
 
-    public BigInteger getUserIdLe() {
+    public Long getUserIdLe() {
         return this.userIdLe;
     }
 
-    public BigInteger getUserIdGt() {
+    public Long getUserIdGt() {
         return this.userIdGt;
     }
 
-    public BigInteger getUserIdGe() {
+    public Long getUserIdGe() {
         return this.userIdGe;
     }
 
@@ -204,11 +203,11 @@ public class OrderHistoryCriteria {
         return this.userIdIsNotNull;
     }
 
-    public List<BigInteger> getUserIdIn() {
+    public List<Long> getUserIdIn() {
         return this.userIdIn;
     }
 
-    public List<BigInteger> getUserIdNotIn() {
+    public List<Long> getUserIdNotIn() {
         return this.userIdNotIn;
     }
 
@@ -368,27 +367,27 @@ public class OrderHistoryCriteria {
         return this.orderBy;
     }
 
-    public void setIdEq(BigInteger idEq) {
+    public void setIdEq(Long idEq) {
         this.idEq = idEq;
     }
 
-    public void setIdNe(BigInteger idNe) {
+    public void setIdNe(Long idNe) {
         this.idNe = idNe;
     }
 
-    public void setIdLt(BigInteger idLt) {
+    public void setIdLt(Long idLt) {
         this.idLt = idLt;
     }
 
-    public void setIdLe(BigInteger idLe) {
+    public void setIdLe(Long idLe) {
         this.idLe = idLe;
     }
 
-    public void setIdGt(BigInteger idGt) {
+    public void setIdGt(Long idGt) {
         this.idGt = idGt;
     }
 
-    public void setIdGe(BigInteger idGe) {
+    public void setIdGe(Long idGe) {
         this.idGe = idGe;
     }
 
@@ -400,35 +399,35 @@ public class OrderHistoryCriteria {
         this.idIsNotNull = idIsNotNull;
     }
 
-    public void setIdIn(List<BigInteger> idIn) {
+    public void setIdIn(List<Long> idIn) {
         this.idIn = idIn;
     }
 
-    public void setIdNotIn(List<BigInteger> idNotIn) {
+    public void setIdNotIn(List<Long> idNotIn) {
         this.idNotIn = idNotIn;
     }
 
-    public void setStockIdEq(BigInteger stockIdEq) {
+    public void setStockIdEq(Long stockIdEq) {
         this.stockIdEq = stockIdEq;
     }
 
-    public void setStockIdNe(BigInteger stockIdNe) {
+    public void setStockIdNe(Long stockIdNe) {
         this.stockIdNe = stockIdNe;
     }
 
-    public void setStockIdLt(BigInteger stockIdLt) {
+    public void setStockIdLt(Long stockIdLt) {
         this.stockIdLt = stockIdLt;
     }
 
-    public void setStockIdLe(BigInteger stockIdLe) {
+    public void setStockIdLe(Long stockIdLe) {
         this.stockIdLe = stockIdLe;
     }
 
-    public void setStockIdGt(BigInteger stockIdGt) {
+    public void setStockIdGt(Long stockIdGt) {
         this.stockIdGt = stockIdGt;
     }
 
-    public void setStockIdGe(BigInteger stockIdGe) {
+    public void setStockIdGe(Long stockIdGe) {
         this.stockIdGe = stockIdGe;
     }
 
@@ -440,35 +439,35 @@ public class OrderHistoryCriteria {
         this.stockIdIsNotNull = stockIdIsNotNull;
     }
 
-    public void setStockIdIn(List<BigInteger> stockIdIn) {
+    public void setStockIdIn(List<Long> stockIdIn) {
         this.stockIdIn = stockIdIn;
     }
 
-    public void setStockIdNotIn(List<BigInteger> stockIdNotIn) {
+    public void setStockIdNotIn(List<Long> stockIdNotIn) {
         this.stockIdNotIn = stockIdNotIn;
     }
 
-    public void setUserIdEq(BigInteger userIdEq) {
+    public void setUserIdEq(Long userIdEq) {
         this.userIdEq = userIdEq;
     }
 
-    public void setUserIdNe(BigInteger userIdNe) {
+    public void setUserIdNe(Long userIdNe) {
         this.userIdNe = userIdNe;
     }
 
-    public void setUserIdLt(BigInteger userIdLt) {
+    public void setUserIdLt(Long userIdLt) {
         this.userIdLt = userIdLt;
     }
 
-    public void setUserIdLe(BigInteger userIdLe) {
+    public void setUserIdLe(Long userIdLe) {
         this.userIdLe = userIdLe;
     }
 
-    public void setUserIdGt(BigInteger userIdGt) {
+    public void setUserIdGt(Long userIdGt) {
         this.userIdGt = userIdGt;
     }
 
-    public void setUserIdGe(BigInteger userIdGe) {
+    public void setUserIdGe(Long userIdGe) {
         this.userIdGe = userIdGe;
     }
 
@@ -480,11 +479,11 @@ public class OrderHistoryCriteria {
         this.userIdIsNotNull = userIdIsNotNull;
     }
 
-    public void setUserIdIn(List<BigInteger> userIdIn) {
+    public void setUserIdIn(List<Long> userIdIn) {
         this.userIdIn = userIdIn;
     }
 
-    public void setUserIdNotIn(List<BigInteger> userIdNotIn) {
+    public void setUserIdNotIn(List<Long> userIdNotIn) {
         this.userIdNotIn = userIdNotIn;
     }
 

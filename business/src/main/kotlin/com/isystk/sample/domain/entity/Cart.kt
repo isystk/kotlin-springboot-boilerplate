@@ -1,8 +1,7 @@
-package com.isystk.sample.domain.entity
+package com.isystk.sample.domain.entity;
 
 import com.isystk.sample.domain.dto.DomaDtoImpl
 import org.seasar.doma.*
-import java.math.BigInteger
 import java.time.LocalDateTime
 
 /**
@@ -14,33 +13,35 @@ import java.time.LocalDateTime
 @Entity
 @Table(name = "cart")
 open class Cart : DomaDtoImpl() {
-    /** カートID  */
+
+
+    /** カートID */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    var id: BigInteger? = null
+    var id: Long? = null
 
-    /** 商品ID  */
+    /** 商品ID */
     @Column(name = "stock_id")
-    var stockId: BigInteger? = null
+    var stockId: Long? = null
 
-    /** ユーザID  */
+    /** ユーザID */
     @Column(name = "user_id")
-    var userId: BigInteger? = null
+    var userId: Long? = null
 
-    /** 登録日時  */
+    /** 登録日時 */
     @Column(name = "created_at")
     var createdAt: LocalDateTime? = null
 
-    /** 更新日時  */
+    /** 更新日時 */
     @Column(name = "updated_at")
     var updatedAt: LocalDateTime? = null
 
-    /** 削除フラグ  */
+    /** 削除フラグ */
     @Column(name = "delete_flg")
     var deleteFlg: Boolean? = null
 
-    /** 楽観チェック用バージョン  */
+    /** 楽観チェック用バージョン */
     @Version
     @Column(name = "version")
     var version: Long? = null

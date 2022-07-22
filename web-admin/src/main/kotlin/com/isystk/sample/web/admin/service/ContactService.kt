@@ -13,7 +13,6 @@ import com.isystk.sample.web.admin.dto.ContactSearchConditionDto
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 import org.springframework.util.Assert
-import java.math.BigInteger
 import java.time.LocalTime
 
 @Service
@@ -68,7 +67,7 @@ class ContactService : BaseTransactionalService() {
      * @param contactId
      * @return
      */
-    fun findById(contactId: BigInteger): ContactFormRepositoryDto? {
+    fun findById(contactId: Long): ContactFormRepositoryDto? {
         val contact = contactRepository!!.findById(contactId)
         val imageList = contact?.imageList?.map {
            e: ContactFormImageRepositoryDto ->
@@ -111,7 +110,7 @@ class ContactService : BaseTransactionalService() {
      *
      * @return
      */
-    fun delete(id: BigInteger): ContactForm {
+    fun delete(id: Long): ContactForm {
         Assert.notNull(id, "id must not be null")
         return contactRepository!!.delete(id)
     }

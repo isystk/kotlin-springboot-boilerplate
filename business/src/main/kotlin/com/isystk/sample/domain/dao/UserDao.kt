@@ -5,7 +5,6 @@ import com.isystk.sample.domain.entity.User
 import org.seasar.doma.*
 import org.seasar.doma.boot.ConfigAutowireable
 import org.seasar.doma.jdbc.SelectOptions
-import java.math.BigInteger
 import java.util.*
 import java.util.stream.Collector
 
@@ -55,7 +54,7 @@ interface UserDao {
      * @return the User entity
      */
     @Select
-    fun selectById(id: BigInteger): User?
+    fun selectById(id: Long): User?
 
     /**
      * @param id
@@ -63,7 +62,7 @@ interface UserDao {
      * @return the User entity
      */
     @Select(ensureResult = true)
-    fun selectByIdAndVersion(id: BigInteger, version: Long): User?
+    fun selectByIdAndVersion(id: Long, version: Long): User?
 
     /**
      * @param criteria

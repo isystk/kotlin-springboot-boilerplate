@@ -5,7 +5,6 @@ import com.isystk.sample.domain.entity.Stock
 import org.seasar.doma.*
 import org.seasar.doma.boot.ConfigAutowireable
 import org.seasar.doma.jdbc.SelectOptions
-import java.math.BigInteger
 import java.util.*
 import java.util.stream.Collector
 
@@ -55,7 +54,7 @@ interface StockDao {
      * @return the Stock entity
      */
     @Select
-    fun selectById(id: BigInteger): Stock?
+    fun selectById(id: Long): Stock?
 
     /**
      * @param id
@@ -63,7 +62,7 @@ interface StockDao {
      * @return the Stock entity
      */
     @Select(ensureResult = true)
-    fun selectByIdAndVersion(id: BigInteger, version: Long): Stock?
+    fun selectByIdAndVersion(id: Long, version: Long): Stock?
 
     /**
      * @param criteria

@@ -59,7 +59,7 @@ class StockService : BaseTransactionalService() {
      * @param stockId
      * @return
      */
-    fun findById(stockId: BigInteger): StockSearchResultDto {
+    fun findById(stockId: Long): StockSearchResultDto {
         // 1件取得する
         val stock = stockRepository!!.findById(stockId)
         return convertDbToFrontStockDto(stock)

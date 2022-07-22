@@ -26,7 +26,6 @@ import org.apache.commons.logging.LogFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Repository
-import java.math.BigInteger
 
 /**
  * マイカートリポジトリ
@@ -60,7 +59,7 @@ class CartRepository : BaseRepository() {
      * @param userId
      * @return
      */
-    fun findCart(userId: BigInteger?): List<CartRepositoryDto> {
+    fun findCart(userId: Long?): List<CartRepositoryDto> {
         val criteria = CartCriteria()
         criteria.userIdEq = userId
         return convertCartDto(cartDao!!.findAll(criteria))
@@ -97,7 +96,7 @@ class CartRepository : BaseRepository() {
      * @param stockId
      * @return
      */
-    fun addCart(userId: BigInteger?, stockId: BigInteger?): List<CartRepositoryDto> {
+    fun addCart(userId: Long?, stockId: Long?): List<CartRepositoryDto> {
         val time = DateUtils.now
 
         // 商品テーブル
@@ -119,7 +118,7 @@ class CartRepository : BaseRepository() {
      * @param cartId
      * @return
      */
-    fun removeCart(userId: BigInteger, cartId: BigInteger): List<CartRepositoryDto> {
+    fun removeCart(userId: Long, cartId: Long): List<CartRepositoryDto> {
         val cart = cartDao!!.selectById(cartId)
              ?: throw
                 NoDataFoundException(
@@ -217,7 +216,7 @@ class CartRepository : BaseRepository() {
             if (cartStock != null) {
                 orderHistory.price = cartStock.price
             }
-            orderHistory.quantity = quantity
+            orderHistory.quantity = quantity.toLong()
             orderHistory.createdAt = time // 作成日
             orderHistory.updatedAt = time // 更新日
             orderHistory.deleteFlg = false // 削除フラグ

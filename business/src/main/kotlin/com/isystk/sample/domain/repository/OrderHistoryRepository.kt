@@ -19,7 +19,6 @@ import com.isystk.sample.domain.entity.User
 import com.isystk.sample.domain.util.DomaUtils
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Repository
-import java.math.BigInteger
 import java.util.*
 import java.util.stream.Collectors
 
@@ -115,7 +114,7 @@ class OrderHistoryRepository : BaseRepository() {
      *
      * @return
      */
-    fun findById(id: BigInteger): OrderHistoryRepositoryDto {
+    fun findById(id: Long): OrderHistoryRepositoryDto {
         val data = orderHistoryDao!!.selectById(id)
             ?: throw NoDataFoundException("orderHistory_id=$id のデータが見つかりません。")
         return convertDto(mutableListOf(data))[0]
@@ -187,7 +186,7 @@ class OrderHistoryRepository : BaseRepository() {
      *
      * @return
      */
-    fun delete(orderHistoryId: BigInteger): OrderHistory {
+    fun delete(orderHistoryId: Long): OrderHistory {
         val orderHistory = orderHistoryDao!!.selectById(orderHistoryId)
             ?: throw NoDataFoundException("orderHistory_id=$orderHistoryId のデータが見つかりません。")
         val time = DateUtils.now

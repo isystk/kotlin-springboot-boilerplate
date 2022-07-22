@@ -29,7 +29,7 @@ class ContactDetailController : AbstractHtmlController() {
      * @return
      */
     @GetMapping("{contactId}")
-    fun show(@PathVariable contactId: BigInteger, model: Model): String {
+    fun show(@PathVariable contactId: Long, model: Model): String {
         val contact = contactService!!.findById(contactId)
         model.addAttribute("contact", contact)
         return "modules/contact/detail"

@@ -13,5 +13,5 @@ class CartSearchResultDto : Dto {
     var cartList: List<CartRepositoryDto>? = null
     var username: String? = null
     var count: Int? = null
-    var sum: Int? = null
+    var sum: Long? = null
 }

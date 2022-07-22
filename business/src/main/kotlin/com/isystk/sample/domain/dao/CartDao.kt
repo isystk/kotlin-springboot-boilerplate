@@ -5,7 +5,6 @@ import com.isystk.sample.domain.entity.Cart
 import org.seasar.doma.*
 import org.seasar.doma.boot.ConfigAutowireable
 import org.seasar.doma.jdbc.SelectOptions
-import java.math.BigInteger
 import java.util.*
 import java.util.stream.Collector
 
@@ -55,7 +54,7 @@ interface CartDao {
      * @return the Cart entity
      */
     @Select
-    fun selectById(id: BigInteger): Cart?
+    fun selectById(id: Long): Cart?
 
     /**
      * @param id
@@ -63,7 +62,7 @@ interface CartDao {
      * @return the Cart entity
      */
     @Select(ensureResult = true)
-    fun selectByIdAndVersion(id: BigInteger, version: Long): Cart?
+    fun selectByIdAndVersion(id: Long, version: Long): Cart?
 
     /**
      * @param criteria

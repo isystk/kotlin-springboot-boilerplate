@@ -10,7 +10,6 @@ import com.isystk.sample.domain.repository.UserRepository
 import com.isystk.sample.web.admin.dto.UserSearchConditionDto
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
-import java.math.BigInteger
 import java.time.LocalTime
 
 @Service
@@ -66,7 +65,7 @@ class UserService : BaseTransactionalService() {
      * @param userId
      * @return
      */
-    fun findById(userId: BigInteger): UserRepositoryDto {
+    fun findById(userId: Long): UserRepositoryDto {
         return userRepository!!.findById(userId)
     }
 }

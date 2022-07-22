@@ -7,10 +7,9 @@ ${lib.copyright}
 package ${packageName};
 </#if>
 
-<#list importNames as importName>
-import ${importName};
-</#list>
-import com.isystk.sample.domain.dto.DomaDtoImpl;
+import com.isystk.sample.domain.dto.DomaDtoImpl
+import org.seasar.doma.*
+import java.time.LocalDateTime
 
 /**
 <#if showDbComment && comment??>
@@ -27,10 +26,7 @@ import com.isystk.sample.domain.dto.DomaDtoImpl;
 <#if showCatalogName && catalogName?? || showSchemaName && schemaName?? || showTableName && tableName??>
 @Table(<#if showCatalogName && catalogName??>catalog = "${catalogName}"</#if><#if showSchemaName && schemaName??><#if showCatalogName && catalogName??>, </#if>schema = "${schemaName}"</#if><#if showTableName><#if showCatalogName && catalogName?? || showSchemaName && schemaName??>, </#if>name = "${tableName}"</#if>)
 </#if>
-public class ${simpleName} extends DomaDtoImpl {
-
-    /** serialVersionUID */
-    private static final long serialVersionUID = 1L;
+open class ${simpleName} : DomaDtoImpl() {
 
 <#list ownEntityPropertyDescs as property>
 
@@ -56,12 +52,17 @@ public class ${simpleName} extends DomaDtoImpl {
   <#if property.showColumnName && property.columnName??>
     @Column(name = "${property.columnName}")
   </#if>
-    <#if !useAccessor>public </#if>${property.propertyClassSimpleName} ${property.name};
+    var ${property.name}: ${property.propertyClassSimpleName}? = null
 </#list>
 <#if originalStatesPropertyName??>
 
     /** */
     @OriginalStates
-    ${simpleName} ${originalStatesPropertyName};
+    var ${originalStatesPropertyName}: ${simpleName}? = null
 </#if>
+
+    companion object {
+        /** serialVersionUID  */
+        private const val serialVersionUID = 1L
+    }
 }

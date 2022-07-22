@@ -29,7 +29,7 @@ class UserDetailController : AbstractHtmlController() {
      * @return
      */
     @GetMapping("{userId}")
-    fun show(@PathVariable userId: BigInteger, model: Model): String {
+    fun show(@PathVariable userId: Long, model: Model): String {
         val user = userService!!.findById(userId)
         model.addAttribute("user", user)
         return "modules/user/detail"

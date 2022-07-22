@@ -7,21 +7,13 @@ ${lib.copyright}
 package ${packageName};
 </#if>
 
-import org.seasar.doma.Select;
-<#list lib.annotationHash?values as annotationImportName>
-import ${annotationImportName};
-</#list>
-
-import java.util.List;
-import org.seasar.doma.jdbc.SelectOptions;
-import java.util.Optional;
-import java.util.stream.Collector;
-
-<#list importNames as importName>
-import ${importName};
-</#list>
-import org.seasar.doma.SelectType;
 import com.isystk.sample.domain.dto.${entityDesc.simpleName}Criteria;
+import com.isystk.sample.domain.entity.${entityDesc.simpleName}
+import org.seasar.doma.*
+import org.seasar.doma.boot.ConfigAutowireable
+import org.seasar.doma.jdbc.SelectOptions
+import java.util.*
+import java.util.stream.Collector
 
 /**
 <#if lib.author??>
@@ -32,28 +24,28 @@ import com.isystk.sample.domain.dto.${entityDesc.simpleName}Criteria;
 @${annotation}
 </#list>
 @Dao<#if configClassSimpleName??>(config = ${configClassSimpleName}.class)</#if>
-public interface ${simpleName} {
+interface ${simpleName} {
 
     /**
      * @param entity
      * @return affected rows
      */
     @Insert
-    int insert(${entityDesc.simpleName} entity);
+    fun insert(entity: ${entityDesc.simpleName}): Int
 
     /**
      * @param entity
      * @return affected rows
      */
     @Update
-    int update(${entityDesc.simpleName} entity);
+    fun update(entity: ${entityDesc.simpleName}): Int
 
     /**
      * @param entity
      * @return affected rows
      */
     @Delete
-    int delete(${entityDesc.simpleName} entity);
+    fun delete(entity: ${entityDesc.simpleName}): Int
 
     /**
      * @param criteria
@@ -61,14 +53,14 @@ public interface ${simpleName} {
      * @return
      */
     @Select(strategy = SelectType.COLLECT)
-    <R> R findAll(final ${entityDesc.simpleName}Criteria criteria, final SelectOptions options, final Collector<${entityDesc.simpleName}, ?, R> collector);
+    fun <R> findAll(criteria: ${entityDesc.simpleName}Criteria, options: SelectOptions, collector: Collector<${entityDesc.simpleName}, *, R>): R
 
     /**
      * @param criteria
      * @return
      */
     @Select
-    List<${entityDesc.simpleName}> findAll(${entityDesc.simpleName}Criteria criteria);
+    fun findAll(criteria: ${entityDesc.simpleName}Criteria): List<${entityDesc.simpleName}>
 
 <#if entityDesc.idEntityPropertyDescs?size gt 0>
     /**
@@ -78,7 +70,7 @@ public interface ${simpleName} {
      * @return the ${entityDesc.simpleName} entity
      */
     @Select
-    Optional<${entityDesc.simpleName}> selectById(<#list entityDesc.idEntityPropertyDescs as property>${property.propertyClassSimpleName} ${property.name}<#if property_has_next>, </#if></#list>);
+    fun selectById(<#list entityDesc.idEntityPropertyDescs as property>${property.name}: ${property.propertyClassSimpleName}<#if property_has_next>, </#if></#list>): ${entityDesc.simpleName}?
 
 </#if>
 <#if entityDesc.idEntityPropertyDescs?size gt 0 && entityDesc.versionEntityPropertyDesc??>
@@ -90,7 +82,7 @@ public interface ${simpleName} {
      * @return the ${entityDesc.simpleName} entity
      */
     @Select(ensureResult = true)
-    Optional<${entityDesc.simpleName}> selectByIdAndVersion(<#list entityDesc.idEntityPropertyDescs as property>${property.propertyClassSimpleName} ${property.name}, </#list>${entityDesc.versionEntityPropertyDesc.propertyClassSimpleName} ${entityDesc.versionEntityPropertyDesc.name});
+    fun selectByIdAndVersion(<#list entityDesc.idEntityPropertyDescs as property>${property.name}: ${property.propertyClassSimpleName}, </#list>${entityDesc.versionEntityPropertyDesc.name}: ${entityDesc.versionEntityPropertyDesc.propertyClassSimpleName}): ${entityDesc.simpleName}?
 
 </#if>
 
@@ -99,6 +91,6 @@ public interface ${simpleName} {
      * @return
      */
     @Select
-    Optional<${entityDesc.simpleName}> findOne(${entityDesc.simpleName}Criteria criteria);
+    fun findOne(criteria: ${entityDesc.simpleName}Criteria): ${entityDesc.simpleName}?
 
 }

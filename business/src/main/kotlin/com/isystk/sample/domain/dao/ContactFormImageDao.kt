@@ -5,7 +5,6 @@ import com.isystk.sample.domain.entity.ContactFormImage
 import org.seasar.doma.*
 import org.seasar.doma.boot.ConfigAutowireable
 import org.seasar.doma.jdbc.SelectOptions
-import java.math.BigInteger
 import java.util.*
 import java.util.stream.Collector
 
@@ -55,7 +54,7 @@ interface ContactFormImageDao {
      * @return the ContactFormImage entity
      */
     @Select
-    fun selectById(id: BigInteger): ContactFormImage?
+    fun selectById(id: Long): ContactFormImage?
 
     /**
      * @param id
@@ -63,7 +62,7 @@ interface ContactFormImageDao {
      * @return the ContactFormImage entity
      */
     @Select(ensureResult = true)
-    fun selectByIdAndVersion(id: BigInteger, version: Long): ContactFormImage?
+    fun selectByIdAndVersion(id: Long, version: Long): ContactFormImage?
 
     /**
      * @param criteria

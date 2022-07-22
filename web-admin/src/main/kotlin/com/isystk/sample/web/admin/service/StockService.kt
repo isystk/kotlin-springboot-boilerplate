@@ -12,7 +12,6 @@ import com.isystk.sample.web.admin.dto.StockSearchConditionDto
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 import org.springframework.util.Assert
-import java.math.BigInteger
 import java.time.LocalTime
 
 @Service
@@ -68,7 +67,7 @@ class StockService : BaseTransactionalService() {
      * @param stockId
      * @return
      */
-    fun findById(stockId: BigInteger): StockRepositoryDto {
+    fun findById(stockId: Long): StockRepositoryDto {
         // 1件取得する
         val stock = stockRepository!!.findById(stockId)
         if (stock.imgpath === null) return stock
@@ -105,7 +104,7 @@ class StockService : BaseTransactionalService() {
      *
      * @return
      */
-    fun delete(id: BigInteger): Stock {
+    fun delete(id: Long): Stock {
         Assert.notNull(id, "id must not be null")
         return stockRepository!!.delete(id)
     }

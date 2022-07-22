@@ -18,7 +18,6 @@ import com.isystk.sample.domain.entity.ContactFormImage
 import com.isystk.sample.domain.util.DomaUtils
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Repository
-import java.math.BigInteger
 import java.util.*
 import java.util.stream.Collectors
 
@@ -104,7 +103,7 @@ class ContactFormRepository : BaseRepository() {
      *
      * @return
      */
-    fun findById(id: BigInteger): ContactFormRepositoryDto? {
+    fun findById(id: Long): ContactFormRepositoryDto? {
         val data = contactFormDao!!.selectById(id)
             ?: throw NoDataFoundException("contactForm_id=$id のデータが見つかりません。")
         return convertDto(mutableListOf(data))[0]
@@ -191,7 +190,7 @@ class ContactFormRepository : BaseRepository() {
      *
      * @return
      */
-    fun delete(contactFormId: BigInteger): ContactForm {
+    fun delete(contactFormId: Long): ContactForm {
         val contactForm = contactFormDao!!.selectById(contactFormId)
             ?: throw NoDataFoundException("contactForm_id=$contactFormId のデータが見つかりません。")
         val time = DateUtils.now

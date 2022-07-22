@@ -43,7 +43,7 @@ class MyCartController : AbstractRestController() {
      * @return
      */
     @PostMapping("/add")
-    fun addCart(@RequestParam("stock_id") stockId: BigInteger?): Resource {
+    fun addCart(@RequestParam("stock_id") stockId: Long?): Resource {
         val resource = resourceFactory!!.create()
         resource.data = Arrays.asList(cartService!!.addCart(stockId))
         resource.message = getMessage(Const.MESSAGE_SUCCESS)
@@ -57,7 +57,7 @@ class MyCartController : AbstractRestController() {
      * @return
      */
     @PostMapping("/remove")
-    fun removeCart(@RequestParam("cart_id") cartId: BigInteger?): Resource {
+    fun removeCart(@RequestParam("cart_id") cartId: Long?): Resource {
         val resource = resourceFactory!!.create()
         resource.data = Arrays.asList(cartService!!.removeCart(cartId!!))
         resource.message = getMessage(Const.MESSAGE_SUCCESS)

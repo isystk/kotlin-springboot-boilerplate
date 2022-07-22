@@ -16,7 +16,6 @@ import com.isystk.sample.domain.repository.OrderHistoryRepository
 import com.isystk.sample.web.admin.dto.OrderHistorySearchConditionDto
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
-import java.math.BigInteger
 import java.time.LocalTime
 
 @Service
@@ -93,7 +92,7 @@ class OrderHistoryService : BaseTransactionalService() {
      * @param stockId
      * @return
      */
-    fun findById(stockId: BigInteger): OrderHistoryRepositoryDto {
+    fun findById(stockId: Long): OrderHistoryRepositoryDto {
         return orderHistoryRepository!!.findById(stockId)
     }
 }

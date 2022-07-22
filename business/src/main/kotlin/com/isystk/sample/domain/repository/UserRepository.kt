@@ -77,7 +77,7 @@ class UserRepository : BaseRepository() {
      *
      * @return
      */
-    fun findById(id: BigInteger): UserRepositoryDto {
+    fun findById(id: Long): UserRepositoryDto {
         val data = userDao!!.selectById(id)
             ?: throw NoDataFoundException("user_id=$id のデータが見つかりません。")
         return convertDto(Lists.newArrayList(data))[0]
@@ -123,7 +123,7 @@ class UserRepository : BaseRepository() {
      *
      * @return
      */
-    fun delete(id: BigInteger): User {
+    fun delete(id: Long): User {
         val user = userDao!!.selectById(id)
             ?: throw NoDataFoundException("user_id=$id のデータが見つかりません。")
         val updated = userDao!!.delete(user)

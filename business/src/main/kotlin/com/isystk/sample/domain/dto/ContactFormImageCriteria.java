@@ -1,6 +1,5 @@
 package com.isystk.sample.domain.dto;
 
-import java.math.BigInteger;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -13,27 +12,27 @@ import java.util.List;
 public class ContactFormImageCriteria {
 
 
-    BigInteger idEq;
-    BigInteger idNe;
-    BigInteger idLt;
-    BigInteger idLe;
-    BigInteger idGt;
-    BigInteger idGe;
+    Long idEq;
+    Long idNe;
+    Long idLt;
+    Long idLe;
+    Long idGt;
+    Long idGe;
     boolean idIsNull;
     boolean idIsNotNull;
-    List<BigInteger> idIn;
-    List<BigInteger> idNotIn;
+    List<Long> idIn;
+    List<Long> idNotIn;
 
-    BigInteger contactFormIdEq;
-    BigInteger contactFormIdNe;
-    BigInteger contactFormIdLt;
-    BigInteger contactFormIdLe;
-    BigInteger contactFormIdGt;
-    BigInteger contactFormIdGe;
+    Long contactFormIdEq;
+    Long contactFormIdNe;
+    Long contactFormIdLt;
+    Long contactFormIdLe;
+    Long contactFormIdGt;
+    Long contactFormIdGe;
     boolean contactFormIdIsNull;
     boolean contactFormIdIsNotNull;
-    List<BigInteger> contactFormIdIn;
-    List<BigInteger> contactFormIdNotIn;
+    List<Long> contactFormIdIn;
+    List<Long> contactFormIdNotIn;
 
     String fileNameEq;
     String fileNameNe;
@@ -76,27 +75,27 @@ public class ContactFormImageCriteria {
 
     String orderBy;
 
-    public BigInteger getIdEq() {
+    public Long getIdEq() {
         return this.idEq;
     }
 
-    public BigInteger getIdNe() {
+    public Long getIdNe() {
         return this.idNe;
     }
 
-    public BigInteger getIdLt() {
+    public Long getIdLt() {
         return this.idLt;
     }
 
-    public BigInteger getIdLe() {
+    public Long getIdLe() {
         return this.idLe;
     }
 
-    public BigInteger getIdGt() {
+    public Long getIdGt() {
         return this.idGt;
     }
 
-    public BigInteger getIdGe() {
+    public Long getIdGe() {
         return this.idGe;
     }
 
@@ -108,35 +107,35 @@ public class ContactFormImageCriteria {
         return this.idIsNotNull;
     }
 
-    public List<BigInteger> getIdIn() {
+    public List<Long> getIdIn() {
         return this.idIn;
     }
 
-    public List<BigInteger> getIdNotIn() {
+    public List<Long> getIdNotIn() {
         return this.idNotIn;
     }
 
-    public BigInteger getContactFormIdEq() {
+    public Long getContactFormIdEq() {
         return this.contactFormIdEq;
     }
 
-    public BigInteger getContactFormIdNe() {
+    public Long getContactFormIdNe() {
         return this.contactFormIdNe;
     }
 
-    public BigInteger getContactFormIdLt() {
+    public Long getContactFormIdLt() {
         return this.contactFormIdLt;
     }
 
-    public BigInteger getContactFormIdLe() {
+    public Long getContactFormIdLe() {
         return this.contactFormIdLe;
     }
 
-    public BigInteger getContactFormIdGt() {
+    public Long getContactFormIdGt() {
         return this.contactFormIdGt;
     }
 
-    public BigInteger getContactFormIdGe() {
+    public Long getContactFormIdGe() {
         return this.contactFormIdGe;
     }
 
@@ -148,11 +147,11 @@ public class ContactFormImageCriteria {
         return this.contactFormIdIsNotNull;
     }
 
-    public List<BigInteger> getContactFormIdIn() {
+    public List<Long> getContactFormIdIn() {
         return this.contactFormIdIn;
     }
 
-    public List<BigInteger> getContactFormIdNotIn() {
+    public List<Long> getContactFormIdNotIn() {
         return this.contactFormIdNotIn;
     }
 
@@ -296,27 +295,27 @@ public class ContactFormImageCriteria {
         return this.orderBy;
     }
 
-    public void setIdEq(BigInteger idEq) {
+    public void setIdEq(Long idEq) {
         this.idEq = idEq;
     }
 
-    public void setIdNe(BigInteger idNe) {
+    public void setIdNe(Long idNe) {
         this.idNe = idNe;
     }
 
-    public void setIdLt(BigInteger idLt) {
+    public void setIdLt(Long idLt) {
         this.idLt = idLt;
     }
 
-    public void setIdLe(BigInteger idLe) {
+    public void setIdLe(Long idLe) {
         this.idLe = idLe;
     }
 
-    public void setIdGt(BigInteger idGt) {
+    public void setIdGt(Long idGt) {
         this.idGt = idGt;
     }
 
-    public void setIdGe(BigInteger idGe) {
+    public void setIdGe(Long idGe) {
         this.idGe = idGe;
     }
 
@@ -328,35 +327,35 @@ public class ContactFormImageCriteria {
         this.idIsNotNull = idIsNotNull;
     }
 
-    public void setIdIn(List<BigInteger> idIn) {
+    public void setIdIn(List<Long> idIn) {
         this.idIn = idIn;
     }
 
-    public void setIdNotIn(List<BigInteger> idNotIn) {
+    public void setIdNotIn(List<Long> idNotIn) {
         this.idNotIn = idNotIn;
     }
 
-    public void setContactFormIdEq(BigInteger contactFormIdEq) {
+    public void setContactFormIdEq(Long contactFormIdEq) {
         this.contactFormIdEq = contactFormIdEq;
     }
 
-    public void setContactFormIdNe(BigInteger contactFormIdNe) {
+    public void setContactFormIdNe(Long contactFormIdNe) {
         this.contactFormIdNe = contactFormIdNe;
     }
 
-    public void setContactFormIdLt(BigInteger contactFormIdLt) {
+    public void setContactFormIdLt(Long contactFormIdLt) {
         this.contactFormIdLt = contactFormIdLt;
     }
 
-    public void setContactFormIdLe(BigInteger contactFormIdLe) {
+    public void setContactFormIdLe(Long contactFormIdLe) {
         this.contactFormIdLe = contactFormIdLe;
     }
 
-    public void setContactFormIdGt(BigInteger contactFormIdGt) {
+    public void setContactFormIdGt(Long contactFormIdGt) {
         this.contactFormIdGt = contactFormIdGt;
     }
 
-    public void setContactFormIdGe(BigInteger contactFormIdGe) {
+    public void setContactFormIdGe(Long contactFormIdGe) {
         this.contactFormIdGe = contactFormIdGe;
     }
 
@@ -368,11 +367,11 @@ public class ContactFormImageCriteria {
         this.contactFormIdIsNotNull = contactFormIdIsNotNull;
     }
 
-    public void setContactFormIdIn(List<BigInteger> contactFormIdIn) {
+    public void setContactFormIdIn(List<Long> contactFormIdIn) {
         this.contactFormIdIn = contactFormIdIn;
     }
 
-    public void setContactFormIdNotIn(List<BigInteger> contactFormIdNotIn) {
+    public void setContactFormIdNotIn(List<Long> contactFormIdNotIn) {
         this.contactFormIdNotIn = contactFormIdNotIn;
     }
 

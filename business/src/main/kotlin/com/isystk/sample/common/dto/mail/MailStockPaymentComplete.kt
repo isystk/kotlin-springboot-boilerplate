@@ -5,5 +5,5 @@ package com.isystk.sample.common.dto.mail
  */
 class MailStockPaymentComplete {
     var userName: String? = null
-    var amount: Int? = null
+    var amount: Long? = null
 }

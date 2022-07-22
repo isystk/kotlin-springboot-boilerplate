@@ -5,7 +5,7 @@ import java.time.LocalDate
 
 class StockSearchConditionDto {
 
-    var stockId: BigInteger? = null
+    var stockId: Long? = null
 
     var name: String? = null
 

@@ -1,6 +1,5 @@
 package com.isystk.sample.domain.dto;
 
-import java.math.BigInteger;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -13,16 +12,16 @@ import java.util.List;
 public class StockCriteria {
 
 
-    BigInteger idEq;
-    BigInteger idNe;
-    BigInteger idLt;
-    BigInteger idLe;
-    BigInteger idGt;
-    BigInteger idGe;
+    Long idEq;
+    Long idNe;
+    Long idLt;
+    Long idLe;
+    Long idGt;
+    Long idGe;
     boolean idIsNull;
     boolean idIsNotNull;
-    List<BigInteger> idIn;
-    List<BigInteger> idNotIn;
+    List<Long> idIn;
+    List<Long> idNotIn;
 
     String nameEq;
     String nameNe;
@@ -121,27 +120,27 @@ public class StockCriteria {
 
     String orderBy;
 
-    public BigInteger getIdEq() {
+    public Long getIdEq() {
         return this.idEq;
     }
 
-    public BigInteger getIdNe() {
+    public Long getIdNe() {
         return this.idNe;
     }
 
-    public BigInteger getIdLt() {
+    public Long getIdLt() {
         return this.idLt;
     }
 
-    public BigInteger getIdLe() {
+    public Long getIdLe() {
         return this.idLe;
     }
 
-    public BigInteger getIdGt() {
+    public Long getIdGt() {
         return this.idGt;
     }
 
-    public BigInteger getIdGe() {
+    public Long getIdGe() {
         return this.idGe;
     }
 
@@ -153,11 +152,11 @@ public class StockCriteria {
         return this.idIsNotNull;
     }
 
-    public List<BigInteger> getIdIn() {
+    public List<Long> getIdIn() {
         return this.idIn;
     }
 
-    public List<BigInteger> getIdNotIn() {
+    public List<Long> getIdNotIn() {
         return this.idNotIn;
     }
 
@@ -509,27 +508,27 @@ public class StockCriteria {
         return this.orderBy;
     }
 
-    public void setIdEq(BigInteger idEq) {
+    public void setIdEq(Long idEq) {
         this.idEq = idEq;
     }
 
-    public void setIdNe(BigInteger idNe) {
+    public void setIdNe(Long idNe) {
         this.idNe = idNe;
     }
 
-    public void setIdLt(BigInteger idLt) {
+    public void setIdLt(Long idLt) {
         this.idLt = idLt;
     }
 
-    public void setIdLe(BigInteger idLe) {
+    public void setIdLe(Long idLe) {
         this.idLe = idLe;
     }
 
-    public void setIdGt(BigInteger idGt) {
+    public void setIdGt(Long idGt) {
         this.idGt = idGt;
     }
 
-    public void setIdGe(BigInteger idGe) {
+    public void setIdGe(Long idGe) {
         this.idGe = idGe;
     }
 
@@ -541,11 +540,11 @@ public class StockCriteria {
         this.idIsNotNull = idIsNotNull;
     }
 
-    public void setIdIn(List<BigInteger> idIn) {
+    public void setIdIn(List<Long> idIn) {
         this.idIn = idIn;
     }
 
-    public void setIdNotIn(List<BigInteger> idNotIn) {
+    public void setIdNotIn(List<Long> idNotIn) {
         this.idNotIn = idNotIn;
     }
 
