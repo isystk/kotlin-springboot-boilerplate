@@ -56,7 +56,7 @@ class ContactService : BaseTransactionalService() {
         criteria.yourNameLike = dto.userName
         criteria.createdAtGe = dto.createdAtFrom?.atStartOfDay()
         criteria.createdAtLe = dto.createdAtTo?.atTime(LocalTime.MAX)
-        criteria.isDeleteFlgFalse = true
+        criteria.deleteFlgFalse = true
         criteria.orderBy = "order by updated_at desc"
         return criteria
     }

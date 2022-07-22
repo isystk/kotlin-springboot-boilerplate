@@ -29,7 +29,7 @@ class SolrStockService : BaseTransactionalService() {
 
         // 有効な商品を全件取得する
         val criteria = StockCriteria()
-        criteria.isDeleteFlgFalse = true
+        criteria.deleteFlgFalse = true
         val stockList = stockRepository!!.findAll(criteria)
         if (stockList.size == 0) {
             // 商品データが0件の場合は何もしない

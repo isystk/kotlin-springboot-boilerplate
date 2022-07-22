@@ -56,7 +56,7 @@ class StockService : BaseTransactionalService() {
         criteria.nameLike = dto.name
         criteria.createdAtGe = dto.createdAtFrom?.atStartOfDay()
         criteria.createdAtLe = dto.createdAtTo?.atTime(LocalTime.MAX)
-        criteria.isDeleteFlgFalse = true
+        criteria.deleteFlgFalse = true
         criteria.orderBy = "order by updated_at desc"
         return criteria
     }

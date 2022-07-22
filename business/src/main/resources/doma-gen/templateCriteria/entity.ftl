@@ -7,9 +7,6 @@ ${lib.copyright}
 package ${packageName};
 </#if>
 
-import java.math.BigInteger;
-import java.util.List;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 /**
@@ -23,39 +20,39 @@ import java.time.LocalDateTime;
  * @author ${lib.author}
 </#if>
  */
-public class ${simpleName}Criteria {
+class ${simpleName}Criteria {
 
 <#list ownEntityPropertyDescs as property>
 
 <#if property.name == "version">
 <#elseif 0 lt property.name?index_of("Flg") >
-    <#if !useAccessor>public </#if>boolean ${property.name}True;
-    <#if !useAccessor>public </#if>boolean ${property.name}False;
+    <#if !useAccessor>public </#if>var ${property.name}True: Boolean = false
+    <#if !useAccessor>public </#if>var ${property.name}False: Boolean = false
 <#else>
-    <#if !useAccessor>public </#if>${property.propertyClassSimpleName} ${property.name}Eq;
-    <#if !useAccessor>public </#if>${property.propertyClassSimpleName} ${property.name}Ne;
-    <#if !useAccessor>public </#if>${property.propertyClassSimpleName} ${property.name}Lt;
-    <#if !useAccessor>public </#if>${property.propertyClassSimpleName} ${property.name}Le;
-    <#if !useAccessor>public </#if>${property.propertyClassSimpleName} ${property.name}Gt;
-    <#if !useAccessor>public </#if>${property.propertyClassSimpleName} ${property.name}Ge;
-    <#if !useAccessor>public </#if>boolean ${property.name}IsNull;
-    <#if !useAccessor>public </#if>boolean ${property.name}IsNotNull;
+    <#if !useAccessor>public </#if>var ${property.name}Eq: ${property.propertyClassSimpleName}? = null
+    <#if !useAccessor>public </#if>var ${property.name}Ne: ${property.propertyClassSimpleName}? = null
+    <#if !useAccessor>public </#if>var ${property.name}Lt: ${property.propertyClassSimpleName}? = null
+    <#if !useAccessor>public </#if>var ${property.name}Le: ${property.propertyClassSimpleName}? = null
+    <#if !useAccessor>public </#if>var ${property.name}Gt: ${property.propertyClassSimpleName}? = null
+    <#if !useAccessor>public </#if>var ${property.name}Ge: ${property.propertyClassSimpleName}? = null
+    <#if !useAccessor>public </#if>var ${property.name}IsNull: Boolean = false
+    <#if !useAccessor>public </#if>var ${property.name}IsNotNull: Boolean = false
 <#if (property.date || property.timestamp)>
 <#elseif property.number>
-    <#if !useAccessor>public </#if>List<${property.propertyClassSimpleName}> ${property.name}In;
-    <#if !useAccessor>public </#if>List<${property.propertyClassSimpleName}> ${property.name}NotIn;
+    <#if !useAccessor>public </#if>var ${property.name}In: List<${property.propertyClassSimpleName}?>? = null
+    <#if !useAccessor>public </#if>var ${property.name}NotIn: List<${property.propertyClassSimpleName}?>? = null
 <#else>
-    <#if !useAccessor>public </#if>List<${property.propertyClassSimpleName}> ${property.name}In;
-    <#if !useAccessor>public </#if>List<${property.propertyClassSimpleName}> ${property.name}NotIn;
-    <#if !useAccessor>public </#if>${property.propertyClassSimpleName} ${property.name}Like;
-    <#if !useAccessor>public </#if>${property.propertyClassSimpleName} ${property.name}NotLike;
-    <#if !useAccessor>public </#if>${property.propertyClassSimpleName} ${property.name}Starts;
-    <#if !useAccessor>public </#if>${property.propertyClassSimpleName} ${property.name}NotStarts;
-    <#if !useAccessor>public </#if>${property.propertyClassSimpleName} ${property.name}Ends;
-    <#if !useAccessor>public </#if>${property.propertyClassSimpleName} ${property.name}NotEnds;
+    <#if !useAccessor>public </#if>var ${property.name}In: List<${property.propertyClassSimpleName}?>? = null
+    <#if !useAccessor>public </#if>var ${property.name}NotIn: List<${property.propertyClassSimpleName}?>? = null
+    <#if !useAccessor>public </#if>var ${property.name}Like: ${property.propertyClassSimpleName}? = null
+    <#if !useAccessor>public </#if>var ${property.name}NotLike: ${property.propertyClassSimpleName}? = null
+    <#if !useAccessor>public </#if>var ${property.name}Starts: ${property.propertyClassSimpleName}? = null
+    <#if !useAccessor>public </#if>var ${property.name}NotStarts: ${property.propertyClassSimpleName}? = null
+    <#if !useAccessor>public </#if>var ${property.name}Ends: ${property.propertyClassSimpleName}? = null
+    <#if !useAccessor>public </#if>var ${property.name}NotEnds: ${property.propertyClassSimpleName}? = null
 </#if>
 </#if>
 </#list>
 
-    String orderBy;
+    var orderBy: String? = null;
 }

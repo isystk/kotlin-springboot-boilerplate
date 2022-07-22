@@ -49,7 +49,7 @@ class PasswordResetService : BaseTransactionalService() {
         // ユーザー情報を取得する
         val criteria = UserCriteria()
         criteria.emailEq = email
-        criteria.isDeleteFlgFalse = true
+        criteria.deleteFlgFalse = true
         val user: User = userRepository!!.findOne(criteria)
             ?: throw NoDataFoundException("email=$email のデータが見つかりません。")
 

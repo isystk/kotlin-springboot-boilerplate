@@ -1,6 +1,6 @@
-package com.isystk.sample.domain.dao
+package com.isystk.sample.domain.dao;
 
-import com.isystk.sample.domain.dto.AdminCriteria
+import com.isystk.sample.domain.dto.AdminCriteria;
 import com.isystk.sample.domain.entity.Admin
 import org.seasar.doma.*
 import org.seasar.doma.boot.ConfigAutowireable
@@ -13,6 +13,7 @@ import java.util.stream.Collector
 @ConfigAutowireable
 @Dao
 interface AdminDao {
+
     /**
      * @param entity
      * @return affected rows
@@ -64,10 +65,12 @@ interface AdminDao {
     @Select(ensureResult = true)
     fun selectByIdAndVersion(id: Long, version: Long): Admin?
 
+
     /**
      * @param criteria
      * @return
      */
     @Select
     fun findOne(criteria: AdminCriteria): Admin?
+
 }

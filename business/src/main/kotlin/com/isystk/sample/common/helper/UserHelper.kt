@@ -27,7 +27,7 @@ class UserHelper {
     val userList: List<User>
         get() {
             val criteria = UserCriteria()
-            criteria.isDeleteFlgFalse = true
+            criteria.deleteFlgFalse = true
             return userDao!!.findAll(criteria)
         }
 

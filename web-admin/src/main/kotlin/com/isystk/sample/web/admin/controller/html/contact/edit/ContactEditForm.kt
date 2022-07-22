@@ -31,7 +31,6 @@ class ContactEditForm : BaseForm() {
     @NotBlank
     var contact: String? = null
 
-    @NotBlank
     var url: String? = null
 
     @NotBlank
