@@ -33,7 +33,7 @@ class CartService : BaseTransactionalService() {
         val dto = CartSearchResultDto()
         dto.cartList = cartList
         dto.count = cartList.size
-        dto.sum = cartList.map { e: CartRepositoryDto -> e.stock.price }.sum()
+        dto.sum = cartList.map { e: CartRepositoryDto -> e.stock?.price!! }.sum()
         dto.username = user.name
         return dto
     }
@@ -54,7 +54,7 @@ class CartService : BaseTransactionalService() {
         val dto = CartSearchResultDto()
         dto.cartList = cartList
         dto.count = cartList.size
-        dto.sum = cartList.map { e: CartRepositoryDto -> e.stock.price }.sum()
+        dto.sum = cartList.map { e: CartRepositoryDto -> e.stock?.price!! }.sum()
         dto.username = user.name
         return dto
     }
@@ -67,7 +67,7 @@ class CartService : BaseTransactionalService() {
     fun removeCart(cartId: BigInteger): CartSearchResultDto {
         val user = userHelper!!.user
         Assert.notNull(user, "user must not be null")
-        val cartList = cartRepository!!.removeCart(user.id, cartId)
+        val cartList = cartRepository!!.removeCart(user.id!!, cartId)
         return convertCartSearchResultDto(user, cartList)
     }
 

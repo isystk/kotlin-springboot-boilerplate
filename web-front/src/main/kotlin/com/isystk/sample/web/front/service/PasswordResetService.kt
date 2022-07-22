@@ -99,7 +99,7 @@ class PasswordResetService : BaseTransactionalService() {
         val passwordReset = passwordResetDao!!.findOne(criteria) ?: throw NoDataFoundException("指定されたワンタイムキーが見つかりません。[onetimeKey=$onetimeKey]")
 
         // 承認期限オーバー
-        if (DateUtils.beforeNow(DateUtils.addMinutes(passwordReset.createdAt, 60))) {
+        if (DateUtils.beforeNow(DateUtils.addMinutes(passwordReset.createdAt!!, 60))) {
             throw NoDataFoundException("指定されたワンタイムキーは期限を過ぎています。[onetimeKey=$onetimeKey]")
         }
 

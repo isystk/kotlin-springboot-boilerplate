@@ -98,7 +98,8 @@ class StockRepository : BaseRepository() {
     fun create(stockDto: StockRepositoryDto): Stock {
 
         // 画像ファイルをS3にアップロードする
-        imageHelper!!.saveFileData(stockDto.stockImageData, "/stocks", stockDto.stockImageName, true)
+        imageHelper!!.saveFileData(stockDto.stockImageData!!, "/stocks",
+            stockDto.stockImageName!!, true)
         val time = DateUtils.now
 
         // 商品テーブル
@@ -120,9 +121,10 @@ class StockRepository : BaseRepository() {
      */
     fun update(stockDto: StockRepositoryDto): Stock {
         // 画像ファイルをS3にアップロードする
-        imageHelper!!.saveFileData(stockDto.stockImageData, "/stocks", stockDto.stockImageName, true)
+        imageHelper!!.saveFileData(stockDto.stockImageData!!, "/stocks",
+            stockDto.stockImageName!!, true)
         val time = DateUtils.now
-        val before = stockDao!!.selectById(stockDto.id)
+        val before = stockDao!!.selectById(stockDto.id!!)
             ?: throw NoDataFoundException("stock_id=" + stockDto.id + " のデータが見つかりません。")
 
         // 商品テーブル

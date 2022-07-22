@@ -71,7 +71,8 @@ class StockService : BaseTransactionalService() {
     fun findById(stockId: BigInteger): StockRepositoryDto {
         // 1件取得する
         val stock = stockRepository!!.findById(stockId)
-        val imageData = imageHelper!!.getImageData("/stocks", stock.imgpath)
+        if (stock.imgpath === null) return stock
+        val imageData = imageHelper!!.getImageData("/stocks", stock.imgpath!!)
         stock.stockImageData = imageData
         stock.stockImageName = stock.imgpath
         return stock

@@ -48,7 +48,7 @@ class UserHelper {
      * @return
      */
     val loginUserId: BigInteger
-        get() = user.id
+        get() = user.id!!
 
     /**
      * ログインユーザーを取得します。

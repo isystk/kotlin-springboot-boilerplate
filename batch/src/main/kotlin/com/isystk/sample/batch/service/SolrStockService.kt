@@ -39,7 +39,7 @@ class SolrStockService : BaseTransactionalService() {
         stockList
                 .forEach { stock: StockRepositoryDto ->
                     val solrStock = ObjectMapperUtils.map(stock, SolrStock::class.java)
-                    solrStock.stockId = stock.id.toInt()
+                    solrStock.stockId = stock.id!!.toInt()
                     solrStock.createdAtDate = DateUtils.toDate(stock.createdAt)
                     solrStockList.add(solrStock)
                 }

@@ -39,7 +39,7 @@ class StockExcel : ExcelView.Callback {
             val userRow = sheet.createRow(count++)
             userRow.createCell(0).setCellValue(stock.id.toString())
             userRow.createCell(1).setCellValue(stock.name)
-            userRow.createCell(2).setCellValue(stock.price.toDouble())
+            userRow.createCell(2).setCellValue(stock.price!!.toDouble())
         }
     }
 }

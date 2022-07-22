@@ -30,7 +30,7 @@ class StaffHelper {
      * @return
      */
     val loginStaffId: Long
-        get() = loginStaff.id
+        get() = loginStaff.id!!
 
     /**
      * ログインユーザーを取得します。

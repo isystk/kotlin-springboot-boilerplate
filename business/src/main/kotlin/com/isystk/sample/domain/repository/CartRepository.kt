@@ -145,13 +145,15 @@ class CartRepository : BaseRepository() {
         val stockIdList = cartList.map { e: CartRepositoryDto -> e.stockId }.distinct()
 
         // 発注履歴に追加する。
-        stockIdList.forEach { stockId: BigInteger ->
+        stockIdList.forEach { stockId ->
             val stockCartList = cartMap[stockId]!!
             val cartStock = stockCartList[0].stock
             val quantity = stockCartList.size
-            if (cartStock.quantity < quantity) {
-                // 在庫が不足している場合はエラーとする
-                throw ErrorMessagesException("在庫が不足しています。stockId:$stockId")
+            if (cartStock != null) {
+                if (cartStock.quantity!! < quantity) {
+                    // 在庫が不足している場合はエラーとする
+                    throw ErrorMessagesException("在庫が不足しています。stockId:$stockId")
+                }
             }
         }
         val dto = StripePaymentDto()
@@ -189,20 +191,22 @@ class CartRepository : BaseRepository() {
         val stockIdList = cartList.map { e: CartRepositoryDto -> e.stockId }.distinct()
 
         // 発注履歴に追加する。
-        stockIdList.forEach { stockId: BigInteger ->
+        stockIdList.forEach { stockId ->
             val stockCartList = cartMap[stockId]!!
             val cartStock = stockCartList[0].stock
             val quantity = stockCartList.size
-            if (cartStock.quantity < quantity) {
-                // 在庫が不足している場合はエラーとする
-                throw ErrorMessagesException("在庫が不足しています。stockId:$stockId")
+            if (cartStock != null) {
+                if (cartStock.quantity!! < quantity) {
+                    // 在庫が不足している場合はエラーとする
+                    throw ErrorMessagesException("在庫が不足しています。stockId:$stockId")
+                }
             }
 
             // 在庫を減らす
-            val stock = stockDao!!.selectById(cartStock.id) ?: throw
+            val stock = stockDao!!.selectById(cartStock?.id!!) ?: throw
                  NoDataFoundException(
                         "stockId=" + cartStock.id + "のデータが見つかりません。")
-            stock.quantity = stock.quantity - quantity
+            stock.quantity = stock.quantity!! - quantity
             stock.updatedAt = time // 更新日
             stockDao!!.update(stock)
 
@@ -210,7 +214,9 @@ class CartRepository : BaseRepository() {
             val orderHistory = OrderHistory()
             orderHistory.stockId = stockId
             orderHistory.userId = user.id
-            orderHistory.price = cartStock.price
+            if (cartStock != null) {
+                orderHistory.price = cartStock.price
+            }
             orderHistory.quantity = quantity
             orderHistory.createdAt = time // 作成日
             orderHistory.updatedAt = time // 更新日
@@ -220,10 +226,10 @@ class CartRepository : BaseRepository() {
         }
 
         // カートから商品を削除
-        cartList.forEach { e: CartRepositoryDto -> removeCart(user.id, e.id) }
+        cartList.forEach { e: CartRepositoryDto -> removeCart(user.id!!, e.id!!) }
 
         // ユーザ宛に購入完了メール送信
-        val amount = cartList.map { e: CartRepositoryDto -> e.stock.price }.sum()
+        val amount = cartList.map { e: CartRepositoryDto -> e.stock?.price!! }.sum()
         val mailTemplate = mailTemplateRepository!!.getMailTemplate(MailTemplateDiv.STOCK_PAYMENT_COMPLETE)
         val subject = mailTemplate!!.title
         val templateBody = mailTemplate.text

@@ -45,7 +45,7 @@ class RegisterService : BaseTransactionalService() {
         userRepository!!.create(user)
 
         // 仮会員登録メールを送信する
-        sendMail(user.id)
+        sendMail(user.id!!)
     }
 
     /**

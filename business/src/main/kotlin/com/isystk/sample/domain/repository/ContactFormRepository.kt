@@ -120,7 +120,8 @@ class ContactFormRepository : BaseRepository() {
 
         // 画像ファイルをS3にアップロードする
         contactFormDto.imageList
-                .forEach { e: ContactFormImageRepositoryDto -> imageHelper!!.saveFileData(e.contactImageData, "/contacts", e.contactImageName, true) }
+            ?.forEach { e: ContactFormImageRepositoryDto -> imageHelper!!.saveFileData(e.contactImageData!!, "/contacts",
+                e.contactImageName!!, true) }
         val time = DateUtils.now
 
         // お問い合わせテーブル
@@ -133,16 +134,16 @@ class ContactFormRepository : BaseRepository() {
 
         // お問い合わせ画像テーブル
         contactFormDto.imageList
-                .forEach { e: ContactFormImageRepositoryDto ->
-                    val contactFormImage = ContactFormImage()
-                    contactFormImage.contactFormId = contactForm.id
-                    contactFormImage.fileName = e.contactImageName
-                    contactFormImage.createdAt = time // 作成日
-                    contactFormImage.updatedAt = time // 更新日
-                    contactFormImage.deleteFlg = false // 削除フラグ
-                    contactFormImage.version = 0L // 楽観ロック改定番号
-                    contactFormImageDao!!.insert(contactFormImage)
-                }
+            ?.forEach { e: ContactFormImageRepositoryDto ->
+                val contactFormImage = ContactFormImage()
+                contactFormImage.contactFormId = contactForm.id
+                contactFormImage.fileName = e.contactImageName
+                contactFormImage.createdAt = time // 作成日
+                contactFormImage.updatedAt = time // 更新日
+                contactFormImage.deleteFlg = false // 削除フラグ
+                contactFormImage.version = 0L // 楽観ロック改定番号
+                contactFormImageDao!!.insert(contactFormImage)
+            }
         return contactForm
     }
 
@@ -155,9 +156,10 @@ class ContactFormRepository : BaseRepository() {
     fun update(contactFormDto: ContactFormRepositoryDto): ContactForm {
         // 画像ファイルをS3にアップロードする
         contactFormDto.imageList
-                .forEach { e: ContactFormImageRepositoryDto -> imageHelper!!.saveFileData(e.contactImageData, "/contacts", e.contactImageName, true) }
+            ?.forEach { e: ContactFormImageRepositoryDto -> imageHelper!!.saveFileData(e.contactImageData!!, "/contacts",
+                e.contactImageName!!, true) }
         val time = DateUtils.now
-        val before = contactFormDao!!.selectById(contactFormDto.id)
+        val before = contactFormDao!!.selectById(contactFormDto.id!!)
             ?: throw NoDataFoundException("contactForm_id=" + contactFormDto.id + " のデータが見つかりません。")
 
         // お問い合わせテーブル
@@ -171,16 +173,16 @@ class ContactFormRepository : BaseRepository() {
         val contactFormImageList = contactFormImageDao!!.findAll(criteria)
         contactFormImageList.forEach { e: ContactFormImage -> contactFormImageDao!!.delete(e) }
         contactFormDto.imageList
-                .forEach { e: ContactFormImageRepositoryDto ->
-                    val contactFormImage = ContactFormImage()
-                    contactFormImage.contactFormId = contactForm.id
-                    contactFormImage.fileName = e.contactImageName
-                    contactFormImage.createdAt = time // 作成日
-                    contactFormImage.updatedAt = time // 更新日
-                    contactFormImage.deleteFlg = false // 削除フラグ
-                    contactFormImage.version = 0L // 楽観ロック改定番号
-                    contactFormImageDao!!.insert(contactFormImage)
-                }
+            ?.forEach { e: ContactFormImageRepositoryDto ->
+                val contactFormImage = ContactFormImage()
+                contactFormImage.contactFormId = contactForm.id
+                contactFormImage.fileName = e.contactImageName
+                contactFormImage.createdAt = time // 作成日
+                contactFormImage.updatedAt = time // 更新日
+                contactFormImage.deleteFlg = false // 削除フラグ
+                contactFormImage.version = 0L // 楽観ロック改定番号
+                contactFormImageDao!!.insert(contactFormImage)
+            }
         return contactForm
     }
 

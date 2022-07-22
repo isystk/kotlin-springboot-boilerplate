@@ -58,9 +58,11 @@ class ContactEditController : AbstractHtmlController() {
         // 取得したDtoをFromに詰め替える
         ObjectMapperUtils.map(contact, form)
         val contactImageList = contact!!.imageList
-        if (0 < contactImageList.size) {
-            form.contactImageData = contactImageList[0].contactImageData
-            form.contactImageName = contactImageList[0].contactImageName
+        if (contactImageList != null) {
+            if (0 < contactImageList.size) {
+                form.contactImageData = contactImageList[0].contactImageData
+                form.contactImageName = contactImageList[0].contactImageName
+            }
         }
         return showEditIndex(form, model)
     }

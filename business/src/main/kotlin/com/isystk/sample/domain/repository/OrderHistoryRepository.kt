@@ -172,7 +172,7 @@ class OrderHistoryRepository : BaseRepository() {
      */
     fun update(orderHistoryDto: OrderHistoryRepositoryDto): OrderHistory {
         val time = DateUtils.now
-        val before = orderHistoryDao!!.selectById(orderHistoryDto.id)
+        val before = orderHistoryDao!!.selectById(orderHistoryDto.id!!)
             ?: throw NoDataFoundException("orderHistory_id=" + orderHistoryDto.id + " のデータが見つかりません。")
 
         // 注文履歴テーブル

@@ -85,7 +85,9 @@ class StockService : BaseTransactionalService() {
     private fun convertDbToFrontStockDto(stockRepositoryDto: StockRepositoryDto): StockSearchResultDto {
         // 入力値を詰め替える
         val dto = ObjectMapperUtils.map(stockRepositoryDto, StockSearchResultDto::class.java)
-        dto.imgUrl = imageHelper!!.getImageUrl("/stocks", stockRepositoryDto.imgpath)
+        if (stockRepositoryDto.imgpath !== null) {
+            dto.imgUrl = imageHelper!!.getImageUrl("/stocks", stockRepositoryDto.imgpath!!)
+        }
         dto.createdAtYYYYMMDD = DateUtils.format(stockRepositoryDto.createdAt, DateTimeFormatter.ofPattern("yyyy/MM/dd"))
         dto.createdAtMMDD = DateUtils.format(stockRepositoryDto.createdAt, DateTimeFormatter.ofPattern("MM/dd"))
         return dto

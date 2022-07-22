@@ -72,7 +72,8 @@ class ContactService : BaseTransactionalService() {
         val contact = contactRepository!!.findById(contactId)
         val imageList = contact?.imageList?.map {
            e: ContactFormImageRepositoryDto ->
-                val imageData = imageHelper!!.getImageData("/contacts", e.fileName)
+                if (e.fileName === null) e
+                val imageData = imageHelper!!.getImageData("/contacts", e.fileName!!)
                 e.contactImageData = imageData
                 e.contactImageName = e.fileName
                 e
