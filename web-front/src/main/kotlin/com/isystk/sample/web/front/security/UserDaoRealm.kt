@@ -1,10 +1,10 @@
 package com.isystk.sample.web.front.security
 
+import com.isystk.sample.common.logger
 import com.isystk.sample.domain.dao.UserDao
 import com.isystk.sample.domain.dto.UserCriteria
 import com.isystk.sample.domain.entity.User
 import com.isystk.sample.web.base.security.BaseRealm
-import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.security.core.GrantedAuthority
 import org.springframework.security.core.authority.AuthorityUtils
@@ -37,14 +37,11 @@ class UserDaoRealm : BaseRealm() {
         } catch (e: Exception) {
             if (e !is UsernameNotFoundException) {
                 // 入力間違い以外の例外はログ出力する
-                log.error("failed to getLoginUser. ", e)
+                logger.error("failed to getLoginUser. ", e)
                 throw e
             }
             throw UsernameNotFoundException("could not select user.", e)
         }
     }
 
-    companion object {
-        private val log = LoggerFactory.getLogger(UserDaoRealm::class.java)
-    }
 }

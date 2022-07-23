@@ -3,7 +3,6 @@ package com.isystk.sample.web.base.controller.html
 import com.isystk.sample.common.Const
 import com.isystk.sample.common.FunctionNameAware
 import com.isystk.sample.web.base.controller.BaseController
-import org.slf4j.LoggerFactory
 import org.springframework.ui.Model
 import org.springframework.validation.BeanPropertyBindingResult
 import org.springframework.validation.BindingResult
@@ -39,7 +38,4 @@ abstract class AbstractHtmlController : BaseController(), FunctionNameAware {
         attributes.addFlashAttribute(Const.MAV_ERRORS, result)
     }
 
-    companion object {
-        private val log = LoggerFactory.getLogger(AbstractHtmlController::class.java)
-    }
 }

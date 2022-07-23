@@ -1,6 +1,6 @@
 package com.isystk.sample.common.validator
 
-import org.slf4j.LoggerFactory
+import com.isystk.sample.common.logger
 import org.springframework.validation.Errors
 import org.springframework.validation.Validator
 
@@ -20,7 +20,7 @@ abstract class AbstractValidator<T> : Validator {
                 doValidate(target as T, errors)
             }
         } catch (e: RuntimeException) {
-            log.error("validate error", e)
+            logger.error("validate error", e)
             throw e
         }
     }
@@ -42,7 +42,4 @@ abstract class AbstractValidator<T> : Validator {
         return false
     }
 
-    companion object {
-        private val log = LoggerFactory.getLogger(AbstractValidator::class.java)
-    }
 }

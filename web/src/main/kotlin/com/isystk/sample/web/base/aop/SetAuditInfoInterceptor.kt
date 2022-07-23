@@ -1,12 +1,10 @@
 package com.isystk.sample.web.base.aop
 
 import com.isystk.sample.domain.dao.AuditInfoHolder
-import org.slf4j.LoggerFactory
 import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.web.servlet.ModelAndView
 import java.time.LocalDateTime
-import java.util.*
 import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
 
@@ -56,8 +54,4 @@ class SetAuditInfoInterceptor : BaseHandlerInterceptor() {
             return null
         }
 
-    companion object {
-        private val log = LoggerFactory
-                .getLogger(SetAuditInfoInterceptor::class.java)
-    }
 }

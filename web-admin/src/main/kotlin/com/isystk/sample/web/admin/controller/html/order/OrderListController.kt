@@ -5,7 +5,6 @@ import com.isystk.sample.common.util.ObjectMapperUtils
 import com.isystk.sample.web.admin.dto.OrderHistorySearchConditionDto
 import com.isystk.sample.web.admin.service.OrderHistoryService
 import com.isystk.sample.web.base.controller.html.AbstractHtmlController
-import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
@@ -76,7 +75,4 @@ class OrderListController : AbstractHtmlController() {
         return ObjectMapperUtils.map(form, OrderHistorySearchConditionDto::class.java)
     }
 
-    companion object {
-        private val log = LoggerFactory.getLogger(OrderListController::class.java)
-    }
 }

@@ -1,6 +1,5 @@
 package com.isystk.sample.common.util
 
-import org.slf4j.LoggerFactory
 import java.io.UnsupportedEncodingException
 import java.net.URLEncoder
 
@@ -8,7 +7,6 @@ import java.net.URLEncoder
  * エンコードユーティリティ
  */
 object EncodeUtils {
-    private val log = LoggerFactory.getLogger(EncodeUtils::class.java)
 
     /**
      * UTF-8でエンコードした文字列を返します。

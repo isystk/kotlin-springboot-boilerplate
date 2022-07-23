@@ -3,7 +3,6 @@ package com.isystk.sample.web.front.controller.html.password
 import com.isystk.sample.common.FrontUrl
 import com.isystk.sample.web.base.controller.html.AbstractHtmlController
 import com.isystk.sample.web.front.service.PasswordResetService
-import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Controller
 import org.springframework.validation.BindingResult
@@ -62,8 +61,4 @@ class PasswordResetController : AbstractHtmlController() {
         return "redirect:/password/reset/sendMail"
     }
 
-    companion object {
-        private val log = LoggerFactory.getLogger(
-                PasswordResetController::class.java)
-    }
 }

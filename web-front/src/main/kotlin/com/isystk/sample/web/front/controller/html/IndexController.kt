@@ -2,7 +2,6 @@ package com.isystk.sample.web.front.controller.html
 
 import com.isystk.sample.common.FrontUrl
 import com.isystk.sample.web.base.controller.html.AbstractHtmlController
-import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
 import org.springframework.web.bind.annotation.GetMapping
@@ -20,7 +19,4 @@ class IndexController : AbstractHtmlController() {
         return "modules/index"
     }
 
-    companion object {
-        private val log = LoggerFactory.getLogger(IndexController::class.java)
-    }
 }

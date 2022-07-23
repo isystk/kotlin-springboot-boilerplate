@@ -4,8 +4,8 @@ import com.isystk.sample.common.Const
 import com.isystk.sample.common.exception.DoubleSubmitErrorException
 import com.isystk.sample.common.exception.FileNotFoundException
 import com.isystk.sample.common.exception.NoDataFoundException
+import com.isystk.sample.common.logger
 import com.isystk.sample.common.util.MessageUtils
-import org.slf4j.LoggerFactory
 import org.springframework.dao.OptimisticLockingFailureException
 import org.springframework.http.HttpStatus
 import org.springframework.security.access.AccessDeniedException
@@ -37,8 +37,8 @@ class HtmlExceptionHandler {
     @ResponseStatus(value = HttpStatus.NOT_FOUND)
     fun handleNotFoundException(e: Exception, request: HttpServletRequest?,
                                 response: HttpServletResponse?): String {
-        if (log.isDebugEnabled) {
-            log.debug("not found.", e)
+        if (logger.isDebugEnabled) {
+            logger.debug("not found.", e)
         }
         val stackTrace = getStackTraceAsString(e)
         outputFlashMap(request, response, VIEW_ATTR_STACKTRACE, stackTrace)
@@ -57,8 +57,8 @@ class HtmlExceptionHandler {
     @ResponseStatus(HttpStatus.FORBIDDEN)
     fun handleAccessDeniedException(e: Exception, request: HttpServletRequest?,
                                     response: HttpServletResponse?): String {
-        if (log.isDebugEnabled) {
-            log.debug("forbidden.", e)
+        if (logger.isDebugEnabled) {
+            logger.debug("forbidden.", e)
         }
         val stackTrace = getStackTraceAsString(e)
         outputFlashMap(request, response, VIEW_ATTR_STACKTRACE, stackTrace)
@@ -77,8 +77,8 @@ class HtmlExceptionHandler {
     fun handleOptimisticLockingFailureException(e: Exception?,
                                                 request: HttpServletRequest,
                                                 response: HttpServletResponse?): RedirectView {
-        if (log.isDebugEnabled) {
-            log.debug("optimistic locking failure.", e)
+        if (logger.isDebugEnabled) {
+            logger.debug("optimistic locking failure.", e)
         }
 
         // 共通メッセージを取得する
@@ -98,8 +98,8 @@ class HtmlExceptionHandler {
     @ExceptionHandler(DoubleSubmitErrorException::class)
     fun handleDoubleSubmitErrorException(e: Exception?, request: HttpServletRequest,
                                          response: HttpServletResponse?): RedirectView {
-        if (log.isDebugEnabled) {
-            log.debug("double submit error.")
+        if (logger.isDebugEnabled) {
+            logger.debug("double submit error.")
         }
 
         // 共通メッセージを取得する
@@ -122,7 +122,7 @@ class HtmlExceptionHandler {
                         response: HttpServletResponse?): String {
         // TODO
         // ハンドルする例外がある場合は、条件分岐する
-        log.error("unhandled runtime exception.", e)
+        logger.error("unhandled runtime exception.", e)
         val stackTrace = getStackTraceAsString(e)
         outputFlashMap(request, response, VIEW_ATTR_STACKTRACE, stackTrace)
         return Const.ERROR_VIEW
@@ -180,6 +180,5 @@ class HtmlExceptionHandler {
 
     companion object {
         private const val VIEW_ATTR_STACKTRACE = "trace"
-        private val log = LoggerFactory.getLogger(HtmlExceptionHandler::class.java)
     }
 }

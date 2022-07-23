@@ -1,6 +1,5 @@
 package com.isystk.sample.common.util
 
-import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.context.MessageSource
 import org.springframework.context.MessageSourceResolvable
@@ -16,7 +15,6 @@ class MessageUtils {
     }
 
     companion object {
-        private val log = LoggerFactory.getLogger(MessageUtils::class.java)
         private var messageSource: MessageSource? = null
 
         /**

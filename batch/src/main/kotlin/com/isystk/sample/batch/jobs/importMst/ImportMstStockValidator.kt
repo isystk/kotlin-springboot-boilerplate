@@ -1,7 +1,6 @@
 package com.isystk.sample.batch.jobs.importMst
 
 import com.isystk.sample.common.validator.AbstractValidator
-import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Component
 import org.springframework.validation.Errors
 
@@ -15,8 +14,4 @@ class ImportMstStockValidator : AbstractValidator<ImportMstStockDto?>() {
         }
     }
 
-    companion object {
-        private val log = LoggerFactory.getLogger(
-                ImportMstStockValidator::class.java)
-    }
 }

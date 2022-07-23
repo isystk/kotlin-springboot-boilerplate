@@ -6,10 +6,8 @@ import com.isystk.sample.domain.dao.AuditInfoHolder
 import com.isystk.sample.domain.dao.UserDao
 import com.isystk.sample.domain.dto.UserCriteria
 import com.isystk.sample.domain.entity.User
-import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
-import java.math.BigInteger
 
 /**
  * ユーザーヘルパー
@@ -75,7 +73,4 @@ class UserHelper {
         userDao!!.update(user)
     }
 
-    companion object {
-        private val log = LoggerFactory.getLogger(UserHelper::class.java)
-    }
 }

@@ -13,7 +13,7 @@ import com.amazonaws.services.s3.model.*
 import com.google.common.collect.Lists
 import com.isystk.sample.common.Environment
 import com.isystk.sample.common.exception.SystemException
-import org.slf4j.LoggerFactory
+import com.isystk.sample.common.logger
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.context.annotation.Configuration
 import java.io.*
@@ -46,7 +46,6 @@ class AwsS3Utils {
 
     companion object {
         /** ログ  */
-        protected val logger = LoggerFactory.getLogger(AwsS3Utils::class.java)
         var ENDPOINT_URL: String? = null
         var REGION: String? = null
 

@@ -1,6 +1,5 @@
 package com.isystk.sample.common.util
 
-import org.slf4j.LoggerFactory
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.ZoneId
@@ -12,7 +11,6 @@ import java.util.*
  * 日付ユーティリティ
  */
 object DateUtils {
-    private val log = LoggerFactory.getLogger(DateUtils::class.java)
 
     /**
      * Date型の値を指定されたDateTimeFormatterフォーマットした値を返します。

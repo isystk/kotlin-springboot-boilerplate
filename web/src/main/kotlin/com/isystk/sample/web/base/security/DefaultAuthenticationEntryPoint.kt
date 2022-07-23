@@ -1,7 +1,7 @@
 package com.isystk.sample.web.base.security
 
+import com.isystk.sample.common.logger
 import com.isystk.sample.web.base.util.RequestUtils
-import org.slf4j.LoggerFactory
 import org.springframework.security.core.AuthenticationException
 import org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint
 import java.io.IOException
@@ -33,16 +33,12 @@ class DefaultAuthenticationEntryPoint
                                                  exception: AuthenticationException): String {
         val url = super.determineUrlToUseForThisRequest(request, response, exception)
         if (request.requestedSessionId != null && !request.isRequestedSessionIdValid) {
-            if (log.isDebugEnabled) {
-                log.debug("セッションがタイムアウトしました。")
+            if (logger.isDebugEnabled) {
+                logger.debug("セッションがタイムアウトしました。")
             }
             return loginTimeoutUrl
         }
         return url
     }
 
-    companion object {
-        private val log = LoggerFactory.getLogger(
-                DefaultAuthenticationEntryPoint::class.java)
-    }
 }

@@ -1,7 +1,7 @@
 package com.isystk.sample.batch.jobs
 
+import com.isystk.sample.common.logger
 import com.isystk.sample.common.util.*
-import org.slf4j.LoggerFactory
 import org.springframework.batch.core.*
 import org.springframework.batch.core.converter.JobParametersConverter
 import org.springframework.batch.core.explore.JobExplorer
@@ -78,9 +78,9 @@ class SingleJobCommandLineRunner : CommandLineRunner, ApplicationEventPublisherA
      */
     protected fun getJobParameters(args: Array<String>?): JobParameters {
         val props = StringUtils.splitArrayElementsIntoProperties(args!!, "=")
-        if (log.isDebugEnabled && props != null) {
+        if (logger.isDebugEnabled && props != null) {
             props.entries
-                    .forEach { (key, value): Map.Entry<Any?, Any> -> log.debug("args: key={}, value={}", key, value.toString()) }
+                    .forEach { (key, value): Map.Entry<Any?, Any> -> logger.debug("args: key={}, value={}", key, value.toString()) }
         }
         return converter!!.getJobParameters(props)
     }
@@ -102,7 +102,7 @@ class SingleJobCommandLineRunner : CommandLineRunner, ApplicationEventPublisherA
         try {
             Files.createFile(path)
         } catch (e: FileAlreadyExistsException) {
-            log.error("二重起動防止ファイルが存在するため処理を中断します。[path={}]", path.toAbsolutePath().toString())
+            logger.error("二重起動防止ファイルが存在するため処理を中断します。[path={}]", path.toAbsolutePath().toString())
             throw e
         }
     }
@@ -194,8 +194,6 @@ class SingleJobCommandLineRunner : CommandLineRunner, ApplicationEventPublisherA
     }
 
     companion object {
-        private val log = LoggerFactory.getLogger(
-                SingleJobCommandLineRunner::class.java)
         const val JOB_PARAMETER_JOB_NAME = "--job"
     }
 }

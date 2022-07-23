@@ -5,11 +5,11 @@ import com.isystk.sample.batch.context.BatchContextHolder
 import com.isystk.sample.batch.item.ItemError
 import com.isystk.sample.batch.jobs.BaseTasklet
 import com.isystk.sample.common.helper.ImageHelper
+import com.isystk.sample.common.logger
 import com.isystk.sample.common.util.*
 import com.isystk.sample.domain.dao.StockDao
 import com.isystk.sample.domain.entity.Stock
 import org.apache.commons.compress.utils.Lists
-import org.slf4j.LoggerFactory
 import org.springframework.batch.core.StepContribution
 import org.springframework.batch.core.scope.context.ChunkContext
 import org.springframework.batch.repeat.RepeatStatus
@@ -18,7 +18,6 @@ import java.io.File
 import java.io.IOException
 import java.nio.charset.StandardCharsets
 import java.nio.file.Files
-import java.nio.file.Path
 import java.nio.file.Paths
 import java.util.function.Consumer
 import javax.validation.ValidationException
@@ -42,7 +41,7 @@ class ImportMstStockTasklet : BaseTasklet<ImportMstStockDto?>() {
                 val sourceName = e?.sourceName
                 val position = e?.position
                 val errorMessage = e?.errorMessage
-                log.error("エラーがあります。ファイル名={}, 行数={}, エラーメッセージ={}", sourceName, position, errorMessage)
+                logger.error("エラーがあります。ファイル名={}, 行数={}, エラーメッセージ={}", sourceName, position, errorMessage)
             })
             throw ValidationException("取り込むファイルに不正な行が含まれています。")
         }
@@ -95,7 +94,4 @@ class ImportMstStockTasklet : BaseTasklet<ImportMstStockDto?>() {
         return errors
     }
 
-    companion object {
-        private val log = LoggerFactory.getLogger(ImportMstStockTasklet::class.java)
-    }
 }

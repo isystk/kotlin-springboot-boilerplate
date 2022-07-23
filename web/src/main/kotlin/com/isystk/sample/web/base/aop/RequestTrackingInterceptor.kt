@@ -1,7 +1,7 @@
 package com.isystk.sample.web.base.aop
 
 import com.isystk.sample.common.XORShiftRandom
-import org.slf4j.LoggerFactory
+import com.isystk.sample.common.logger
 import org.slf4j.MDC
 import java.util.concurrent.TimeUnit
 import javax.servlet.http.HttpServletRequest
@@ -35,7 +35,7 @@ class RequestTrackingInterceptor : BaseHandlerInterceptor() {
         val beforeNanoSec = startTimeHolder.get() ?: return
         val elapsedNanoSec = System.nanoTime() - beforeNanoSec
         val elapsedMilliSec = TimeUnit.NANOSECONDS.toMillis(elapsedNanoSec)
-        log.info("path={}, method={}, Elapsed {}ms.", request.requestURI, request.method,
+        logger.info("path={}, method={}, Elapsed {}ms.", request.requestURI, request.method,
                 elapsedMilliSec)
 
         // 破棄する
@@ -60,7 +60,5 @@ class RequestTrackingInterceptor : BaseHandlerInterceptor() {
     companion object {
         private val startTimeHolder = ThreadLocal<Long>()
         private const val HEADER_X_TRACK_ID = "X-Track-Id"
-        private val log = LoggerFactory
-                .getLogger(RequestTrackingInterceptor::class.java)
     }
 }

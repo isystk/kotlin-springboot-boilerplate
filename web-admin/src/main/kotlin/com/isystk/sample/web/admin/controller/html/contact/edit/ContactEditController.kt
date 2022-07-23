@@ -8,7 +8,6 @@ import com.isystk.sample.domain.dto.ContactFormRepositoryDto
 import com.isystk.sample.web.admin.service.ContactService
 import com.isystk.sample.web.base.controller.html.AbstractHtmlController
 import org.apache.commons.compress.utils.Lists
-import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
@@ -164,7 +163,4 @@ class ContactEditController : AbstractHtmlController() {
         return "modules/contact/edit/complete"
     }
 
-    companion object {
-        private val log = LoggerFactory.getLogger(ContactEditController::class.java)
-    }
 }

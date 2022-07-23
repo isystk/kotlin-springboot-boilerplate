@@ -1,6 +1,5 @@
 package com.isystk.sample.web.base.security
 
-import org.slf4j.LoggerFactory
 import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.security.core.userdetails.UserDetailsService
 import org.springframework.security.core.userdetails.UsernameNotFoundException
@@ -25,7 +24,4 @@ abstract class BaseRealm : UserDetailsService {
 
     protected abstract fun getLoginUser(loginId: String?): UserDetails?
 
-    companion object {
-        private val log = LoggerFactory.getLogger(BaseRealm::class.java)
-    }
 }

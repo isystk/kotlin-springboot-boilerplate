@@ -3,7 +3,6 @@ package com.isystk.sample.batch.jobs.solrRegist
 import com.isystk.sample.batch.context.BatchContext
 import com.isystk.sample.batch.jobs.BaseTasklet
 import com.isystk.sample.batch.service.SolrStockService
-import org.slf4j.LoggerFactory
 import org.springframework.batch.core.StepContribution
 import org.springframework.batch.core.scope.context.ChunkContext
 import org.springframework.batch.repeat.RepeatStatus
@@ -26,7 +25,4 @@ class SolrRegistTasklet : BaseTasklet<SolrRegistDto>() {
         solrStockService!!.refresh()
     }
 
-    companion object {
-        private val log = LoggerFactory.getLogger(SolrRegistTasklet::class.java)
-    }
 }

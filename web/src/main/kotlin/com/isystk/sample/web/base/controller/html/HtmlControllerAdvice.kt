@@ -2,7 +2,6 @@ package com.isystk.sample.web.base.controller.html
 
 import com.isystk.sample.common.dto.ID
 import com.isystk.sample.web.base.controller.IDTypeEditor
-import org.slf4j.LoggerFactory
 import org.springframework.beans.propertyeditors.StringTrimmerEditor
 import org.springframework.web.bind.WebDataBinder
 import org.springframework.web.bind.annotation.ControllerAdvice
@@ -29,7 +28,4 @@ class HtmlControllerAdvice {
         binder.setDisallowedFields("*.version")
     }
 
-    companion object {
-        private val log = LoggerFactory.getLogger(HtmlControllerAdvice::class.java)
-    }
 }

@@ -1,7 +1,7 @@
 package com.isystk.sample.common.validator.annotation
 
+import com.isystk.sample.common.logger
 import com.isystk.sample.common.util.ValidateUtils
-import org.slf4j.LoggerFactory
 import java.util.regex.Pattern
 import java.util.regex.PatternSyntaxException
 import javax.validation.ConstraintValidator
@@ -16,7 +16,7 @@ class PhoneNumberValidator : ConstraintValidator<PhoneNumber, String?> {
         pattern = try {
             Pattern.compile(phoneNumber.regexp)
         } catch (e: PatternSyntaxException) {
-            log.error("invalid regular expression.", e)
+            logger.error("invalid regular expression.", e)
             throw e
         }
     }
@@ -34,7 +34,4 @@ class PhoneNumberValidator : ConstraintValidator<PhoneNumber, String?> {
         return isValid
     }
 
-    companion object {
-        private val log = LoggerFactory.getLogger(PhoneNumberValidator::class.java)
-    }
 }

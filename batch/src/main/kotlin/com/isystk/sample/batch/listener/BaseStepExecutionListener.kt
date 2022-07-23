@@ -3,9 +3,9 @@ package com.isystk.sample.batch.listener
 import com.isystk.sample.batch.BatchConst
 import com.isystk.sample.batch.context.BatchContext
 import com.isystk.sample.batch.context.BatchContextHolder
+import com.isystk.sample.common.logger
 import com.isystk.sample.common.util.MDCUtils
 import com.isystk.sample.domain.dao.AuditInfoHolder
-import org.slf4j.LoggerFactory
 import org.springframework.batch.core.ExitStatus
 import org.springframework.batch.core.StepExecution
 import org.springframework.batch.core.listener.StepExecutionListenerSupport
@@ -34,7 +34,7 @@ abstract class BaseStepExecutionListener : StepExecutionListenerSupport() {
         try {
             after(context, stepExecution)
         } catch (e: Exception) {
-            log.error("exception occurred. ", e)
+            logger.error("exception occurred. ", e)
             throw IllegalStateException(e)
         }
 
@@ -73,7 +73,7 @@ abstract class BaseStepExecutionListener : StepExecutionListenerSupport() {
      */
     protected fun logBeforeStep(context: BatchContext?, stepExecution: StepExecution) {
         val stepName = stepExecution.stepName
-        log.info("Step:{} ---- START ----", stepName)
+        logger.info("Step:{} ---- START ----", stepName)
     }
 
     /**
@@ -84,7 +84,7 @@ abstract class BaseStepExecutionListener : StepExecutionListenerSupport() {
      */
     protected fun logAfterStep(context: BatchContext?, stepExecution: StepExecution) {
         val stepName = stepExecution.stepName
-        log.info("Step:{} ---- END ----", stepName)
+        logger.info("Step:{} ---- END ----", stepName)
     }
 
     /**
@@ -103,8 +103,4 @@ abstract class BaseStepExecutionListener : StepExecutionListenerSupport() {
      */
     protected fun after(context: BatchContext?, stepExecution: StepExecution?) {}
 
-    companion object {
-        private val log = LoggerFactory.getLogger(
-                BaseStepExecutionListener::class.java)
-    }
 }

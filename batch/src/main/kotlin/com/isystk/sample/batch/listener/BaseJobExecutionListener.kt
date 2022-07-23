@@ -3,10 +3,10 @@ package com.isystk.sample.batch.listener
 import com.isystk.sample.batch.BatchConst
 import com.isystk.sample.batch.context.BatchContext
 import com.isystk.sample.batch.context.BatchContextHolder
+import com.isystk.sample.common.logger
 import com.isystk.sample.common.util.DateUtils
 import com.isystk.sample.common.util.MDCUtils
 import com.isystk.sample.domain.dao.AuditInfoHolder
-import org.slf4j.LoggerFactory
 import org.slf4j.MDC
 import org.springframework.batch.core.JobExecution
 import org.springframework.batch.core.StepExecution
@@ -21,11 +21,11 @@ abstract class BaseJobExecutionListener : JobExecutionListenerSupport() {
         val startTime = jobExecution.startTime
         val startDateTime = DateUtils.toLocalDateTime(startTime)
         MDCUtils.putIfAbsent(BatchConst.MDC_BATCH_ID, batchId)
-        log.info("*********************************************")
-        log.info("* バッチID : {}", batchId)
-        log.info("* バッチ名 : {}", batchName)
-        log.info("* 開始時刻 : {}", DateUtils.format(startTime, YYYY_MM_DD_HHmmss))
-        log.info("*********************************************")
+        logger.info("*********************************************")
+        logger.info("* バッチID : {}", batchId)
+        logger.info("* バッチ名 : {}", batchName)
+        logger.info("* 開始時刻 : {}", DateUtils.format(startTime, YYYY_MM_DD_HHmmss))
+        logger.info("*********************************************")
 
         // 監査情報を設定する
         AuditInfoHolder.set(batchId, startDateTime)
@@ -46,7 +46,7 @@ abstract class BaseJobExecutionListener : JobExecutionListenerSupport() {
         try {
             after(jobExecution, context)
         } catch (t: Throwable) {
-            log.error("exception occurred. ", t)
+            logger.error("exception occurred. ", t)
             throw IllegalStateException(t)
         } finally {
             // 共通の終了処理
@@ -55,27 +55,27 @@ abstract class BaseJobExecutionListener : JobExecutionListenerSupport() {
                 val batchName = context.batchName
                 val jobStatus = jobExecution.status
                 val endTime = jobExecution.endTime
-                if (log.isDebugEnabled) {
+                if (logger.isDebugEnabled) {
                     val jobId = jobExecution.jobId
                     val jobInstance = jobExecution.jobInstance
                     val jobInstanceId = jobInstance.instanceId
-                    log.debug("job executed. [job={}(JobInstanceId:{} status:{})] in {}ms", jobId,
+                    logger.debug("job executed. [job={}(JobInstanceId:{} status:{})] in {}ms", jobId,
                             jobInstanceId,
                             jobStatus, took(jobExecution))
                     jobExecution.stepExecutions
                             .forEach(
-                                    Consumer { s: StepExecution -> log.debug("step executed. [step={}] in {}ms", s.stepName, took(s)) })
+                                    Consumer { s: StepExecution -> logger.debug("step executed. [step={}] in {}ms", s.stepName, took(s)) })
                 }
                 if (!jobStatus.isRunning) {
-                    log.info("*********************************************")
-                    log.info("* バッチID   : {}", batchId)
-                    log.info("* バッチ名   : {}", batchName)
-                    log.info("* ステータス : {}", jobStatus.batchStatus.toString())
-                    log.info("* 対象件数   : {}", context!!.totalCount)
-                    log.info("* 処理件数   : {}", context!!.processCount)
-                    log.info("* エラー件数 : {}", context!!.errorCount)
-                    log.info("* 終了時刻   : {}", DateUtils.format(endTime, YYYY_MM_DD_HHmmss))
-                    log.info("*********************************************")
+                    logger.info("*********************************************")
+                    logger.info("* バッチID   : {}", batchId)
+                    logger.info("* バッチ名   : {}", batchName)
+                    logger.info("* ステータス : {}", jobStatus.batchStatus.toString())
+                    logger.info("* 対象件数   : {}", context!!.totalCount)
+                    logger.info("* 処理件数   : {}", context!!.processCount)
+                    logger.info("* エラー件数 : {}", context!!.errorCount)
+                    logger.info("* 終了時刻   : {}", DateUtils.format(endTime, YYYY_MM_DD_HHmmss))
+                    logger.info("*********************************************")
                 }
             } finally {
                 MDC.remove(BatchConst.MDC_BATCH_ID)
@@ -131,7 +131,5 @@ abstract class BaseJobExecutionListener : JobExecutionListenerSupport() {
         // yyyy/MM/dd HH:mm:ss
         private val YYYY_MM_DD_HHmmss = DateTimeFormatter
                 .ofPattern("yyyy/MM/dd HH:mm:ss")
-        private val log = LoggerFactory.getLogger(
-                BaseJobExecutionListener::class.java)
     }
 }

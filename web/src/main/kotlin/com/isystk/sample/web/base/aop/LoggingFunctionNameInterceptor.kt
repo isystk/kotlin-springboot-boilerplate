@@ -2,7 +2,6 @@ package com.isystk.sample.web.base.aop
 
 import com.isystk.sample.common.Const
 import com.isystk.sample.common.FunctionNameAware
-import org.slf4j.LoggerFactory
 import org.slf4j.MDC
 import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
@@ -24,7 +23,5 @@ class LoggingFunctionNameInterceptor : BaseHandlerInterceptor() {
 
     companion object {
         private const val MDC_FUNCTION_NAME = Const.MDC_FUNCTION_NAME
-        private val log = LoggerFactory
-                .getLogger(LoggingFunctionNameInterceptor::class.java)
     }
 }

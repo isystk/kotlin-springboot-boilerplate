@@ -1,18 +1,17 @@
 package com.isystk.sample.web.base.controller.api
 
 import com.isystk.sample.common.Const
+import com.isystk.sample.common.logger as myLogger
 import com.isystk.sample.common.exception.ErrorMessagesException
 import com.isystk.sample.common.exception.NoDataFoundException
 import com.isystk.sample.common.exception.ValidationErrorException
 import com.isystk.sample.common.util.MessageUtils
 import com.isystk.sample.web.base.controller.api.resource.ErrorResourceImpl
 import com.isystk.sample.web.base.controller.api.resource.FieldErrorResource
-import org.slf4j.LoggerFactory
 import org.slf4j.MDC
 import org.springframework.http.HttpHeaders
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
-import org.springframework.validation.Errors
 import org.springframework.validation.FieldError
 import org.springframework.web.bind.MethodArgumentNotValidException
 import org.springframework.web.bind.annotation.ExceptionHandler
@@ -91,7 +90,7 @@ class ApiExceptionHandler : ResponseEntityExceptionHandler() {
         val headers = HttpHeaders()
         val status = HttpStatus.OK
         val parameterDump = dumpParameterMap(request.parameterMap)
-        log.info("no data found. dump: {}", parameterDump)
+        myLogger.info("no data found. dump: {}", parameterDump)
         val message = MessageUtils
                 .getMessage(Const.NO_DATA_FOUND_ERROR, null, "no data found", request.locale)
         val errorResource = ErrorResourceImpl()
@@ -123,7 +122,7 @@ class ApiExceptionHandler : ResponseEntityExceptionHandler() {
                                          headers: HttpHeaders,
                                          status: HttpStatus, request: WebRequest): ResponseEntity<Any> {
         val parameterDump = dumpParameterMap(request.parameterMap)
-        log.error(String.format("unexpected error has occurred. dump: %s", parameterDump), ex)
+        myLogger.error(String.format("unexpected error has occurred. dump: %s", parameterDump), ex)
         val locale = request.locale
         val message = MessageUtils.getMessage(Const.UNEXPECTED_ERROR, null, "unexpected error", locale)
         val errorResource = ErrorResourceImpl()
@@ -157,7 +156,4 @@ class ApiExceptionHandler : ResponseEntityExceptionHandler() {
         return sb.toString()
     }
 
-    companion object {
-        private val log = LoggerFactory.getLogger(ApiExceptionHandler::class.java)
-    }
 }

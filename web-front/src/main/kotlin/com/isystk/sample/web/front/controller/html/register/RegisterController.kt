@@ -7,7 +7,6 @@ import com.isystk.sample.common.util.ObjectMapperUtils
 import com.isystk.sample.domain.entity.User
 import com.isystk.sample.web.base.controller.html.AbstractHtmlController
 import com.isystk.sample.web.front.service.RegisterService
-import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.stereotype.Controller
@@ -106,7 +105,4 @@ class RegisterController : AbstractHtmlController() {
         return "redirect:/register/complete"
     }
 
-    companion object {
-        private val log = LoggerFactory.getLogger(RegisterController::class.java)
-    }
 }

@@ -6,7 +6,6 @@ import com.isystk.sample.domain.dao.AdminDao
 import com.isystk.sample.domain.dao.AuditInfoHolder
 import com.isystk.sample.domain.dto.AdminCriteria
 import com.isystk.sample.domain.entity.Admin
-import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
 
@@ -57,7 +56,4 @@ class StaffHelper {
         adminDao!!.update(admin)
     }
 
-    companion object {
-        private val log = LoggerFactory.getLogger(StaffHelper::class.java)
-    }
 }

@@ -1,13 +1,11 @@
 package com.isystk.sample.web.base.filter
 
 import com.isystk.sample.common.Const
-import org.slf4j.LoggerFactory
 import org.slf4j.MDC
 import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.util.AntPathMatcher
 import org.springframework.web.filter.OncePerRequestFilter
 import java.io.IOException
-import java.util.*
 import javax.servlet.FilterChain
 import javax.servlet.ServletException
 import javax.servlet.http.HttpServletRequest
@@ -55,8 +53,6 @@ class LoginUserTrackingFilter : OncePerRequestFilter() {
     }
 
     companion object {
-        private val log = LoggerFactory
-                .getLogger(LoginUserTrackingFilter::class.java)
         private val pathMatcher = AntPathMatcher()
     }
 }

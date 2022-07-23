@@ -3,7 +3,6 @@ package com.isystk.sample.web.admin.controller.html.auth
 import com.isystk.sample.common.Const
 import com.isystk.sample.common.helper.StaffHelper
 import com.isystk.sample.web.base.controller.html.AbstractHtmlController
-import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
@@ -88,7 +87,4 @@ class LoginController : AbstractHtmlController() {
         return "redirect:/login"
     }
 
-    companion object {
-        private val log = LoggerFactory.getLogger(LoginController::class.java)
-    }
 }

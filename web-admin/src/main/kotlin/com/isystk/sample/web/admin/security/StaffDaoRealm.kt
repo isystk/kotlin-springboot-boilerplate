@@ -1,10 +1,10 @@
 package com.isystk.sample.web.admin.security
 
+import com.isystk.sample.common.logger
 import com.isystk.sample.domain.dao.AdminDao
 import com.isystk.sample.domain.dto.AdminCriteria
 import com.isystk.sample.domain.entity.Admin
 import com.isystk.sample.web.base.security.BaseRealm
-import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.security.core.GrantedAuthority
 import org.springframework.security.core.authority.AuthorityUtils
@@ -38,14 +38,11 @@ class StaffDaoRealm : BaseRealm() {
         } catch (e: Exception) {
             if (e !is UsernameNotFoundException) {
                 // 入力間違い以外の例外はログ出力する
-                log.error("failed to getLoginUser. ", e)
+                logger.error("failed to getLoginUser. ", e)
                 throw e
             }
             throw UsernameNotFoundException("could not select staff.", e)
         }
     }
 
-    companion object {
-        private val log = LoggerFactory.getLogger(StaffDaoRealm::class.java)
-    }
 }

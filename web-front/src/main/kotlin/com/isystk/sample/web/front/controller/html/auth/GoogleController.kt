@@ -3,7 +3,6 @@ package com.isystk.sample.web.front.controller.html.auth
 import com.isystk.sample.common.FrontUrl
 import com.isystk.sample.common.helper.UserHelper
 import com.isystk.sample.web.base.controller.html.AbstractHtmlController
-import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.security.core.annotation.AuthenticationPrincipal
 import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken
@@ -29,7 +28,4 @@ class GoogleController : AbstractHtmlController() {
         return "redirect:/home"
     }
 
-    companion object {
-        private val log = LoggerFactory.getLogger(GoogleController::class.java)
-    }
 }

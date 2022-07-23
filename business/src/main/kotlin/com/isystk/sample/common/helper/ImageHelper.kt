@@ -5,7 +5,6 @@ import com.amazonaws.services.s3.model.S3Object
 import com.amazonaws.services.s3.model.S3ObjectSummary
 import com.isystk.sample.common.util.AwsS3Utils
 import org.apache.commons.io.FileUtils
-import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Component
 import org.springframework.util.Assert
@@ -143,7 +142,6 @@ class ImageHelper {
     }
 
     companion object {
-        private val log = LoggerFactory.getLogger(ImageHelper::class.java)
         var BUCKET_NAME: String? = null
     }
 }

@@ -5,7 +5,6 @@ import com.isystk.sample.common.util.ObjectMapperUtils
 import com.isystk.sample.domain.dto.StockRepositoryDto
 import com.isystk.sample.web.admin.service.StockService
 import com.isystk.sample.web.base.controller.html.AbstractHtmlController
-import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
@@ -146,7 +145,4 @@ class StockEditController : AbstractHtmlController() {
         return "modules/stock/edit/complete"
     }
 
-    companion object {
-        private val log = LoggerFactory.getLogger(StockEditController::class.java)
-    }
 }

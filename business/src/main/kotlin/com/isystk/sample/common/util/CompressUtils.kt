@@ -1,9 +1,9 @@
 package com.isystk.sample.common.util
 
+import com.isystk.sample.common.logger
 import org.apache.commons.compress.compressors.bzip2.BZip2CompressorInputStream
 import org.apache.commons.compress.compressors.bzip2.BZip2CompressorOutputStream
 import org.apache.commons.compress.utils.IOUtils
-import org.slf4j.LoggerFactory
 import java.io.ByteArrayInputStream
 import java.io.ByteArrayOutputStream
 import java.io.IOException
@@ -12,7 +12,6 @@ import java.io.IOException
  * 圧縮ユーティリティ
  */
 object CompressUtils {
-    private val log = LoggerFactory.getLogger(CompressUtils::class.java)
 
     /**
      * 入力したバイト配列をBZip2で圧縮して返します。
@@ -32,7 +31,7 @@ object CompressUtils {
                 }
             }
         } catch (e: IOException) {
-            log.error("failed to encode.", e)
+            logger.error("failed to encode.", e)
             throw RuntimeException(e)
         }
         return ref!!.toByteArray()
@@ -56,7 +55,7 @@ object CompressUtils {
                 }
             }
         } catch (e: IOException) {
-            log.error("failed to decode.", e)
+            logger.error("failed to decode.", e)
             throw RuntimeException(e)
         }
         return ref!!.toByteArray()

@@ -3,7 +3,6 @@ package com.isystk.sample.web.base.aop
 import com.isystk.sample.common.Const
 import com.isystk.sample.common.util.MessageUtils
 import com.isystk.sample.web.base.filter.UserIdAware
-import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.context.i18n.LocaleContextHolder
 import org.springframework.security.core.context.SecurityContextHolder
@@ -70,8 +69,4 @@ class SetModelAndViewInterceptor : BaseHandlerInterceptor() {
         }
     }
 
-    companion object {
-        private val log = LoggerFactory
-                .getLogger(SetModelAndViewInterceptor::class.java)
-    }
 }

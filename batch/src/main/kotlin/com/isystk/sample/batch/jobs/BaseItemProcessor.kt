@@ -2,7 +2,7 @@ package com.isystk.sample.batch.jobs
 
 import com.isystk.sample.batch.context.BatchContext
 import com.isystk.sample.batch.context.BatchContextHolder
-import org.slf4j.LoggerFactory
+import com.isystk.sample.common.logger
 import org.springframework.batch.core.annotation.OnProcessError
 import org.springframework.batch.item.ItemProcessor
 import org.springframework.validation.BindingResult
@@ -111,11 +111,8 @@ abstract class BaseItemProcessor<I, O> : ItemProcessor<I, O?> {
      */
     @OnProcessError
     protected fun onProcessError(item: I, e: Exception?) {
-        log.error("failed to process item.", e)
+        logger.error("failed to process item.", e)
         throw IllegalStateException(e)
     }
 
-    companion object {
-        private val log = LoggerFactory.getLogger(BaseItemProcessor::class.java)
-    }
 }

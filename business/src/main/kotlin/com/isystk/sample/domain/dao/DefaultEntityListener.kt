@@ -2,6 +2,7 @@ package com.isystk.sample.domain.dao
 
 import com.isystk.sample.common.dto.Dto
 import com.isystk.sample.common.exception.DoubleSubmitErrorException
+import com.isystk.sample.common.logger
 import com.isystk.sample.common.util.DateUtils.now
 import com.isystk.sample.common.util.ReflectionUtils.findWithAnnotation
 import com.isystk.sample.common.util.ReflectionUtils.getFieldValue
@@ -11,7 +12,6 @@ import org.seasar.doma.jdbc.entity.EntityListener
 import org.seasar.doma.jdbc.entity.PreDeleteContext
 import org.seasar.doma.jdbc.entity.PreInsertContext
 import org.seasar.doma.jdbc.entity.PreUpdateContext
-import org.slf4j.LoggerFactory
 import java.lang.reflect.Field
 import java.util.stream.Collectors
 
@@ -46,7 +46,7 @@ class DefaultEntityListener<ENTITY> : EntityListener<ENTITY> {
             val ids = getIds(domaDto)
 
             // 物理削除した場合はログ出力する
-            log.info("データを物理削除しました。entity={}, id={}, deletedBy={}, deletedAt={}", name, ids, deletedBy,
+            logger.info("データを物理削除しました。entity={}, id={}, deletedBy={}, deletedAt={}", name, ids, deletedBy,
                     deletedAt)
         }
     }
@@ -62,7 +62,4 @@ class DefaultEntityListener<ENTITY> : EntityListener<ENTITY> {
                 .map { f: Field? -> getFieldValue(f!!, dto) }.collect(Collectors.toList())
     }
 
-    companion object {
-        private val log = LoggerFactory.getLogger(DefaultEntityListener::class.java)
-    }
 }

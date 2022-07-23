@@ -1,6 +1,5 @@
 package com.isystk.sample.common.util
 
-import org.slf4j.LoggerFactory
 import java.lang.reflect.Field
 import java.util.*
 import java.util.stream.Stream
@@ -9,7 +8,6 @@ import java.util.stream.Stream
  * リフレクション関連ユーティリティ
  */
 object ReflectionUtils {
-    private val log = LoggerFactory.getLogger(ReflectionUtils::class.java)
 
     /**
      * 指定したアノテーションが付与されているフィールドを返します。

@@ -1,8 +1,8 @@
 package com.isystk.sample.common.helper
 
 import com.isystk.sample.common.exception.SystemException
+import com.isystk.sample.common.logger
 import com.isystk.sample.common.util.ValidateUtils
-import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.mail.MailException
 import org.springframework.stereotype.Component
@@ -49,13 +49,13 @@ class SendMailHelper {
             message.setText(body, "utf-8")
             Transport.send(message)
         } catch (e: MailException) {
-            log.error("failed to send mail.", e)
+            logger.error("failed to send mail.", e)
             throw SystemException(e)
         } catch (e: AddressException) {
-            log.error("failed to send mail.", e)
+            logger.error("failed to send mail.", e)
             throw SystemException(e)
         } catch (e: MessagingException) {
-            log.error("failed to send mail.", e)
+            logger.error("failed to send mail.", e)
             throw SystemException(e)
         }
     }
@@ -84,7 +84,4 @@ class SendMailHelper {
         return resolver
     }
 
-    companion object {
-        private val log = LoggerFactory.getLogger(SendMailHelper::class.java)
-    }
 }

@@ -1,6 +1,5 @@
 package com.isystk.sample.common.helper
 
-import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Component
 
@@ -31,7 +30,4 @@ class EnvHelper {
     val isProduction: Boolean
         get() = "production" == profile
 
-    companion object {
-        private val log = LoggerFactory.getLogger(EnvHelper::class.java)
-    }
 }

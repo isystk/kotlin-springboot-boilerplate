@@ -1,6 +1,5 @@
 package com.isystk.sample.batch.jobs
 
-import org.slf4j.LoggerFactory
 import org.springframework.batch.core.partition.support.Partitioner
 import org.springframework.batch.item.ExecutionContext
 
@@ -44,7 +43,4 @@ abstract class BasePartitioner : Partitioner {
         return partitionInfo
     }
 
-    companion object {
-        private val log = LoggerFactory.getLogger(BasePartitioner::class.java)
-    }
 }

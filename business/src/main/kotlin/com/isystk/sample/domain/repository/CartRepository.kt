@@ -22,7 +22,6 @@ import com.isystk.sample.domain.entity.User
 import com.stripe.Stripe
 import com.stripe.exception.StripeException
 import com.stripe.model.PaymentIntent
-import org.apache.commons.logging.LogFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Repository
@@ -242,7 +241,4 @@ class CartRepository : BaseRepository() {
         return true
     }
 
-    companion object {
-        private val logger = LogFactory.getLog(CartRepository::class.java)
-    }
 }

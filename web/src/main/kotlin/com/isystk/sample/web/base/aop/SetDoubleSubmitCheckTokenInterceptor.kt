@@ -4,7 +4,6 @@ import com.isystk.sample.domain.dao.DoubleSubmitCheckTokenHolder
 import com.isystk.sample.web.base.security.DoubleSubmitCheckToken
 import com.isystk.sample.web.base.security.DoubleSubmitCheckToken.renewToken
 import org.apache.commons.lang3.StringUtils
-import org.slf4j.LoggerFactory
 import org.springframework.web.servlet.ModelAndView
 import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
@@ -43,8 +42,4 @@ class SetDoubleSubmitCheckTokenInterceptor : BaseHandlerInterceptor() {
         DoubleSubmitCheckTokenHolder.clear()
     }
 
-    companion object {
-        private val log = LoggerFactory
-                .getLogger(SetDoubleSubmitCheckTokenInterceptor::class.java)
-    }
 }
